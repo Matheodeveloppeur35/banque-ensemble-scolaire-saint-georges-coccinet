@@ -304,3 +304,285 @@ footer p {
         justify-content: center;
     }
 }
+/* Tableau de bord */
+
+.entete-dashboard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.entete-dashboard h1 {
+    margin: 8px 0;
+    color: var(--bleu-fonce);
+    font-size: clamp(34px, 5vw, 52px);
+}
+
+.entete-dashboard > div > p:last-child {
+    margin-bottom: 0;
+    color: #647282;
+    font-size: 17px;
+}
+
+.petit-titre {
+    margin: 0;
+    color: var(--bleu-principal);
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.statut-compte {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    flex-shrink: 0;
+    padding: 11px 16px;
+    color: #12633e;
+    background-color: #e3f6eb;
+    border: 1px solid #acd8bd;
+    border-radius: 50px;
+    font-weight: bold;
+}
+
+.point-statut {
+    width: 10px;
+    height: 10px;
+    background-color: #168851;
+    border-radius: 50%;
+}
+
+.grille-dashboard {
+    display: grid;
+    grid-template-columns: 1.4fr 0.8fr;
+    gap: 24px;
+}
+
+.carte-solde,
+.carte-information,
+.operations {
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(12, 38, 63, 0.08);
+}
+
+.carte-solde {
+    padding: 36px;
+    color: var(--blanc);
+    background:
+        linear-gradient(
+            135deg,
+            var(--bleu-fonce),
+            var(--bleu-principal)
+        );
+}
+
+.carte-solde > p {
+    margin-top: 0;
+    color: var(--texte-clair);
+}
+
+.carte-solde h2 {
+    margin: 10px 0 30px;
+    font-size: clamp(38px, 6vw, 58px);
+}
+
+.carte-solde h2 small {
+    color: var(--dore);
+    font-size: 17px;
+}
+
+.details-compte {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.details-compte span {
+    color: var(--texte-clair);
+}
+
+.actions-compte {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 30px;
+}
+
+.actions-compte .bouton {
+    background-color: var(--dore);
+}
+
+.bouton-clair {
+    display: inline-block;
+    padding: 15px 22px;
+    color: var(--blanc);
+    background-color: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.bouton-clair:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.carte-information {
+    padding: 30px;
+    background-color: var(--blanc);
+    border: 1px solid var(--bordure);
+}
+
+.carte-information h2 {
+    margin-top: 0;
+    color: var(--bleu-principal);
+}
+
+.carte-information dl {
+    margin: 0;
+}
+
+.carte-information dl div {
+    padding: 18px 0;
+    border-bottom: 1px solid var(--bordure);
+}
+
+.carte-information dl div:last-child {
+    border-bottom: 0;
+}
+
+.carte-information dt {
+    margin-bottom: 6px;
+    color: #647282;
+    font-size: 13px;
+}
+
+.carte-information dd {
+    margin: 0;
+    font-weight: bold;
+}
+
+.texte-vert {
+    color: #168851;
+}
+
+.operations {
+    margin-top: 30px;
+    padding: 30px;
+    background-color: var(--blanc);
+    border: 1px solid var(--bordure);
+}
+
+.titre-section h2 {
+    margin: 7px 0 25px;
+    color: var(--bleu-fonce);
+    font-size: 28px;
+}
+
+.liste-operations {
+    border-top: 1px solid var(--bordure);
+}
+
+.ligne-operation {
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    align-items: center;
+    gap: 18px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--bordure);
+}
+
+.ligne-operation:last-child {
+    border-bottom: 0;
+}
+
+.icone-operation {
+    display: grid;
+    width: 42px;
+    height: 42px;
+    place-items: center;
+    border-radius: 12px;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.icone-operation.revenu {
+    color: #12633e;
+    background-color: #e3f6eb;
+}
+
+.icone-operation.depense {
+    color: #9d3030;
+    background-color: #fdeaea;
+}
+
+.description-operation {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.description-operation span,
+.date-operation {
+    color: #647282;
+    font-size: 14px;
+}
+
+.montant {
+    min-width: 100px;
+    text-align: right;
+}
+
+.montant.positif {
+    color: #168851;
+}
+
+.montant.negatif {
+    color: #b13a3a;
+}
+
+@media (max-width: 800px) {
+    .entete-dashboard {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .grille-dashboard {
+        grid-template-columns: 1fr;
+    }
+
+    .ligne-operation {
+        grid-template-columns: auto 1fr auto;
+    }
+
+    .date-operation {
+        display: none;
+    }
+}
+
+@media (max-width: 520px) {
+    .carte-solde,
+    .carte-information,
+    .operations {
+        padding: 22px;
+    }
+
+    .details-compte {
+        flex-direction: column;
+    }
+
+    .ligne-operation {
+        grid-template-columns: auto 1fr;
+    }
+
+    .montant {
+        grid-column: 2;
+        min-width: auto;
+        text-align: left;
+    }
+}
