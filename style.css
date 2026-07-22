@@ -2143,3 +2143,14 @@ nav a.page-active:hover {
     color: var(--bleu-fonce);
     background-color: rgba(214, 177, 93, 0.55);
 }
+/* Bouton de déconnexion */
+
+button.bouton-deconnexion {
+    cursor: pointer;
+    font: inherit;
+}
+
+button.bouton-deconnexion:disabled {
+    cursor: wait;
+    opacity: 0.65;
+}
