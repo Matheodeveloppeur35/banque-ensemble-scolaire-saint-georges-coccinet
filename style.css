@@ -216,6 +216,89 @@ footer p {
     .description {
         font-size: 17px;
     }
+.page-interieure {
+    padding: 70px 20px;
+    background-color: var(--fond);
+}
+
+.conteneur {
+    max-width: 950px;
+    margin: 0 auto;
+}
+
+.titre-page {
+    margin-bottom: 35px;
+    padding: 40px;
+    color: var(--blanc);
+    background-color: var(--bleu-principal);
+    border-radius: 18px;
+}
+
+.titre-page h1 {
+    margin-top: 15px;
+    font-size: clamp(36px, 6vw, 58px);
+}
+
+.titre-page > p:last-child {
+    margin-bottom: 0;
+    color: var(--texte-clair);
+    font-size: 18px;
+}
+
+.bloc-reglement {
+    padding: 20px 40px;
+    background-color: var(--blanc);
+    border: 1px solid var(--bordure);
+    border-radius: 18px;
+}
+
+.bloc-reglement article {
+    padding: 25px 0;
+    border-bottom: 1px solid var(--bordure);
+}
+
+.bloc-reglement article:last-child {
+    border-bottom: 0;
+}
+
+.bloc-reglement h2 {
+    margin-top: 0;
+    color: var(--bleu-principal);
+}
+
+.bloc-reglement p,
+.bloc-reglement li {
+    line-height: 1.7;
+}
+
+.bloc-reglement li {
+    margin-bottom: 8px;
+}
+
+.encadre-important {
+    margin-top: 25px;
+    padding: 20px;
+    color: #543d00;
+    background-color: #fff3cd;
+    border: 1px solid #e5c96f;
+    border-radius: 10px;
+    line-height: 1.6;
+}
+
+.retour {
+    margin-top: 25px;
+}
+
+@media (max-width: 600px) {
+    .page-interieure {
+        padding: 35px 12px;
+    }
+
+    .titre-page,
+    .bloc-reglement {
+        padding: 25px 20px;
+    }
+}
 
     .boutons {
         justify-content: center;
