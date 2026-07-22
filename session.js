@@ -1,11 +1,18 @@
 const cleSession = "saintGeorgesSessionDemo";
 
-function ouvrirSessionDemo() {
+function ouvrirSessionDemo(modeAdministrateur = false) {
     const session = {
         connecte: true,
-        nom: "Jean Dupont",
-        role: "Élève",
-        numeroCompte: "SGC-000042",
+        nom: modeAdministrateur
+            ? "Administrateur Démo"
+            : "Jean Dupont",
+        role: modeAdministrateur
+            ? "Administrateur RP"
+            : "Élève",
+        numeroCompte: modeAdministrateur
+            ? "SGC-ADMIN-001"
+            : "SGC-000042",
+        administrateur: modeAdministrateur,
         dateConnexion: new Date().toISOString()
     };
 
@@ -42,4 +49,14 @@ function fermerSessionDemo() {
 
 function utilisateurConnecte() {
     return obtenirSessionDemo() !== null;
+}
+
+function utilisateurAdministrateur() {
+    const session = obtenirSessionDemo();
+
+    return Boolean(
+        session &&
+        session.connecte &&
+        session.administrateur === true
+    );
 }
