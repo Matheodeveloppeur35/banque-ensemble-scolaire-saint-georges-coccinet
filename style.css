@@ -1535,3 +1535,6 @@ footer p {
         width: 100%;
     }
 }
+.article-boutique[hidden] {
+    display: none;
+}
