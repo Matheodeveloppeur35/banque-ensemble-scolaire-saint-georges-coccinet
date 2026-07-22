@@ -2124,3 +2124,22 @@ body.modal-ouverte {
         width: 100%;
     }
 }
+/* Page active dans le menu de navigation */
+
+nav a {
+    padding: 9px 12px;
+    border-radius: 8px;
+    transition:
+        color 0.2s ease,
+        background-color 0.2s ease;
+}
+
+nav a.page-active {
+    color: var(--bleu-fonce);
+    background-color: rgba(214, 177, 93, 0.35);
+}
+
+nav a.page-active:hover {
+    color: var(--bleu-fonce);
+    background-color: rgba(214, 177, 93, 0.55);
+}
