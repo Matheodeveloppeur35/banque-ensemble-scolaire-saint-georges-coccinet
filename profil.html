@@ -15,7 +15,7 @@
 
     <title>Mon profil — Banque Saint-Georges RP</title>
 
-    <link rel="stylesheet" href="./style.css?v=9">
+    <link rel="stylesheet" href="./style.css?v=10">
 </head>
 
 <body>
@@ -46,7 +46,9 @@
         <section class="conteneur">
             <div class="entete-profil">
                 <div>
-                    <p class="petit-titre">Espace personnel RP</p>
+                    <p class="petit-titre">
+                        Espace personnel RP
+                    </p>
 
                     <h1>Mon profil</h1>
 
@@ -56,7 +58,10 @@
                     </p>
                 </div>
 
-                <a class="retour-dashboard" href="./dashboard.html">
+                <a
+                    class="retour-dashboard"
+                    href="./dashboard.html"
+                >
                     ← Retour au compte
                 </a>
             </div>
@@ -130,23 +135,26 @@
 
             <section class="securite-profil">
                 <div>
-                    <p class="petit-titre">Sécurité</p>
+                    <p class="petit-titre">
+                        Sécurité
+                    </p>
 
                     <h2>Session de démonstration</h2>
 
                     <p>
-                        Aucune véritable session Discord n’est actuellement
-                        enregistrée. Le bouton ci-dessous vous ramènera
-                        simplement à la page de connexion.
+                        Une session locale de démonstration est actuellement
+                        utilisée. La déconnexion supprimera cette session
+                        de votre navigateur.
                     </p>
                 </div>
 
-                <a
+                <button
                     class="bouton-deconnexion"
-                    href="./connexion.html"
+                    id="bouton-deconnexion"
+                    type="button"
                 >
                     Se déconnecter
-                </a>
+                </button>
             </section>
 
             <div class="encadre-important">
@@ -165,8 +173,34 @@
             Ensemble Scolaire Saint-Georges Coccinet
         </p>
 
-        <p>Monnaie RP fictive, sans valeur réelle.</p>
+        <p>
+            Monnaie RP fictive, sans valeur réelle.
+        </p>
     </footer>
+
+    <!-- Gestion de la session de démonstration -->
+    <script src="./session.js?v=1"></script>
+
+    <script>
+        if (!utilisateurConnecte()) {
+            window.location.replace("./connexion.html");
+        }
+
+        const boutonDeconnexion = document.querySelector(
+            "#bouton-deconnexion"
+        );
+
+        boutonDeconnexion.addEventListener("click", function () {
+            boutonDeconnexion.disabled = true;
+            boutonDeconnexion.textContent = "Déconnexion…";
+
+            fermerSessionDemo();
+
+            window.setTimeout(function () {
+                window.location.replace("./connexion.html");
+            }, 500);
+        });
+    </script>
 
     <!-- Mise en évidence de la page active -->
     <script src="./navigation.js?v=1"></script>
