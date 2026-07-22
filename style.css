@@ -2187,3 +2187,38 @@ button.bouton-deconnexion:disabled {
     opacity: 0.65;
     transform: none;
 }
+/* Session administrateur */
+
+.zone-session-admin {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.bouton-deconnexion-admin {
+    padding: 10px 15px;
+    color: #812828;
+    background-color: #fdeaea;
+    border: 1px solid #e5aaaa;
+    border-radius: 9px;
+    cursor: pointer;
+    font: inherit;
+    font-weight: bold;
+}
+
+.bouton-deconnexion-admin:hover {
+    color: #ffffff;
+    background-color: #b13a3a;
+}
+
+.bouton-deconnexion-admin:disabled {
+    cursor: wait;
+    opacity: 0.65;
+}
+
+@media (max-width: 750px) {
+    .zone-session-admin {
+        align-items: flex-start;
+    }
+}
