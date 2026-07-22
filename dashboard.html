@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Tableau de bord de la Banque Saint-Georges RP"
+    >
+
+    <title>Mon compte — Banque Saint-Georges RP</title>
+
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <header>
+        <div class="identite">
+            <div class="logo">SG</div>
+
+            <div>
+                <strong>Banque Saint-Georges RP</strong>
+
+                <p>
+                    Ensemble Scolaire Saint-Georges Coccinet
+                </p>
+            </div>
+        </div>
+
+        <nav>
+            <a href="./index.html">Accueil</a>
+            <a href="./dashboard.html">Mon compte</a>
+            <a href="./reglement.html">Règlement</a>
+        </nav>
+    </header>
+
+    <main class="page-interieure">
+        <section class="conteneur">
+            <div class="entete-dashboard">
+                <div>
+                    <p class="petit-titre">Espace bancaire fictif</p>
+                    <h1>Bonjour, Jean Dupont</h1>
+
+                    <p>
+                        Voici un aperçu de votre compte Saint-Georges RP.
+                    </p>
+                </div>
+
+                <div class="statut-compte">
+                    <span class="point-statut"></span>
+                    Compte actif
+                </div>
+            </div>
+
+            <div class="grille-dashboard">
+                <article class="carte-solde">
+                    <p>Solde disponible</p>
+
+                    <h2>1 245,50 € <small>RP</small></h2>
+
+                    <div class="details-compte">
+                        <span>Compte scolaire</span>
+                        <strong>SGC-000042</strong>
+                    </div>
+
+                    <div class="actions-compte">
+                        <a class="bouton" href="./virement.html">
+                            Faire un virement
+                        </a>
+
+                        <a class="bouton-clair" href="#operations">
+                            Voir les opérations
+                        </a>
+                    </div>
+                </article>
+
+                <article class="carte-information">
+                    <h2>Informations du compte</h2>
+
+                    <dl>
+                        <div>
+                            <dt>Titulaire</dt>
+                            <dd>Jean Dupont</dd>
+                        </div>
+
+                        <div>
+                            <dt>Type de compte</dt>
+                            <dd>Compte élève RP</dd>
+                        </div>
+
+                        <div>
+                            <dt>Statut</dt>
+                            <dd class="texte-vert">Actif</dd>
+                        </div>
+                    </dl>
+                </article>
+            </div>
+
+            <section class="operations" id="operations">
+                <div class="titre-section">
+                    <div>
+                        <p class="petit-titre">Historique récent</p>
+                        <h2>Dernières opérations</h2>
+                    </div>
+                </div>
+
+                <div class="liste-operations">
+                    <article class="ligne-operation">
+                        <div class="icone-operation revenu">+</div>
+
+                        <div class="description-operation">
+                            <strong>Allocation scolaire</strong>
+                            <span>Versement hebdomadaire RP</span>
+                        </div>
+
+                        <div class="date-operation">
+                            20 juillet 2026
+                        </div>
+
+                        <strong class="montant positif">
+                            +150,00 €
+                        </strong>
+                    </article>
+
+                    <article class="ligne-operation">
+                        <div class="icone-operation depense">−</div>
+
+                        <div class="description-operation">
+                            <strong>Cafétéria scolaire</strong>
+                            <span>Achat RP</span>
+                        </div>
+
+                        <div class="date-operation">
+                            18 juillet 2026
+                        </div>
+
+                        <strong class="montant negatif">
+                            −12,50 €
+                        </strong>
+                    </article>
+
+                    <article class="ligne-operation">
+                        <div class="icone-operation depense">−</div>
+
+                        <div class="description-operation">
+                            <strong>Virement à Marie Martin</strong>
+                            <span>Participation à un événement</span>
+                        </div>
+
+                        <div class="date-operation">
+                            15 juillet 2026
+                        </div>
+
+                        <strong class="montant negatif">
+                            −50,00 €
+                        </strong>
+                    </article>
+                </div>
+            </section>
+
+            <div class="encadre-important">
+                <strong>Version de démonstration :</strong>
+
+                le nom, le numéro de compte, le solde et les opérations
+                affichés sur cette page sont actuellement des exemples.
+                Nous les rendrons dynamiques plus tard.
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>
+            Banque Saint-Georges RP —
+            Ensemble Scolaire Saint-Georges Coccinet
+        </p>
+
+        <p>Monnaie RP fictive, sans valeur réelle.</p>
+    </footer>
+</body>
+</html>
