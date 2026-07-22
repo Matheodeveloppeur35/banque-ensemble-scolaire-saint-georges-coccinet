@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Connexion à la Banque Saint-Georges RP"
+    >
+
+    <title>Connexion — Banque Saint-Georges RP</title>
+
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <header>
+        <div class="identite">
+            <div class="logo">SG</div>
+
+            <div>
+                <strong>Banque Saint-Georges RP</strong>
+
+                <p>
+                    Ensemble Scolaire Saint-Georges Coccinet
+                </p>
+            </div>
+        </div>
+
+        <nav>
+            <a href="./index.html">Accueil</a>
+            <a href="./reglement.html">Règlement</a>
+        </nav>
+    </header>
+
+    <main class="page-connexion">
+        <section class="carte-connexion">
+            <div class="icone-connexion">SG</div>
+
+            <p class="petit-titre">Espace personnel RP</p>
+
+            <h1>Connexion</h1>
+
+            <p class="description-connexion">
+                Connectez-vous pour consulter votre compte bancaire,
+                votre solde et vos opérations RP.
+            </p>
+
+            <button
+                class="bouton-discord"
+                id="bouton-discord"
+                type="button"
+            >
+                <span class="logo-discord">◉</span>
+                Continuer avec Discord
+            </button>
+
+            <div
+                class="message-connexion"
+                id="message-connexion"
+                hidden
+            >
+                La connexion Discord sera activée lors d’une prochaine
+                version du système.
+            </div>
+
+            <div class="separation">
+                <span>Informations importantes</span>
+            </div>
+
+            <ul class="securite-connexion">
+                <li>
+                    Nous ne demanderons jamais votre mot de passe Discord.
+                </li>
+
+                <li>
+                    Aucun numéro de carte ou compte bancaire réel
+                    n’est nécessaire.
+                </li>
+
+                <li>
+                    Les montants du site sont entièrement fictifs.
+                </li>
+            </ul>
+
+            <a class="lien-retour" href="./index.html">
+                ← Retour à l’accueil
+            </a>
+        </section>
+    </main>
+
+    <footer>
+        <p>
+            Banque Saint-Georges RP —
+            Ensemble Scolaire Saint-Georges Coccinet
+        </p>
+
+        <p>Monnaie RP fictive, sans valeur réelle.</p>
+    </footer>
+
+    <script>
+        const boutonDiscord = document.querySelector("#bouton-discord");
+        const messageConnexion = document.querySelector("#message-connexion");
+
+        boutonDiscord.addEventListener("click", function () {
+            messageConnexion.hidden = false;
+        });
+    </script>
+</body>
+</html>
