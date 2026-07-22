@@ -15,7 +15,7 @@
 
     <title>Connexion — Banque Saint-Georges RP</title>
 
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./style.css?v=2">
 </head>
 
 <body>
@@ -51,14 +51,14 @@
                 votre solde et vos opérations RP.
             </p>
 
-            <button
-                class="bouton-discord"
-                id="bouton-discord"
-                type="button"
-            >
-                <span class="logo-discord">◉</span>
-                Continuer avec Discord
-            </button>
+            <a
+    class="bouton-discord"
+    href="./dashboard.html?v=2"
+>
+    <span class="logo-discord">◉</span>
+    Continuer en mode démonstration
+</a>
+
 
             <div
                 class="message-connexion"
@@ -103,22 +103,5 @@
         <p>Monnaie RP fictive, sans valeur réelle.</p>
     </footer>
 
-<script>
-    const boutonDiscord = document.querySelector("#bouton-discord");
-    const messageConnexion = document.querySelector("#message-connexion");
-
-    boutonDiscord.addEventListener("click", function () {
-        boutonDiscord.disabled = true;
-        boutonDiscord.textContent = "Connexion en cours…";
-
-        messageConnexion.hidden = false;
-        messageConnexion.textContent =
-            "Mode démonstration : ouverture de votre compte RP…";
-
-        window.setTimeout(function () {
-            window.location.href = "./dashboard.html";
-        }, 1200);
-    });
-</script>
 </body>
 </html>
