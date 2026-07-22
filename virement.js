@@ -98,7 +98,7 @@ formulaire.addEventListener("submit", function (evenement) {
             <b>${securiserTexte(motif)}</b>
         </span>
 
-            <em>
+        <em>
             Vérifiez les informations avant de confirmer.
         </em>
 
@@ -109,11 +109,10 @@ formulaire.addEventListener("submit", function (evenement) {
         >
             Confirmer le virement
         </button>
-
     `;
 
     afficherMessage(texte, "succes");
-});
+
     const boutonConfirmation = document.querySelector(
         "#confirmer-virement"
     );
@@ -121,7 +120,7 @@ formulaire.addEventListener("submit", function (evenement) {
     boutonConfirmation.addEventListener("click", function () {
         simulerVirement(destinataire, montant, motif);
     });
-
+});
 
 function afficherMessage(contenu, type) {
     let message = document.querySelector("#message-virement");
@@ -134,6 +133,7 @@ function afficherMessage(contenu, type) {
 
     message.className = `message-virement ${type}`;
     message.innerHTML = contenu;
+
     message.scrollIntoView({
         behavior: "smooth",
         block: "center"
@@ -143,10 +143,16 @@ function afficherMessage(contenu, type) {
 function securiserTexte(texte) {
     const element = document.createElement("div");
     element.textContent = texte;
+
     return element.innerHTML;
 }
+
 function simulerVirement(destinataire, montant, motif) {
     const bouton = document.querySelector("#confirmer-virement");
+
+    if (!bouton || bouton.disabled) {
+        return;
+    }
 
     bouton.disabled = true;
     bouton.textContent = "Traitement en cours…";
@@ -198,13 +204,14 @@ function simulerVirement(destinataire, montant, motif) {
         `;
 
         afficherMessage(recu, "succes-final");
-
         formulaire.reset();
     }, 800);
 }
 
 function creerIdentifiantTransaction() {
-    const nombre = Math.floor(100000 + Math.random() * 900000);
+    const nombre = Math.floor(
+        100000 + Math.random() * 900000
+    );
 
     return `SGC-DEMO-${nombre}`;
 }
