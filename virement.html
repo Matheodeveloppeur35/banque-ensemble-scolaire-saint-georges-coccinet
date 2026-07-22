@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Effectuer un virement à la Banque Saint-Georges RP"
+    >
+
+    <title>Virement — Banque Saint-Georges RP</title>
+
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <header>
+        <div class="identite">
+            <div class="logo">SG</div>
+
+            <div>
+                <strong>Banque Saint-Georges RP</strong>
+
+                <p>
+                    Ensemble Scolaire Saint-Georges Coccinet
+                </p>
+            </div>
+        </div>
+
+        <nav>
+            <a href="./index.html">Accueil</a>
+            <a href="./dashboard.html">Mon compte</a>
+            <a href="./reglement.html">Règlement</a>
+        </nav>
+    </header>
+
+    <main class="page-interieure">
+        <section class="conteneur">
+            <div class="entete-virement">
+                <div>
+                    <p class="petit-titre">Nouvelle opération</p>
+                    <h1>Effectuer un virement</h1>
+
+                    <p>
+                        Envoyez des euros RP à un autre membre de
+                        l’établissement.
+                    </p>
+                </div>
+
+                <a class="retour-dashboard" href="./dashboard.html">
+                    ← Retour au compte
+                </a>
+            </div>
+
+            <div class="grille-virement">
+                <form class="formulaire-virement" id="formulaire-virement">
+                    <div class="solde-formulaire">
+                        <span>Solde disponible</span>
+                        <strong>1 245,50 € RP</strong>
+                    </div>
+
+                    <div class="champ">
+                        <label for="destinataire">
+                            Destinataire
+                        </label>
+
+                        <input
+                            id="destinataire"
+                            name="destinataire"
+                            type="text"
+                            placeholder="Nom du membre ou numéro de compte"
+                            autocomplete="off"
+                            required
+                        >
+
+                        <small>
+                            Exemple : Marie Martin ou SGC-000043
+                        </small>
+                    </div>
+
+                    <div class="champ">
+                        <label for="montant">
+                            Montant du virement
+                        </label>
+
+                        <div class="champ-montant">
+                            <input
+                                id="montant"
+                                name="montant"
+                                type="number"
+                                min="0.01"
+                                max="1245.50"
+                                step="0.01"
+                                placeholder="0,00"
+                                required
+                            >
+
+                            <span>€ RP</span>
+                        </div>
+                    </div>
+
+                    <div class="champ">
+                        <label for="motif">
+                            Motif du virement
+                        </label>
+
+                        <textarea
+                            id="motif"
+                            name="motif"
+                            maxlength="150"
+                            rows="4"
+                            placeholder="Indiquez la raison RP du virement"
+                            required
+                        ></textarea>
+
+                        <small>150 caractères maximum.</small>
+                    </div>
+
+                    <label class="confirmation-reglement">
+                        <input
+                            id="confirmation"
+                            name="confirmation"
+                            type="checkbox"
+                            required
+                        >
+
+                        <span>
+                            Je confirme que ce virement est fictif et
+                            respecte le règlement du serveur.
+                        </span>
+                    </label>
+
+                    <button class="bouton bouton-validation" type="submit">
+                        Vérifier le virement
+                    </button>
+
+                    <p class="note-formulaire">
+                        Aucun argent réel ne sera envoyé. Ce formulaire
+                        appartient uniquement au système RP.
+                    </p>
+                </form>
+
+                <aside class="aide-virement">
+                    <h2>Avant de continuer</h2>
+
+                    <ul>
+                        <li>
+                            Vérifiez soigneusement le nom du destinataire.
+                        </li>
+
+                        <li>
+                            Assurez-vous de posséder un solde suffisant.
+                        </li>
+
+                        <li>
+                            Indiquez un motif clair et conforme au RP.
+                        </li>
+
+                        <li>
+                            Ne communiquez aucune donnée bancaire réelle.
+                        </li>
+                    </ul>
+
+                    <div class="limite-virement">
+                        <span>Plafond de démonstration</span>
+                        <strong>1 000,00 € RP par virement</strong>
+                    </div>
+                </aside>
+            </div>
+
+            <div class="encadre-important">
+                <strong>Version de démonstration :</strong>
+
+                le bouton ne réalisera pas encore de véritable transaction.
+                Nous ajouterons le fonctionnement et les vérifications
+                lors d’une prochaine étape.
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>
+            Banque Saint-Georges RP —
+            Ensemble Scolaire Saint-Georges Coccinet
+        </p>
+
+        <p>Monnaie RP fictive, sans valeur réelle.</p>
+    </footer>
+</body>
+</html>
