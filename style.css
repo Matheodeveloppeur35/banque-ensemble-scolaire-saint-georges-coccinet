@@ -1322,3 +1322,216 @@ footer p {
         text-align: left;
     }
 }
+/* Page de la boutique */
+
+.entete-boutique {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.entete-boutique h1 {
+    margin: 8px 0;
+    color: var(--bleu-fonce);
+    font-size: clamp(34px, 5vw, 52px);
+}
+
+.entete-boutique > div:first-child > p:last-child {
+    margin-bottom: 0;
+    color: #647282;
+    font-size: 17px;
+}
+
+.solde-boutique {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    flex-shrink: 0;
+    padding: 18px 22px;
+    color: var(--blanc);
+    background:
+        linear-gradient(
+            135deg,
+            var(--bleu-fonce),
+            var(--bleu-principal)
+        );
+    border: 2px solid var(--dore);
+    border-radius: 14px;
+    box-shadow: 0 8px 25px rgba(12, 38, 63, 0.14);
+}
+
+.solde-boutique span {
+    color: var(--texte-clair);
+    font-size: 13px;
+}
+
+.solde-boutique strong {
+    color: var(--dore);
+    font-size: 22px;
+}
+
+.filtres-boutique {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 28px;
+}
+
+.filtre {
+    padding: 11px 17px;
+    color: var(--bleu-principal);
+    background-color: var(--blanc);
+    border: 1px solid var(--bordure);
+    border-radius: 50px;
+    cursor: pointer;
+    font: inherit;
+    font-weight: bold;
+    transition:
+        color 0.2s ease,
+        background-color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.filtre:hover,
+.filtre.actif {
+    color: var(--blanc);
+    background-color: var(--bleu-principal);
+    border-color: var(--bleu-principal);
+}
+
+.grille-boutique {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.article-boutique {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background-color: var(--blanc);
+    border: 1px solid var(--bordure);
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(12, 38, 63, 0.08);
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.article-boutique:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 38px rgba(12, 38, 63, 0.14);
+}
+
+.illustration-article {
+    display: grid;
+    min-height: 150px;
+    place-items: center;
+    background:
+        linear-gradient(
+            135deg,
+            #eaf0f6,
+            #f8fafc
+        );
+    border-bottom: 1px solid var(--bordure);
+    font-size: 64px;
+}
+
+.contenu-article {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 25px;
+}
+
+.categorie-article {
+    align-self: flex-start;
+    padding: 6px 10px;
+    color: var(--bleu-principal);
+    background-color: #eaf0f6;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.contenu-article h2 {
+    margin: 16px 0 10px;
+    color: var(--bleu-fonce);
+    font-size: 23px;
+}
+
+.contenu-article p {
+    flex: 1;
+    margin: 0;
+    color: #647282;
+    line-height: 1.6;
+}
+
+.achat-article {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid var(--bordure);
+}
+
+.achat-article > strong {
+    color: var(--bleu-principal);
+    font-size: 19px;
+}
+
+.bouton-achat {
+    padding: 11px 16px;
+    color: var(--bleu-fonce);
+    background-color: var(--dore);
+    border: 0;
+    border-radius: 9px;
+    cursor: pointer;
+    font: inherit;
+    font-weight: bold;
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.bouton-achat:hover {
+    background-color: #e7c979;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 1000px) {
+    .grille-boutique {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 700px) {
+    .entete-boutique {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .solde-boutique {
+        width: 100%;
+    }
+
+    .grille-boutique {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 420px) {
+    .achat-article {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .bouton-achat {
+        width: 100%;
+    }
+}
