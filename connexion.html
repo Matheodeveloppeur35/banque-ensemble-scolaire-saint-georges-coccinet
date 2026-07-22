@@ -103,13 +103,23 @@
         <p>Monnaie RP fictive, sans valeur réelle.</p>
     </footer>
 
-    <script>
-        const boutonDiscord = document.querySelector("#bouton-discord");
-        const messageConnexion = document.querySelector("#message-connexion");
+<script>
+    const boutonDiscord = document.querySelector("#bouton-discord");
+    const messageConnexion = document.querySelector("#message-connexion");
 
-        boutonDiscord.addEventListener("click", function () {
-            messageConnexion.hidden = false;
-        });
-    </script>
+    boutonDiscord.addEventListener("click", function () {
+        boutonDiscord.disabled = true;
+        boutonDiscord.textContent = "Connexion en cours…";
+
+        messageConnexion.hidden = false;
+        messageConnexion.textContent =
+            "Mode démonstration : ouverture de votre compte RP…";
+
+        window.setTimeout(function () {
+            window.location.href = "./dashboard.html";
+        }, 1200);
+    });
+</script>
+
 </body>
 </html>
