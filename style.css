@@ -586,3 +586,227 @@ footer p {
         text-align: left;
     }
 }
+/* Page de virement */
+
+.entete-virement {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.entete-virement h1 {
+    margin: 8px 0;
+    color: var(--bleu-fonce);
+    font-size: clamp(34px, 5vw, 52px);
+}
+
+.entete-virement > div > p:last-child {
+    margin-bottom: 0;
+    color: #647282;
+    font-size: 17px;
+}
+
+.retour-dashboard {
+    flex-shrink: 0;
+    color: var(--bleu-principal);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.retour-dashboard:hover {
+    text-decoration: underline;
+}
+
+.grille-virement {
+    display: grid;
+    grid-template-columns: 1.3fr 0.7fr;
+    align-items: start;
+    gap: 24px;
+}
+
+.formulaire-virement,
+.aide-virement {
+    padding: 32px;
+    background-color: var(--blanc);
+    border: 1px solid var(--bordure);
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(12, 38, 63, 0.08);
+}
+
+.solde-formulaire {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 30px;
+    padding: 20px;
+    color: var(--blanc);
+    background:
+        linear-gradient(
+            135deg,
+            var(--bleu-fonce),
+            var(--bleu-principal)
+        );
+    border-radius: 12px;
+}
+
+.solde-formulaire span {
+    color: var(--texte-clair);
+}
+
+.solde-formulaire strong {
+    color: var(--dore);
+    font-size: 21px;
+}
+
+.champ {
+    margin-bottom: 24px;
+}
+
+.champ label {
+    display: block;
+    margin-bottom: 9px;
+    color: var(--bleu-fonce);
+    font-weight: bold;
+}
+
+.champ input,
+.champ textarea {
+    width: 100%;
+    padding: 14px 15px;
+    color: var(--texte);
+    background-color: #fbfcfd;
+    border: 1px solid #bdc8d3;
+    border-radius: 9px;
+    font: inherit;
+    outline: none;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.champ textarea {
+    min-height: 115px;
+    resize: vertical;
+}
+
+.champ input:focus,
+.champ textarea:focus {
+    border-color: var(--bleu-principal);
+    box-shadow: 0 0 0 3px rgba(23, 63, 103, 0.14);
+}
+
+.champ small {
+    display: block;
+    margin-top: 7px;
+    color: #647282;
+    line-height: 1.4;
+}
+
+.champ-montant {
+    position: relative;
+}
+
+.champ-montant input {
+    padding-right: 75px;
+}
+
+.champ-montant span {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    color: var(--bleu-principal);
+    font-weight: bold;
+    transform: translateY(-50%);
+}
+
+.confirmation-reglement {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+    margin-bottom: 24px;
+    line-height: 1.5;
+    cursor: pointer;
+}
+
+.confirmation-reglement input {
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    flex-shrink: 0;
+    accent-color: var(--bleu-principal);
+}
+
+.bouton-validation {
+    width: 100%;
+    cursor: pointer;
+    font: inherit;
+}
+
+.note-formulaire {
+    margin: 16px 0 0;
+    color: #647282;
+    text-align: center;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.aide-virement h2 {
+    margin-top: 0;
+    color: var(--bleu-principal);
+}
+
+.aide-virement ul {
+    margin: 20px 0;
+    padding-left: 22px;
+}
+
+.aide-virement li {
+    margin-bottom: 14px;
+    line-height: 1.6;
+}
+
+.limite-virement {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    margin-top: 25px;
+    padding: 18px;
+    background-color: #eef4fa;
+    border-left: 4px solid var(--bleu-principal);
+    border-radius: 8px;
+}
+
+.limite-virement span {
+    color: #647282;
+    font-size: 13px;
+}
+
+.limite-virement strong {
+    color: var(--bleu-fonce);
+}
+
+@media (max-width: 800px) {
+    .entete-virement {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .grille-virement {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 520px) {
+    .formulaire-virement,
+    .aide-virement {
+        padding: 22px;
+    }
+
+    .solde-formulaire {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
