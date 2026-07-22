@@ -15,7 +15,7 @@
 
     <title>Virement — Banque Saint-Georges RP</title>
 
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./style.css?v=10">
 </head>
 
 <body>
@@ -32,21 +32,24 @@
             </div>
         </div>
 
-       <nav>
-    <a href="./index.html">Accueil</a>
-    <a href="./dashboard.html">Mon compte</a>
-    <a href="./historique.html">Historique</a>
-    <a href="./boutique.html">Boutique</a>
-    <a href="./profil.html">Profil</a>
-    <a href="./reglement.html">Règlement</a>
-</nav>
+        <nav>
+            <a href="./index.html">Accueil</a>
+            <a href="./dashboard.html">Mon compte</a>
+            <a href="./historique.html">Historique</a>
+            <a href="./boutique.html">Boutique</a>
+            <a href="./profil.html">Profil</a>
+            <a href="./reglement.html">Règlement</a>
+        </nav>
     </header>
 
     <main class="page-interieure">
         <section class="conteneur">
             <div class="entete-virement">
                 <div>
-                    <p class="petit-titre">Nouvelle opération</p>
+                    <p class="petit-titre">
+                        Nouvelle opération
+                    </p>
+
                     <h1>Effectuer un virement</h1>
 
                     <p>
@@ -55,13 +58,19 @@
                     </p>
                 </div>
 
-                <a class="retour-dashboard" href="./dashboard.html">
+                <a
+                    class="retour-dashboard"
+                    href="./dashboard.html"
+                >
                     ← Retour au compte
                 </a>
             </div>
 
             <div class="grille-virement">
-                <form class="formulaire-virement" id="formulaire-virement">
+                <form
+                    class="formulaire-virement"
+                    id="formulaire-virement"
+                >
                     <div class="solde-formulaire">
                         <span>Solde disponible</span>
                         <strong>1 245,50 € RP</strong>
@@ -121,7 +130,9 @@
                             required
                         ></textarea>
 
-                        <small>150 caractères maximum.</small>
+                        <small>
+                            150 caractères maximum.
+                        </small>
                     </div>
 
                     <label class="confirmation-reglement">
@@ -138,7 +149,10 @@
                         </span>
                     </label>
 
-                    <button class="bouton bouton-validation" type="submit">
+                    <button
+                        class="bouton bouton-validation"
+                        type="submit"
+                    >
                         Vérifier le virement
                     </button>
 
@@ -170,8 +184,13 @@
                     </ul>
 
                     <div class="limite-virement">
-                        <span>Plafond de démonstration</span>
-                        <strong>1 000,00 € RP par virement</strong>
+                        <span>
+                            Plafond de démonstration
+                        </span>
+
+                        <strong>
+                            1 000,00 € RP par virement
+                        </strong>
                     </div>
                 </aside>
             </div>
@@ -192,9 +211,24 @@
             Ensemble Scolaire Saint-Georges Coccinet
         </p>
 
-        <p>Monnaie RP fictive, sans valeur réelle.</p>
+        <p>
+            Monnaie RP fictive, sans valeur réelle.
+        </p>
     </footer>
-    <script src="./virement.js"></script>
+
+    <!-- Vérification de la session de démonstration -->
+    <script src="./session.js?v=1"></script>
+
+    <script>
+        if (!utilisateurConnecte()) {
+            window.location.replace("./connexion.html");
+        }
+    </script>
+
+    <!-- Fonctionnement du formulaire de virement -->
+    <script src="./virement.js?v=2"></script>
+
+    <!-- Mise en évidence de la page active -->
+    <script src="./navigation.js?v=1"></script>
 </body>
 </html>
-
