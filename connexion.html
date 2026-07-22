@@ -15,7 +15,7 @@
 
     <title>Connexion — Banque Saint-Georges RP</title>
 
-    <link rel="stylesheet" href="./style.css?v=9">
+    <link rel="stylesheet" href="./style.css?v=11">
 </head>
 
 <body>
@@ -65,6 +65,15 @@
                 Continuer en mode démonstration
             </button>
 
+            <button
+                class="bouton-admin-demo"
+                id="connexion-admin-demo"
+                type="button"
+            >
+                <span>⚙️</span>
+                Connexion administrateur de démonstration
+            </button>
+
             <p
                 class="message-connexion"
                 id="message-connexion"
@@ -89,6 +98,10 @@
                 <li>
                     Les montants du site sont entièrement fictifs.
                 </li>
+
+                <li>
+                    Le mode administrateur est réservé aux tests.
+                </li>
             </ul>
 
             <a class="lien-retour" href="./index.html">
@@ -108,29 +121,63 @@
         </p>
     </footer>
 
-    <script src="./session.js?v=1"></script>
+    <!-- Gestion des sessions de démonstration -->
+    <script src="./session.js?v=2"></script>
+
+    <!-- Mise en évidence de la page active -->
     <script src="./navigation.js?v=1"></script>
 
+    <!-- Fonctionnement de la connexion -->
     <script>
-        const boutonConnexion = document.querySelector("#connexion-demo");
+        const boutonConnexion = document.querySelector(
+            "#connexion-demo"
+        );
+
+        const boutonConnexionAdmin = document.querySelector(
+            "#connexion-admin-demo"
+        );
+
         const messageConnexion = document.querySelector(
             "#message-connexion"
         );
 
         boutonConnexion.addEventListener("click", function () {
+            demarrerConnexion(false);
+        });
+
+        boutonConnexionAdmin.addEventListener("click", function () {
+            demarrerConnexion(true);
+        });
+
+        function demarrerConnexion(modeAdministrateur) {
             boutonConnexion.disabled = true;
-            boutonConnexion.textContent = "Connexion en cours…";
-
+            boutonConnexionAdmin.disabled = true;
             messageConnexion.hidden = false;
-            messageConnexion.textContent =
-                "Création de votre session de démonstration…";
 
-            ouvrirSessionDemo();
+            if (modeAdministrateur) {
+                boutonConnexionAdmin.textContent =
+                    "Connexion administrateur…";
+
+                messageConnexion.textContent =
+                    "Création de la session administrateur de démonstration…";
+            } else {
+                boutonConnexion.textContent =
+                    "Connexion en cours…";
+
+                messageConnexion.textContent =
+                    "Création de votre session de démonstration…";
+            }
+
+            ouvrirSessionDemo(modeAdministrateur);
 
             window.setTimeout(function () {
-                window.location.href = "./dashboard.html";
+                if (modeAdministrateur) {
+                    window.location.href = "./admin.html";
+                } else {
+                    window.location.href = "./dashboard.html";
+                }
             }, 800);
-        });
+        }
     </script>
 </body>
 </html>
