@@ -98,13 +98,30 @@ formulaire.addEventListener("submit", function (evenement) {
             <b>${securiserTexte(motif)}</b>
         </span>
 
-        <em>
-            Aucune transaction n’a encore été enregistrée.
+            <em>
+            Vérifiez les informations avant de confirmer.
         </em>
+
+        <button
+            id="confirmer-virement"
+            class="bouton confirmer-virement"
+            type="button"
+        >
+            Confirmer le virement
+        </button>
+
     `;
 
     afficherMessage(texte, "succes");
 });
+    const boutonConfirmation = document.querySelector(
+        "#confirmer-virement"
+    );
+
+    boutonConfirmation.addEventListener("click", function () {
+        simulerVirement(destinataire, montant, motif);
+    });
+
 
 function afficherMessage(contenu, type) {
     let message = document.querySelector("#message-virement");
@@ -127,4 +144,67 @@ function securiserTexte(texte) {
     const element = document.createElement("div");
     element.textContent = texte;
     return element.innerHTML;
+}
+function simulerVirement(destinataire, montant, motif) {
+    const bouton = document.querySelector("#confirmer-virement");
+
+    bouton.disabled = true;
+    bouton.textContent = "Traitement en cours…";
+
+    window.setTimeout(function () {
+        const identifiant = creerIdentifiantTransaction();
+
+        const date = new Date().toLocaleString("fr-FR", {
+            dateStyle: "long",
+            timeStyle: "short"
+        });
+
+        const montantFormate = montant.toLocaleString("fr-FR", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+
+        const recu = `
+            <strong>Virement RP simulé avec succès</strong>
+
+            <span>
+                Référence :
+                <b>${identifiant}</b>
+            </span>
+
+            <span>
+                Destinataire :
+                <b>${securiserTexte(destinataire)}</b>
+            </span>
+
+            <span>
+                Montant :
+                <b>${montantFormate} € RP</b>
+            </span>
+
+            <span>
+                Motif :
+                <b>${securiserTexte(motif)}</b>
+            </span>
+
+            <span>
+                Date :
+                <b>${date}</b>
+            </span>
+
+            <em>
+                Démonstration uniquement : aucun solde n’a été modifié.
+            </em>
+        `;
+
+        afficherMessage(recu, "succes-final");
+
+        formulaire.reset();
+    }, 800);
+}
+
+function creerIdentifiantTransaction() {
+    const nombre = Math.floor(100000 + Math.random() * 900000);
+
+    return `SGC-DEMO-${nombre}`;
 }
