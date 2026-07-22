@@ -2154,3 +2154,36 @@ button.bouton-deconnexion:disabled {
     cursor: wait;
     opacity: 0.65;
 }
+/* Connexion administrateur de démonstration */
+
+.bouton-admin-demo {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 11px;
+    margin-top: 12px;
+    padding: 14px 18px;
+    color: var(--bleu-fonce);
+    background-color: #fff3cd;
+    border: 1px solid #e5c96f;
+    border-radius: 10px;
+    cursor: pointer;
+    font: inherit;
+    font-weight: bold;
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.bouton-admin-demo:hover {
+    background-color: #f5dda0;
+    transform: translateY(-2px);
+}
+
+.bouton-admin-demo:disabled,
+.bouton-discord:disabled {
+    cursor: wait;
+    opacity: 0.65;
+    transform: none;
+}
