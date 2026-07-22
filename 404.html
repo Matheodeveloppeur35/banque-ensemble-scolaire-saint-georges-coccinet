@@ -1,1 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
 
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Page introuvable — Banque Saint-Georges RP"
+    >
+
+    <title>Page introuvable — Banque Saint-Georges RP</title>
+
+    <link rel="stylesheet" href="./style.css?v=8">
+</head>
+
+<body>
+    <header>
+        <div class="identite">
+            <div class="logo">SG</div>
+
+            <div>
+                <strong>Banque Saint-Georges RP</strong>
+
+                <p>
+                    Ensemble Scolaire Saint-Georges Coccinet
+                </p>
+            </div>
+        </div>
+
+        <nav>
+            <a href="./index.html">Accueil</a>
+            <a href="./connexion.html">Connexion</a>
+            <a href="./reglement.html">Règlement</a>
+        </nav>
+    </header>
+
+    <main class="page-erreur">
+        <section class="carte-erreur">
+            <div class="code-erreur">
+                404
+            </div>
+
+            <p class="petit-titre">
+                Adresse introuvable
+            </p>
+
+            <h1>Cette page n’existe pas</h1>
+
+            <p class="description-erreur">
+                L’adresse demandée est incorrecte, a été déplacée
+                ou n’est plus disponible.
+            </p>
+
+            <div class="actions-erreur">
+                <a class="bouton" href="./index.html">
+                    Retour à l’accueil
+                </a>
+
+                <button
+                    class="bouton-retour-erreur"
+                    id="retour-precedent"
+                    type="button"
+                >
+                    Page précédente
+                </button>
+            </div>
+
+            <div class="information-erreur">
+                <strong>Besoin d’aide ?</strong>
+
+                Vérifiez l’adresse ou retournez à l’accueil de la
+                Banque Saint-Georges RP.
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>
+            Banque Saint-Georges RP —
+            Ensemble Scolaire Saint-Georges Coccinet
+        </p>
+
+        <p>Monnaie RP fictive, sans valeur réelle.</p>
+    </footer>
+
+    <script>
+        const boutonRetour = document.querySelector("#retour-precedent");
+
+        boutonRetour.addEventListener("click", function () {
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                window.location.href = "./index.html";
+            }
+        });
+    </script>
+</body>
+</html>
