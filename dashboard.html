@@ -185,7 +185,12 @@
 
         <p>Monnaie RP fictive, sans valeur réelle.</p>
     </footer>
+      <script src="./session.js?v=1"></script>
+    <script>
+        if (!utilisateurConnecte()) {
+            window.location.replace("./connexion.html");
+        }
+    </script>
     <script src="./navigation.js?v=1"></script>
 </body>
 </html>
-
