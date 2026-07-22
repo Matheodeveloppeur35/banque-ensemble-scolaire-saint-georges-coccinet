@@ -56,13 +56,21 @@
                 votre solde et vos opérations RP.
             </p>
 
-            <a
+            <button
                 class="bouton-discord"
-                href="./dashboard.html"
+                id="connexion-demo"
+                type="button"
             >
                 <span class="logo-discord">◉</span>
                 Continuer en mode démonstration
-            </a>
+            </button>
+
+            <p
+                class="message-connexion"
+                id="message-connexion"
+                aria-live="polite"
+                hidden
+            ></p>
 
             <div class="separation">
                 <span>Informations importantes</span>
@@ -100,7 +108,29 @@
         </p>
     </footer>
 
-    <!-- Mise en évidence de la page active -->
+    <script src="./session.js?v=1"></script>
     <script src="./navigation.js?v=1"></script>
+
+    <script>
+        const boutonConnexion = document.querySelector("#connexion-demo");
+        const messageConnexion = document.querySelector(
+            "#message-connexion"
+        );
+
+        boutonConnexion.addEventListener("click", function () {
+            boutonConnexion.disabled = true;
+            boutonConnexion.textContent = "Connexion en cours…";
+
+            messageConnexion.hidden = false;
+            messageConnexion.textContent =
+                "Création de votre session de démonstration…";
+
+            ouvrirSessionDemo();
+
+            window.setTimeout(function () {
+                window.location.href = "./dashboard.html";
+            }, 800);
+        });
+    </script>
 </body>
 </html>
