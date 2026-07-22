@@ -15,7 +15,7 @@
 
     <title>Mon compte — Banque Saint-Georges RP</title>
 
-    <link rel="stylesheet" href="./style.css?v=9">
+    <link rel="stylesheet" href="./style.css?v=12">
 </head>
 
 <body>
@@ -33,21 +33,26 @@
         </div>
 
         <nav>
-    <a href="./index.html">Accueil</a>
-    <a href="./dashboard.html">Mon compte</a>
-    <a href="./historique.html">Historique</a>
-    <a href="./boutique.html">Boutique</a>
-    <a href="./profil.html">Profil</a>
-    <a href="./reglement.html">Règlement</a>
-</nav>
+            <a href="./index.html">Accueil</a>
+            <a href="./dashboard.html">Mon compte</a>
+            <a href="./historique.html">Historique</a>
+            <a href="./boutique.html">Boutique</a>
+            <a href="./profil.html">Profil</a>
+            <a href="./reglement.html">Règlement</a>
+        </nav>
     </header>
 
     <main class="page-interieure">
         <section class="conteneur">
             <div class="entete-dashboard">
                 <div>
-                    <p class="petit-titre">Espace bancaire fictif</p>
-                    <h1>Bonjour, Jean Dupont</h1>
+                    <p class="petit-titre">
+                        Espace bancaire fictif
+                    </p>
+
+                    <h1 id="bienvenue-dashboard">
+                        Bonjour
+                    </h1>
 
                     <p>
                         Voici un aperçu de votre compte Saint-Georges RP.
@@ -56,7 +61,10 @@
 
                 <div class="statut-compte">
                     <span class="point-statut"></span>
-                    Compte actif
+
+                    <span id="statut-dashboard">
+                        Compte actif
+                    </span>
                 </div>
             </div>
 
@@ -64,21 +72,31 @@
                 <article class="carte-solde">
                     <p>Solde disponible</p>
 
-                    <h2>1 245,50 € <small>RP</small></h2>
+                    <h2 id="solde-dashboard">
+                        Chargement…
+                    </h2>
 
                     <div class="details-compte">
                         <span>Compte scolaire</span>
-                        <strong>SGC-000042</strong>
+
+                        <strong id="numero-compte-dashboard">
+                            Chargement…
+                        </strong>
                     </div>
 
                     <div class="actions-compte">
-                        <a class="bouton" href="./virement.html">
+                        <a
+                            class="bouton"
+                            href="./virement.html"
+                        >
                             Faire un virement
                         </a>
 
-                        <a class="bouton-clair" href="./historique.html">
-    Voir tout l’historique
-</a>
+                        <a
+                            class="bouton-clair"
+                            href="./historique.html"
+                        >
+                            Voir tout l’historique
                         </a>
                     </div>
                 </article>
@@ -89,17 +107,29 @@
                     <dl>
                         <div>
                             <dt>Titulaire</dt>
-                            <dd>Jean Dupont</dd>
+
+                            <dd id="titulaire-dashboard">
+                                Chargement…
+                            </dd>
                         </div>
 
                         <div>
                             <dt>Type de compte</dt>
-                            <dd>Compte élève RP</dd>
+
+                            <dd id="type-compte-dashboard">
+                                Chargement…
+                            </dd>
                         </div>
 
                         <div>
                             <dt>Statut</dt>
-                            <dd class="texte-vert">Actif</dd>
+
+                            <dd
+                                class="texte-vert"
+                                id="statut-information-dashboard"
+                            >
+                                Chargement…
+                            </dd>
                         </div>
                     </dl>
                 </article>
@@ -108,14 +138,19 @@
             <section class="operations" id="operations">
                 <div class="titre-section">
                     <div>
-                        <p class="petit-titre">Historique récent</p>
+                        <p class="petit-titre">
+                            Historique récent
+                        </p>
+
                         <h2>Dernières opérations</h2>
                     </div>
                 </div>
 
                 <div class="liste-operations">
                     <article class="ligne-operation">
-                        <div class="icone-operation revenu">+</div>
+                        <div class="icone-operation revenu">
+                            +
+                        </div>
 
                         <div class="description-operation">
                             <strong>Allocation scolaire</strong>
@@ -132,7 +167,9 @@
                     </article>
 
                     <article class="ligne-operation">
-                        <div class="icone-operation depense">−</div>
+                        <div class="icone-operation depense">
+                            −
+                        </div>
 
                         <div class="description-operation">
                             <strong>Cafétéria scolaire</strong>
@@ -149,11 +186,18 @@
                     </article>
 
                     <article class="ligne-operation">
-                        <div class="icone-operation depense">−</div>
+                        <div class="icone-operation depense">
+                            −
+                        </div>
 
                         <div class="description-operation">
-                            <strong>Virement à Marie Martin</strong>
-                            <span>Participation à un événement</span>
+                            <strong>
+                                Virement à Marie Martin
+                            </strong>
+
+                            <span>
+                                Participation à un événement
+                            </span>
                         </div>
 
                         <div class="date-operation">
@@ -170,9 +214,9 @@
             <div class="encadre-important">
                 <strong>Version de démonstration :</strong>
 
-                le nom, le numéro de compte, le solde et les opérations
-                affichés sur cette page sont actuellement des exemples.
-                Nous les rendrons dynamiques plus tard.
+                les informations du compte sont enregistrées localement
+                dans votre navigateur. Elles ne proviennent pas encore
+                d’une base de données sécurisée.
             </div>
         </section>
     </main>
@@ -183,14 +227,64 @@
             Ensemble Scolaire Saint-Georges Coccinet
         </p>
 
-        <p>Monnaie RP fictive, sans valeur réelle.</p>
+        <p>
+            Monnaie RP fictive, sans valeur réelle.
+        </p>
     </footer>
-      <script src="./session.js?v=1"></script>
+
+    <!-- Vérification de la session -->
+    <script src="./session.js?v=2"></script>
+
     <script>
         if (!utilisateurConnecte()) {
             window.location.replace("./connexion.html");
         }
     </script>
+
+    <!-- Données bancaires dynamiques -->
+    <script src="./banque.js?v=1"></script>
+
+    <script>
+        const donneesBancaires = initialiserBanqueDemo();
+
+        const nomTitulaire = donneesBancaires.titulaire;
+        const roleTitulaire = donneesBancaires.role;
+        const statutCompte = donneesBancaires.statut;
+
+        document.querySelector(
+            "#bienvenue-dashboard"
+        ).textContent = `Bonjour, ${nomTitulaire}`;
+
+        document.querySelector(
+            "#solde-dashboard"
+        ).textContent = formaterEuros(
+            donneesBancaires.soldeCentimes
+        );
+
+        document.querySelector(
+            "#titulaire-dashboard"
+        ).textContent = nomTitulaire;
+
+        document.querySelector(
+            "#numero-compte-dashboard"
+        ).textContent = donneesBancaires.numeroCompte;
+
+        document.querySelector(
+            "#type-compte-dashboard"
+        ).textContent =
+            `Compte ${roleTitulaire.toLowerCase()} RP`;
+
+        document.querySelector(
+            "#statut-dashboard"
+        ).textContent =
+            `Compte ${statutCompte.toLowerCase()}`;
+
+        document.querySelector(
+            "#statut-information-dashboard"
+        ).textContent = statutCompte;
+    </script>
+
+    <!-- Mise en évidence de la page active -->
     <script src="./navigation.js?v=1"></script>
 </body>
 </html>
