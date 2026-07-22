@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Administration de la Banque Saint-Georges RP"
+    >
+
+    <title>Administration — Banque Saint-Georges RP</title>
+
+    <link rel="stylesheet" href="./style.css?v=7">
+</head>
+
+<body>
+    <header>
+        <div class="identite">
+            <div class="logo">SG</div>
+
+            <div>
+                <strong>Banque Saint-Georges RP</strong>
+
+                <p>
+                    Ensemble Scolaire Saint-Georges Coccinet
+                </p>
+            </div>
+        </div>
+
+        <nav>
+            <a href="./index.html">Accueil</a>
+            <a href="./dashboard.html">Mon compte</a>
+            <a href="./admin.html">Administration</a>
+            <a href="./profil.html">Profil</a>
+        </nav>
+    </header>
+
+    <main class="page-interieure">
+        <section class="conteneur">
+            <div class="entete-admin">
+                <div>
+                    <p class="petit-titre">Espace réservé au personnel</p>
+
+                    <h1>Administration bancaire</h1>
+
+                    <p>
+                        Tableau de gestion de la Banque Saint-Georges RP.
+                    </p>
+                </div>
+
+                <div class="badge-administrateur">
+                    Administrateur RP
+                </div>
+            </div>
+
+            <div class="avertissement-admin">
+                <strong>Maquette non sécurisée :</strong>
+
+                cette page est actuellement accessible par son adresse.
+                Elle ne doit pas être utilisée pour gérer de véritables
+                données avant l’ajout de la connexion et des permissions.
+            </div>
+
+            <section class="statistiques-admin">
+                <article>
+                    <span>Comptes actifs</span>
+                    <strong>128</strong>
+                    <small>Utilisateurs RP</small>
+                </article>
+
+                <article>
+                    <span>Solde total</span>
+                    <strong>82 450,50 €</strong>
+                    <small>Monnaie fictive en circulation</small>
+                </article>
+
+                <article>
+                    <span>Transactions du jour</span>
+                    <strong>34</strong>
+                    <small>Opérations RP</small>
+                </article>
+
+                <article>
+                    <span>Comptes suspendus</span>
+                    <strong class="texte-rouge">3</strong>
+                    <small>Contrôles en cours</small>
+                </article>
+            </section>
+
+            <section class="actions-admin">
+                <div class="titre-section">
+                    <p class="petit-titre">Actions rapides</p>
+                    <h2>Gestion bancaire</h2>
+                </div>
+
+                <div class="grille-actions-admin">
+                    <button
+                        class="action-admin"
+                        type="button"
+                        data-action="creer-compte"
+                    >
+                        <span>👤</span>
+
+                        <div>
+                            <strong>Créer un compte</strong>
+                            <small>Ajouter un nouveau membre RP</small>
+                        </div>
+                    </button>
+
+                    <button
+                        class="action-admin"
+                        type="button"
+                        data-action="modifier-solde"
+                    >
+                        <span>💶</span>
+
+                        <div>
+                            <strong>Modifier un solde</strong>
+                            <small>Créditer ou débiter un compte</small>
+                        </div>
+                    </button>
+
+                    <button
+                        class="action-admin"
+                        type="button"
+                        data-action="suspendre-compte"
+                    >
+                        <span>🔒</span>
+
+                        <div>
+                            <strong>Suspendre un compte</strong>
+                            <small>Bloquer temporairement un compte</small>
+                        </div>
+                    </button>
+
+                    <button
+                        class="action-admin"
+                        type="button"
+                        data-action="rechercher"
+                    >
+                        <span>🔎</span>
+
+                        <div>
+                            <strong>Rechercher un membre</strong>
+                            <small>Consulter un profil bancaire RP</small>
+                        </div>
+                    </button>
+                </div>
+
+                <div
+                    class="message-action-admin"
+                    id="message-action-admin"
+                    hidden
+                ></div>
+            </section>
+
+            <section class="tableau-admin">
+                <div class="entete-tableau-admin">
+                    <div>
+                        <p class="petit-titre">Contrôle bancaire</p>
+                        <h2>Comptes récents</h2>
+                    </div>
+
+                    <input
+                        id="recherche-admin"
+                        type="search"
+                        placeholder="Rechercher un membre…"
+                        autocomplete="off"
+                    >
+                </div>
+
+                <div class="tableau-defilant">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Titulaire</th>
+                                <th>Compte</th>
+                                <th>Rôle</th>
+                                <th>Solde</th>
+                                <th>Statut</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="liste-comptes-admin">
+                            <tr>
+                                <td>Jean Dupont</td>
+                                <td>SGC-000042</td>
+                                <td>Élève</td>
+                                <td>1 245,50 €</td>
+
+                                <td>
+                                    <span class="statut-tableau actif">
+                                        Actif
+                                    </span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>Marie Martin</td>
+                                <td>SGC-000043</td>
+                                <td>Élève</td>
+                                <td>875,00 €</td>
+
+                                <td>
+                                    <span class="statut-tableau actif">
+                                        Actif
+                                    </span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>Lucas Bernard</td>
+                                <td>SGC-000044</td>
+                                <td>Professeur</td>
+                                <td>2 350,00 €</td>
+
+                                <td>
+                                    <span class="statut-tableau actif">
+                                        Actif
+                                    </span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>Emma Robert</td>
+                                <td>SGC-000045</td>
+                                <td>Élève</td>
+                                <td>420,75 €</td>
+
+                                <td>
+                                    <span class="statut-tableau suspendu">
+                                        Suspendu
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <div class="encadre-important">
+                <strong>Important :</strong>
+
+                les comptes, statistiques et soldes affichés sont fictifs.
+                Aucune modification réelle ne sera effectuée à cette étape.
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>
+            Banque Saint-Georges RP —
+            Ensemble Scolaire Saint-Georges Coccinet
+        </p>
+
+        <p>Monnaie RP fictive, sans valeur réelle.</p>
+    </footer>
+
+    <script src="./admin.js?v=1"></script>
+</body>
+</html>
