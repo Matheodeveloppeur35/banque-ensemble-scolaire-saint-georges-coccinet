@@ -846,3 +846,29 @@ footer p {
     margin-top: 5px;
     font-size: 13px;
 }
+/* Confirmation et reçu du virement */
+
+.confirmer-virement {
+    margin-top: 12px;
+    cursor: pointer;
+}
+
+.confirmer-virement:disabled {
+    cursor: wait;
+    opacity: 0.65;
+}
+
+.message-virement.succes-final {
+    color: #ffffff;
+    background:
+        linear-gradient(
+            135deg,
+            #125b39,
+            #168851
+        );
+    border: 1px solid #0e5332;
+}
+
+.message-virement.succes-final em {
+    color: #d9f5e6;
+}
