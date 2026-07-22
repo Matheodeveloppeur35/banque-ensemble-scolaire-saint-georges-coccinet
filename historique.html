@@ -32,21 +32,23 @@
             </div>
         </div>
 
-       <nav>
-    <a href="./index.html">Accueil</a>
-    <a href="./dashboard.html">Mon compte</a>
-    <a href="./historique.html">Historique</a>
-    <a href="./boutique.html">Boutique</a>
-    <a href="./profil.html">Profil</a>
-    <a href="./reglement.html">Règlement</a>
-</nav>
+        <nav>
+            <a href="./index.html">Accueil</a>
+            <a href="./dashboard.html">Mon compte</a>
+            <a href="./historique.html">Historique</a>
+            <a href="./boutique.html">Boutique</a>
+            <a href="./profil.html">Profil</a>
+            <a href="./reglement.html">Règlement</a>
+        </nav>
     </header>
 
     <main class="page-interieure">
         <section class="conteneur">
             <div class="entete-historique">
                 <div>
-                    <p class="petit-titre">Compte SGC-000042</p>
+                    <p class="petit-titre">
+                        Compte SGC-000042
+                    </p>
 
                     <h1>Historique des opérations</h1>
 
@@ -56,7 +58,10 @@
                     </p>
                 </div>
 
-                <a class="retour-dashboard" href="./dashboard.html">
+                <a
+                    class="retour-dashboard"
+                    href="./dashboard.html"
+                >
                     ← Retour au compte
                 </a>
             </div>
@@ -69,24 +74,35 @@
 
                 <article>
                     <span>Revenus du mois</span>
-                    <strong class="texte-vert">+350,00 € RP</strong>
+
+                    <strong class="texte-vert">
+                        +350,00 € RP
+                    </strong>
                 </article>
 
                 <article>
                     <span>Dépenses du mois</span>
-                    <strong class="texte-rouge">−112,50 € RP</strong>
+
+                    <strong class="texte-rouge">
+                        −112,50 € RP
+                    </strong>
                 </article>
             </div>
 
             <section class="historique-complet">
                 <div class="titre-section">
-                    <p class="petit-titre">Juillet 2026</p>
+                    <p class="petit-titre">
+                        Juillet 2026
+                    </p>
+
                     <h2>Toutes les opérations</h2>
                 </div>
 
                 <div class="liste-operations">
                     <article class="ligne-operation">
-                        <div class="icone-operation revenu">+</div>
+                        <div class="icone-operation revenu">
+                            +
+                        </div>
 
                         <div class="description-operation">
                             <strong>Allocation scolaire</strong>
@@ -103,7 +119,9 @@
                     </article>
 
                     <article class="ligne-operation">
-                        <div class="icone-operation depense">−</div>
+                        <div class="icone-operation depense">
+                            −
+                        </div>
 
                         <div class="description-operation">
                             <strong>Cafétéria scolaire</strong>
@@ -120,11 +138,18 @@
                     </article>
 
                     <article class="ligne-operation">
-                        <div class="icone-operation depense">−</div>
+                        <div class="icone-operation depense">
+                            −
+                        </div>
 
                         <div class="description-operation">
-                            <strong>Virement à Marie Martin</strong>
-                            <span>Participation à un événement scolaire</span>
+                            <strong>
+                                Virement à Marie Martin
+                            </strong>
+
+                            <span>
+                                Participation à un événement scolaire
+                            </span>
                         </div>
 
                         <div class="date-operation">
@@ -137,7 +162,9 @@
                     </article>
 
                     <article class="ligne-operation">
-                        <div class="icone-operation revenu">+</div>
+                        <div class="icone-operation revenu">
+                            +
+                        </div>
 
                         <div class="description-operation">
                             <strong>Récompense scolaire</strong>
@@ -154,7 +181,9 @@
                     </article>
 
                     <article class="ligne-operation">
-                        <div class="icone-operation depense">−</div>
+                        <div class="icone-operation depense">
+                            −
+                        </div>
 
                         <div class="description-operation">
                             <strong>Sortie scolaire</strong>
@@ -187,8 +216,21 @@
             Ensemble Scolaire Saint-Georges Coccinet
         </p>
 
-        <p>Monnaie RP fictive, sans valeur réelle.</p>
+        <p>
+            Monnaie RP fictive, sans valeur réelle.
+        </p>
     </footer>
-<script src="./navigation.js?v=1"></script>
+
+    <!-- Vérification de la session de démonstration -->
+    <script src="./session.js?v=1"></script>
+
+    <script>
+        if (!utilisateurConnecte()) {
+            window.location.replace("./connexion.html");
+        }
+    </script>
+
+    <!-- Mise en évidence de la page active -->
+    <script src="./navigation.js?v=1"></script>
 </body>
 </html>
