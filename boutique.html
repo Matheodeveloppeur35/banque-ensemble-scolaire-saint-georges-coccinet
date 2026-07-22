@@ -46,7 +46,9 @@
         <section class="conteneur">
             <div class="entete-boutique">
                 <div>
-                    <p class="petit-titre">Services scolaires RP</p>
+                    <p class="petit-titre">
+                        Services scolaires RP
+                    </p>
 
                     <h1>Boutique Saint-Georges</h1>
 
@@ -97,7 +99,6 @@
             </div>
 
             <div class="grille-boutique">
-
                 <!-- Kit scolaire -->
 
                 <article
@@ -336,8 +337,19 @@
             Ensemble Scolaire Saint-Georges Coccinet
         </p>
 
-        <p>Monnaie RP fictive, sans valeur réelle.</p>
+        <p>
+            Monnaie RP fictive, sans valeur réelle.
+        </p>
     </footer>
+
+    <!-- Vérification de la session de démonstration -->
+    <script src="./session.js?v=1"></script>
+
+    <script>
+        if (!utilisateurConnecte()) {
+            window.location.replace("./connexion.html");
+        }
+    </script>
 
     <!-- Fonctionnement des filtres et des achats -->
     <script src="./boutique.js?v=3"></script>
