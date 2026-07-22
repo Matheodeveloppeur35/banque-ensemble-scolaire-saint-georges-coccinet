@@ -810,3 +810,39 @@ footer p {
         align-items: flex-start;
     }
 }
+/* Résultat de la vérification du virement */
+
+.message-virement {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    margin-top: 22px;
+    padding: 18px;
+    border-radius: 10px;
+    line-height: 1.5;
+}
+
+.message-virement.erreur {
+    color: #812828;
+    background-color: #fdeaea;
+    border: 1px solid #e5aaaa;
+}
+
+.message-virement.succes {
+    color: #125b39;
+    background-color: #e3f6eb;
+    border: 1px solid #acd8bd;
+}
+
+.message-virement > strong {
+    font-size: 18px;
+}
+
+.message-virement span {
+    display: block;
+}
+
+.message-virement em {
+    margin-top: 5px;
+    font-size: 13px;
+}
