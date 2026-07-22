@@ -15,7 +15,7 @@
 
     <title>Boutique — Banque Saint-Georges RP</title>
 
-    <link rel="stylesheet" href="./style.css?v=5">
+    <link rel="stylesheet" href="./style.css?v=6">
 </head>
 
 <body>
@@ -63,29 +63,56 @@
             </div>
 
             <div class="filtres-boutique">
-                <button class="filtre actif" type="button">
+                <button
+                    class="filtre actif"
+                    type="button"
+                    data-filtre="tous"
+                >
                     Tous les articles
                 </button>
 
-                <button class="filtre" type="button">
+                <button
+                    class="filtre"
+                    type="button"
+                    data-filtre="fournitures"
+                >
                     Fournitures
                 </button>
 
-                <button class="filtre" type="button">
+                <button
+                    class="filtre"
+                    type="button"
+                    data-filtre="activites"
+                >
                     Activités
                 </button>
 
-                <button class="filtre" type="button">
+                <button
+                    class="filtre"
+                    type="button"
+                    data-filtre="services"
+                >
                     Services
                 </button>
             </div>
 
             <div class="grille-boutique">
-                <article class="article-boutique">
-                    <div class="illustration-article">📚</div>
+
+                <!-- Kit scolaire -->
+
+                <article
+                    class="article-boutique"
+                    data-categorie="fournitures"
+                >
+                    <div class="illustration-article">
+                        📚
+                    </div>
 
                     <div class="contenu-article">
-                        <span class="categorie-article">Fournitures</span>
+                        <span class="categorie-article">
+                            Fournitures
+                        </span>
+
                         <h2>Kit scolaire complet</h2>
 
                         <p>
@@ -108,11 +135,21 @@
                     </div>
                 </article>
 
-                <article class="article-boutique">
-                    <div class="illustration-article">🥪</div>
+                <!-- Formule cafétéria -->
+
+                <article
+                    class="article-boutique"
+                    data-categorie="services"
+                >
+                    <div class="illustration-article">
+                        🥪
+                    </div>
 
                     <div class="contenu-article">
-                        <span class="categorie-article">Services</span>
+                        <span class="categorie-article">
+                            Services
+                        </span>
+
                         <h2>Formule cafétéria</h2>
 
                         <p>
@@ -135,11 +172,21 @@
                     </div>
                 </article>
 
-                <article class="article-boutique">
-                    <div class="illustration-article">🚌</div>
+                <!-- Sortie scolaire -->
+
+                <article
+                    class="article-boutique"
+                    data-categorie="activites"
+                >
+                    <div class="illustration-article">
+                        🚌
+                    </div>
 
                     <div class="contenu-article">
-                        <span class="categorie-article">Activités</span>
+                        <span class="categorie-article">
+                            Activités
+                        </span>
+
                         <h2>Sortie scolaire</h2>
 
                         <p>
@@ -162,11 +209,21 @@
                     </div>
                 </article>
 
-                <article class="article-boutique">
-                    <div class="illustration-article">🔐</div>
+                <!-- Casier scolaire -->
+
+                <article
+                    class="article-boutique"
+                    data-categorie="services"
+                >
+                    <div class="illustration-article">
+                        🔐
+                    </div>
 
                     <div class="contenu-article">
-                        <span class="categorie-article">Services</span>
+                        <span class="categorie-article">
+                            Services
+                        </span>
+
                         <h2>Casier scolaire</h2>
 
                         <p>
@@ -189,11 +246,21 @@
                     </div>
                 </article>
 
-                <article class="article-boutique">
-                    <div class="illustration-article">🎭</div>
+                <!-- Club scolaire -->
+
+                <article
+                    class="article-boutique"
+                    data-categorie="activites"
+                >
+                    <div class="illustration-article">
+                        🎭
+                    </div>
 
                     <div class="contenu-article">
-                        <span class="categorie-article">Activités</span>
+                        <span class="categorie-article">
+                            Activités
+                        </span>
+
                         <h2>Inscription à un club</h2>
 
                         <p>
@@ -216,11 +283,21 @@
                     </div>
                 </article>
 
-                <article class="article-boutique">
-                    <div class="illustration-article">🎟️</div>
+                <!-- Billet d’événement -->
+
+                <article
+                    class="article-boutique"
+                    data-categorie="activites"
+                >
+                    <div class="illustration-article">
+                        🎟️
+                    </div>
 
                     <div class="contenu-article">
-                        <span class="categorie-article">Activités</span>
+                        <span class="categorie-article">
+                            Activités
+                        </span>
+
                         <h2>Billet pour un événement</h2>
 
                         <p>
@@ -248,7 +325,7 @@
                 <strong>Version de démonstration :</strong>
 
                 les boutons d’achat ne modifieront pas encore votre solde.
-                Les achats réels seront ajoutés avec la base de données.
+                Les achats définitifs seront ajoutés avec la base de données.
             </div>
         </section>
     </main>
@@ -261,5 +338,7 @@
 
         <p>Monnaie RP fictive, sans valeur réelle.</p>
     </footer>
+
+    <script src="./boutique.js?v=2"></script>
 </body>
 </html>
