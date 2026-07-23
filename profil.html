@@ -15,7 +15,7 @@
 
     <title>Mon profil — Banque Saint-Georges RP</title>
 
-    <link rel="stylesheet" href="./style.css?v=10">
+    <link rel="stylesheet" href="./style.css?v=13">
 </head>
 
 <body>
@@ -68,19 +68,33 @@
 
             <div class="grille-profil">
                 <article class="carte-identite-profil">
-                    <div class="avatar-profil">
-                        JD
+                    <div
+                        class="avatar-profil"
+                        id="avatar-profil"
+                    >
+                        …
                     </div>
 
-                    <h2>Jean Dupont</h2>
+                    <h2 id="nom-profil">
+                        Chargement…
+                    </h2>
 
-                    <p class="role-profil">
-                        Élève
+                    <p
+                        class="role-profil"
+                        id="role-profil"
+                    >
+                        Chargement…
                     </p>
 
-                    <div class="badge-compte-actif">
+                    <div
+                        class="badge-compte-actif"
+                        id="badge-statut-profil"
+                    >
                         <span class="point-statut"></span>
-                        Compte actif
+
+                        <span id="statut-badge-profil">
+                            Chargement…
+                        </span>
                     </div>
 
                     <p class="mention-demo">
@@ -102,27 +116,45 @@
                     <dl class="liste-informations-profil">
                         <div>
                             <dt>Nom du titulaire</dt>
-                            <dd>Jean Dupont</dd>
+
+                            <dd id="titulaire-detail-profil">
+                                Chargement…
+                            </dd>
                         </div>
 
                         <div>
                             <dt>Numéro de compte RP</dt>
-                            <dd>SGC-000042</dd>
+
+                            <dd id="numero-detail-profil">
+                                Chargement…
+                            </dd>
                         </div>
 
                         <div>
                             <dt>Rôle dans l’établissement</dt>
-                            <dd>Élève</dd>
+
+                            <dd id="role-detail-profil">
+                                Chargement…
+                            </dd>
                         </div>
 
                         <div>
                             <dt>Type de compte</dt>
-                            <dd>Compte scolaire RP</dd>
+
+                            <dd id="type-detail-profil">
+                                Chargement…
+                            </dd>
                         </div>
 
                         <div>
                             <dt>Statut du compte</dt>
-                            <dd class="texte-vert">Actif</dd>
+
+                            <dd
+                                class="texte-vert"
+                                id="statut-detail-profil"
+                            >
+                                Chargement…
+                            </dd>
                         </div>
 
                         <div>
@@ -160,9 +192,9 @@
             <div class="encadre-important">
                 <strong>Version de démonstration :</strong>
 
-                les informations affichées sont des exemples. Elles seront
-                remplacées plus tard par les informations du membre connecté
-                avec Discord.
+                les informations sont enregistrées localement dans votre
+                navigateur. Elles ne proviennent pas encore d’une base
+                de données sécurisée.
             </div>
         </section>
     </main>
@@ -178,14 +210,122 @@
         </p>
     </footer>
 
-    <!-- Gestion de la session de démonstration -->
-    <script src="./session.js?v=1"></script>
+    <!-- Gestion et vérification de la session -->
+    <script src="./session.js?v=2"></script>
 
     <script>
         if (!utilisateurConnecte()) {
             window.location.replace("./connexion.html");
         }
+    </script>
 
+    <!-- Données bancaires dynamiques -->
+    <script src="./banque.js?v=5"></script>
+
+    <script>
+        const donneesProfil = initialiserBanqueDemo();
+
+        afficherProfilDynamique(donneesProfil);
+
+        function afficherProfilDynamique(donnees) {
+            const nom = String(
+                donnees.titulaire || "Utilisateur"
+            );
+
+            const role = String(
+                donnees.role || "Membre"
+            );
+
+            const statut = String(
+                donnees.statut || "Inconnu"
+            );
+
+            const numeroCompte = String(
+                donnees.numeroCompte || "Non attribué"
+            );
+
+            document.querySelector(
+                "#avatar-profil"
+            ).textContent = creerInitiales(nom);
+
+            document.querySelector(
+                "#nom-profil"
+            ).textContent = nom;
+
+            document.querySelector(
+                "#role-profil"
+            ).textContent = role;
+
+            document.querySelector(
+                "#statut-badge-profil"
+            ).textContent = `Compte ${statut.toLowerCase()}`;
+
+            document.querySelector(
+                "#titulaire-detail-profil"
+            ).textContent = nom;
+
+            document.querySelector(
+                "#numero-detail-profil"
+            ).textContent = numeroCompte;
+
+            document.querySelector(
+                "#role-detail-profil"
+            ).textContent = role;
+
+            document.querySelector(
+                "#type-detail-profil"
+            ).textContent = `Compte ${role.toLowerCase()} RP`;
+
+            document.querySelector(
+                "#statut-detail-profil"
+            ).textContent = statut;
+
+            adapterApparenceStatut(statut);
+        }
+
+        function creerInitiales(nomComplet) {
+            const partiesNom = nomComplet
+                .trim()
+                .split(/\s+/)
+                .filter(Boolean);
+
+            if (partiesNom.length === 0) {
+                return "SG";
+            }
+
+            return partiesNom
+                .slice(0, 2)
+                .map(function (partie) {
+                    return partie.charAt(0).toUpperCase();
+                })
+                .join("");
+        }
+
+        function adapterApparenceStatut(statut) {
+            const badge = document.querySelector(
+                "#badge-statut-profil"
+            );
+
+            const statutDetail = document.querySelector(
+                "#statut-detail-profil"
+            );
+
+            const compteActif =
+                statut.toLowerCase() === "actif";
+
+            if (compteActif) {
+                statutDetail.classList.add("texte-vert");
+                return;
+            }
+
+            badge.classList.add("badge-compte-inactif");
+            statutDetail.classList.remove("texte-vert");
+            statutDetail.classList.add("texte-rouge");
+        }
+    </script>
+
+    <!-- Déconnexion -->
+    <script>
         const boutonDeconnexion = document.querySelector(
             "#bouton-deconnexion"
         );
