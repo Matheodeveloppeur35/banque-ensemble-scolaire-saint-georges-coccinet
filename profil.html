@@ -180,14 +180,24 @@
                     </p>
                 </div>
 
-                <button
-                    class="bouton-deconnexion"
-                    id="bouton-deconnexion"
-                    type="button"
-                >
-                    Se déconnecter
-                </button>
-            </section>
+                <div class="actions-securite-profil">
+    <button
+        class="bouton-reinitialisation"
+        id="bouton-reinitialisation"
+        type="button"
+    >
+        Réinitialiser les données
+    </button>
+
+    <button
+        class="bouton-deconnexion"
+        id="bouton-deconnexion"
+        type="button"
+    >
+        Se déconnecter
+    </button>
+</div>
+
 
             <div class="encadre-important">
                 <strong>Version de démonstration :</strong>
@@ -324,23 +334,53 @@
         }
     </script>
 
-    <!-- Déconnexion -->
-    <script>
-        const boutonDeconnexion = document.querySelector(
-            "#bouton-deconnexion"
-        );
+   <!-- Réinitialisation et déconnexion -->
+<script>
+    const boutonReinitialisation = document.querySelector(
+        "#bouton-reinitialisation"
+    );
 
-        boutonDeconnexion.addEventListener("click", function () {
-            boutonDeconnexion.disabled = true;
-            boutonDeconnexion.textContent = "Déconnexion…";
+    const boutonDeconnexion = document.querySelector(
+        "#bouton-deconnexion"
+    );
 
-            fermerSessionDemo();
+    boutonReinitialisation.addEventListener(
+        "click",
+        function () {
+            const confirmation = window.confirm(
+                "Voulez-vous vraiment réinitialiser les données " +
+                "bancaires de démonstration ?\n\n" +
+                "Le solde et l’historique retrouveront leurs " +
+                "valeurs initiales."
+            );
+
+            if (!confirmation) {
+                return;
+            }
+
+            boutonReinitialisation.disabled = true;
+            boutonReinitialisation.textContent =
+                "Réinitialisation…";
+
+            reinitialiserBanqueDemo();
 
             window.setTimeout(function () {
-                window.location.replace("./connexion.html");
+                window.location.reload();
             }, 500);
-        });
-    </script>
+        }
+    );
+
+    boutonDeconnexion.addEventListener("click", function () {
+        boutonDeconnexion.disabled = true;
+        boutonDeconnexion.textContent = "Déconnexion…";
+
+        fermerSessionDemo();
+
+        window.setTimeout(function () {
+            window.location.replace("./connexion.html");
+        }, 500);
+    });
+</script>
 
     <!-- Mise en évidence de la page active -->
     <script src="./navigation.js?v=1"></script>
