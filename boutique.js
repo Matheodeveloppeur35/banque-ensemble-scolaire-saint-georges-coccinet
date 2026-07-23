@@ -50,9 +50,18 @@ boutonsAchat.forEach(function (bouton) {
             !Number.isInteger(prixCentimes) ||
             prixCentimes <= 0
         ) {
-            window.alert(
-                "Le prix de cet article est invalide."
-            );
+           if (typeof afficherNotification === "function") {
+    afficherNotification(
+        "Le prix de cet article est invalide.",
+        "erreur",
+        6000
+    );
+} else {
+    window.alert(
+        "Le prix de cet article est invalide."
+    );
+}
+
 
             return;
         }
@@ -229,6 +238,16 @@ function effectuerAchat(nomArticle, prixCentimes) {
 function afficherRecuAchat(resultat) {
     const transaction = resultat.transaction;
     const modal = document.querySelector(".modal-achat");
+if (typeof afficherNotification === "function") {
+    afficherNotification(
+        `${transaction.titre} acheté pour ` +
+        `${formaterEuros(transaction.montantCentimes)}. ` +
+        `Nouveau solde : ` +
+        `${formaterEuros(resultat.nouveauSoldeCentimes)}.`,
+        "succes",
+        6000
+    );
+}
 
     if (!modal) {
         return;
@@ -318,6 +337,14 @@ function afficherRecuAchat(resultat) {
 }
 
 function afficherErreurDansModal(message) {
+    if (typeof afficherNotification === "function") {
+    afficherNotification(
+        message,
+        "erreur",
+        6000
+    );
+}
+
     const modal = document.querySelector(".modal-achat");
 
     if (!modal) {
