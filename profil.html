@@ -15,7 +15,7 @@
 
     <title>Mon profil — Banque Saint-Georges RP</title>
 
-    <link rel="stylesheet" href="./style.css?v=17">
+    <link rel="stylesheet" href="./style.css?v=18">
 </head>
 
 <body>
@@ -181,26 +181,26 @@
                 </div>
 
                 <div class="actions-securite-profil">
+                    <input
+                        id="fichier-restauration"
+                        type="file"
+                        accept=".json,application/json"
+                        hidden
+                    >
+
+                    <button
+                        class="bouton-restauration"
+                        id="bouton-restauration"
+                        type="button"
+                    >
+                        Restaurer une sauvegarde
+                    </button>
+
                     <button
                         class="bouton-sauvegarde"
                         id="bouton-sauvegarde"
                         type="button"
                     >
-                        <input
-    id="fichier-restauration"
-    type="file"
-    accept=".json,application/json"
-    hidden
->
-
-<button
-    class="bouton-restauration"
-    id="bouton-restauration"
-    type="button"
->
-    Restaurer une sauvegarde
-</button>
-
                         Télécharger une sauvegarde
                     </button>
 
@@ -252,11 +252,11 @@
         }
     </script>
 
-    <!-- Données bancaires dynamiques -->
+    <!-- Données et services communs -->
     <script src="./banque.js?v=10"></script>
-<!-- Notifications du site -->
-<script src="./notifications.js?v=1"></script>
+    <script src="./notifications.js?v=2"></script>
 
+    <!-- Affichage dynamique du profil -->
     <script>
         const donneesProfil = initialiserBanqueDemo();
 
@@ -389,16 +389,19 @@
                 boutonReinitialisation.textContent =
                     "Réinitialisation…";
 
-               reinitialiserBanqueDemo();
+                reinitialiserBanqueDemo();
 
-memoriserNotification(
-    "Les données bancaires de démonstration ont été réinitialisées.",
-    "succes"
-);
+                memoriserNotification(
+                    "Les données bancaires de démonstration " +
+                    "ont été réinitialisées.",
+                    "succes"
+                );
 
-window.setTimeout(function () {
-    window.location.reload();
-}, 500);
+                window.setTimeout(function () {
+                    window.location.reload();
+                }, 500);
+            }
+        );
 
         boutonDeconnexion.addEventListener(
             "click",
@@ -418,11 +421,11 @@ window.setTimeout(function () {
         );
     </script>
 
-    <!-- Sauvegarde des données bancaires -->
+    <!-- Sauvegarde et restauration -->
     <script src="./sauvegarde.js?v=2"></script>
-    <!-- Restauration des données bancaires -->
-<script src="./restauration.js?v=2"></script>
-<!-- Mise en évidence de la page active -->
+    <script src="./restauration.js?v=2"></script>
+
+    <!-- Navigation -->
     <script src="./navigation.js?v=1"></script>
 </body>
 </html>
