@@ -2773,3 +2773,31 @@ button.bouton-deconnexion:disabled {
         transition: none;
     }
 }
+/* Bouton de déconnexion du menu */
+
+.deconnexion-menu {
+    padding: 9px 12px;
+    color: #9d3030;
+    background-color: #fdeaea;
+    border: 1px solid #e5aaaa;
+    border-radius: 8px;
+    cursor: pointer;
+    font: inherit;
+    font-weight: bold;
+    transition:
+        color 0.2s ease,
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.deconnexion-menu:hover {
+    color: #ffffff;
+    background-color: #b13a3a;
+    transform: translateY(-1px);
+}
+
+.deconnexion-menu:disabled {
+    cursor: wait;
+    opacity: 0.65;
+    transform: none;
+}
