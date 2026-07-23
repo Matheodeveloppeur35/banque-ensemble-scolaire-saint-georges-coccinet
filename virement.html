@@ -227,14 +227,23 @@
             window.location.replace("./connexion.html");
         }
     </script>
+<!-- Vérification de la session -->
+<script src="./session.js?v=2"></script>
 
-    <!-- Données bancaires dynamiques -->
-    <script src="./banque.js?v=4"></script>
+<script>
+    if (!utilisateurConnecte()) {
+        window.location.replace("./connexion.html");
+    }
+</script>
 
-    <!-- Fonctionnement du formulaire de virement -->
-    <script src="./virement.js?v=3"></script>
+<!-- Données et services communs -->
+<script src="./banque.js?v=10"></script>
+<script src="./notifications.js?v=2"></script>
 
-    <!-- Mise en évidence de la page active -->
-    <script src="./navigation.js?v=1"></script>
+<!-- Fonctionnement du formulaire de virement -->
+<script src="./virement.js?v=5"></script>
+
+<!-- Navigation active -->
+<script src="./navigation.js?v=1"></script>
 </body>
 </html>
