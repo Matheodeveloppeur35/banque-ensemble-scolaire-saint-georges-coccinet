@@ -146,68 +146,11 @@
                     </div>
                 </div>
 
-                <div class="liste-operations">
-                    <article class="ligne-operation">
-                        <div class="icone-operation revenu">
-                            +
-                        </div>
-
-                        <div class="description-operation">
-                            <strong>Allocation scolaire</strong>
-                            <span>Versement hebdomadaire RP</span>
-                        </div>
-
-                        <div class="date-operation">
-                            20 juillet 2026
-                        </div>
-
-                        <strong class="montant positif">
-                            +150,00 €
-                        </strong>
-                    </article>
-
-                    <article class="ligne-operation">
-                        <div class="icone-operation depense">
-                            −
-                        </div>
-
-                        <div class="description-operation">
-                            <strong>Cafétéria scolaire</strong>
-                            <span>Achat RP</span>
-                        </div>
-
-                        <div class="date-operation">
-                            18 juillet 2026
-                        </div>
-
-                        <strong class="montant negatif">
-                            −12,50 €
-                        </strong>
-                    </article>
-
-                    <article class="ligne-operation">
-                        <div class="icone-operation depense">
-                            −
-                        </div>
-
-                        <div class="description-operation">
-                            <strong>
-                                Virement à Marie Martin
-                            </strong>
-
-                            <span>
-                                Participation à un événement
-                            </span>
-                        </div>
-
-                        <div class="date-operation">
-                            15 juillet 2026
-                        </div>
-
-                        <strong class="montant negatif">
-                            −50,00 €
-                        </strong>
-                    </article>
+                <div
+                    class="liste-operations"
+                    id="operations-dashboard"
+                >
+                    <p>Chargement des opérations…</p>
                 </div>
             </section>
 
@@ -282,6 +225,122 @@
         document.querySelector(
             "#statut-information-dashboard"
         ).textContent = statutCompte;
+
+        afficherOperationsRecentes();
+
+        function afficherOperationsRecentes() {
+            const conteneurOperations = document.querySelector(
+                "#operations-dashboard"
+            );
+
+            const transactions = Array.isArray(
+                donneesBancaires.transactions
+            )
+                ? donneesBancaires.transactions
+                : [];
+
+            const operationsRecentes = transactions
+                .slice()
+                .sort(function (transactionA, transactionB) {
+                    return (
+                        new Date(transactionB.date) -
+                        new Date(transactionA.date)
+                    );
+                })
+                .slice(0, 3);
+
+            if (operationsRecentes.length === 0) {
+                conteneurOperations.innerHTML = `
+                    <p class="aucune-operation">
+                        Aucune opération enregistrée.
+                    </p>
+                `;
+
+                return;
+            }
+
+            conteneurOperations.innerHTML = operationsRecentes
+                .map(function (transaction) {
+                    const estUnRevenu =
+                        transaction.type === "revenu";
+
+                    const signe = estUnRevenu ? "+" : "−";
+
+                    const classeType = estUnRevenu
+                        ? "revenu"
+                        : "depense";
+
+                    const classeMontant = estUnRevenu
+                        ? "positif"
+                        : "negatif";
+
+                    const montantFormate = formaterEuros(
+                        transaction.montantCentimes
+                    );
+
+                    const dateFormatee = formaterDateTransaction(
+                        transaction.date
+                    );
+
+                    return `
+                        <article class="ligne-operation">
+                            <div
+                                class="icone-operation ${classeType}"
+                            >
+                                ${signe}
+                            </div>
+
+                            <div class="description-operation">
+                                <strong>
+                                    ${securiserValeur(transaction.titre)}
+                                </strong>
+
+                                <span>
+                                    ${securiserValeur(
+                                        transaction.description
+                                    )}
+                                </span>
+                            </div>
+
+                            <div class="date-operation">
+                                ${dateFormatee}
+                            </div>
+
+                            <strong
+                                class="montant ${classeMontant}"
+                            >
+                                ${signe}${montantFormate}
+                            </strong>
+                        </article>
+                    `;
+                })
+                .join("");
+        }
+
+        function formaterDateTransaction(dateTransaction) {
+            const date = new Date(dateTransaction);
+
+            if (Number.isNaN(date.getTime())) {
+                return "Date inconnue";
+            }
+
+            return date.toLocaleDateString("fr-FR", {
+                day: "numeric",
+                month: "long",
+                year: "numeric"
+            });
+        }
+
+        function securiserValeur(valeur) {
+            const element = document.createElement("div");
+
+            element.textContent =
+                valeur === null || valeur === undefined
+                    ? ""
+                    : String(valeur);
+
+            return element.innerHTML;
+        }
     </script>
 
     <!-- Mise en évidence de la page active -->
