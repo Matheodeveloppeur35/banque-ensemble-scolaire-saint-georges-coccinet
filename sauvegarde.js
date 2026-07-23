@@ -1,15 +1,34 @@
-const boutonSauvegarde = document.querySelector(
-    "#bouton-sauvegarde"
-);
+document.addEventListener("DOMContentLoaded", function () {
+    const boutonSauvegarde = document.querySelector(
+        "#bouton-sauvegarde"
+    );
 
-if (boutonSauvegarde) {
+    if (!boutonSauvegarde) {
+        console.error(
+            "Le bouton #bouton-sauvegarde est introuvable."
+        );
+
+        return;
+    }
+
     boutonSauvegarde.addEventListener(
         "click",
-        telechargerSauvegarde
+        function () {
+            telechargerSauvegarde(boutonSauvegarde);
+        }
     );
-}
+});
 
-function telechargerSauvegarde() {
+function telechargerSauvegarde(bouton) {
+    if (typeof obtenirDonneesBancaires !== "function") {
+        window.alert(
+            "Le système bancaire n’est pas chargé. " +
+            "Rechargez la page puis réessayez."
+        );
+
+        return;
+    }
+
     const donneesBancaires = obtenirDonneesBancaires();
 
     if (!donneesBancaires) {
@@ -20,49 +39,73 @@ function telechargerSauvegarde() {
         return;
     }
 
-    boutonSauvegarde.disabled = true;
-    boutonSauvegarde.textContent = "Préparation…";
+    bouton.disabled = true;
+    bouton.textContent = "Préparation…";
 
-    const sauvegarde = {
-        application: "Banque Saint-Georges RP",
-        versionSauvegarde: 1,
-        dateExportation: new Date().toISOString(),
-        avertissement:
-            "Données fictives de démonstration sans valeur réelle.",
-        donneesBancaires: donneesBancaires
-    };
+    try {
+        const sauvegarde = {
+            application: "Banque Saint-Georges RP",
+            versionSauvegarde: 1,
+            dateExportation: new Date().toISOString(),
 
-    const contenuJSON = JSON.stringify(
-        sauvegarde,
-        null,
-        2
-    );
+            avertissement:
+                "Données fictives de démonstration sans valeur réelle.",
 
-    const fichier = new Blob(
-        [contenuJSON],
-        {
-            type: "application/json;charset=utf-8"
-        }
-    );
+            donneesBancaires: donneesBancaires
+        };
 
-    const adresseFichier = URL.createObjectURL(fichier);
-    const lienTelechargement = document.createElement("a");
+        const contenuJSON = JSON.stringify(
+            sauvegarde,
+            null,
+            2
+        );
 
-    lienTelechargement.href = adresseFichier;
-    lienTelechargement.download =
-        creerNomSauvegarde();
+        const fichier = new Blob(
+            [contenuJSON],
+            {
+                type: "application/json;charset=utf-8"
+            }
+        );
 
-    document.body.appendChild(lienTelechargement);
-    lienTelechargement.click();
-    lienTelechargement.remove();
+        const adresseFichier =
+            URL.createObjectURL(fichier);
 
-    window.setTimeout(function () {
-        URL.revokeObjectURL(adresseFichier);
+        const lienTelechargement =
+            document.createElement("a");
 
-        boutonSauvegarde.disabled = false;
-        boutonSauvegarde.textContent =
-            "Télécharger une sauvegarde";
-    }, 500);
+        lienTelechargement.href = adresseFichier;
+        lienTelechargement.download =
+            creerNomSauvegarde();
+
+        lienTelechargement.style.display = "none";
+
+        document.body.appendChild(
+            lienTelechargement
+        );
+
+        lienTelechargement.click();
+        lienTelechargement.remove();
+
+        window.setTimeout(function () {
+            URL.revokeObjectURL(adresseFichier);
+        }, 1000);
+    } catch (erreur) {
+        console.error(
+            "Erreur pendant la sauvegarde :",
+            erreur
+        );
+
+        window.alert(
+            "Une erreur est survenue pendant la création " +
+            "de la sauvegarde."
+        );
+    } finally {
+        window.setTimeout(function () {
+            bouton.disabled = false;
+            bouton.textContent =
+                "Télécharger une sauvegarde";
+        }, 500);
+    }
 }
 
 function creerNomSauvegarde() {
@@ -70,8 +113,14 @@ function creerNomSauvegarde() {
 
     const dateFichier = [
         maintenant.getFullYear(),
-        String(maintenant.getMonth() + 1).padStart(2, "0"),
-        String(maintenant.getDate()).padStart(2, "0")
+
+        String(
+            maintenant.getMonth() + 1
+        ).padStart(2, "0"),
+
+        String(
+            maintenant.getDate()
+        ).padStart(2, "0")
     ].join("-");
 
     return (
