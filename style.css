@@ -2445,3 +2445,117 @@ button.bouton-deconnexion:disabled {
         max-width: none;
     }
 }
+/* Détails d’une transaction */
+
+.transaction-cliquable {
+    cursor: pointer;
+    border-radius: 9px;
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.transaction-cliquable:hover {
+    background-color: #f2f6fa;
+    transform: translateX(3px);
+}
+
+.transaction-cliquable:focus-visible {
+    outline: 3px solid rgba(23, 63, 103, 0.25);
+    outline-offset: 3px;
+}
+
+.modal-transaction {
+    position: relative;
+    width: 100%;
+    max-width: 570px;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    padding: 38px;
+    text-align: center;
+    background-color: var(--blanc);
+    border: 2px solid var(--dore);
+    border-radius: 20px;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.35);
+}
+
+.modal-transaction h2 {
+    margin: 8px 0 24px;
+    color: var(--bleu-fonce);
+    font-size: 30px;
+}
+
+.icone-detail-transaction {
+    display: grid;
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 20px;
+    place-items: center;
+    border-radius: 50%;
+    font-size: 34px;
+    font-weight: bold;
+}
+
+.icone-detail-transaction.revenu {
+    color: #12633e;
+    background-color: #e3f6eb;
+}
+
+.icone-detail-transaction.depense {
+    color: #9d3030;
+    background-color: #fdeaea;
+}
+
+.details-transaction {
+    margin: 25px 0;
+    text-align: left;
+    border-top: 1px solid var(--bordure);
+}
+
+.details-transaction > div {
+    display: grid;
+    grid-template-columns: 0.7fr 1.3fr;
+    gap: 20px;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--bordure);
+}
+
+.details-transaction span {
+    color: #647282;
+}
+
+.details-transaction strong {
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+.bouton-fermer-details {
+    width: 100%;
+    padding: 13px 17px;
+    color: var(--bleu-fonce);
+    background-color: var(--dore);
+    border: 1px solid var(--dore);
+    border-radius: 9px;
+    cursor: pointer;
+    font: inherit;
+    font-weight: bold;
+}
+
+.bouton-fermer-details:hover {
+    background-color: #e7c979;
+}
+
+@media (max-width: 520px) {
+    .modal-transaction {
+        padding: 32px 22px;
+    }
+
+    .details-transaction > div {
+        grid-template-columns: 1fr;
+        gap: 6px;
+    }
+
+    .details-transaction strong {
+        text-align: left;
+    }
+}
