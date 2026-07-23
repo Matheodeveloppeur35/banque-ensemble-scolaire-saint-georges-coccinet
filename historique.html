@@ -151,6 +151,177 @@
         }
     </script>
 
+        <!-- Données bancaires dynamiques -->
+    <script src="./banque.js?v=2"></script>
+
+    <script>
+        const donneesBancaires = initialiserBanqueDemo();
+
+        afficherResumeHistorique();
+        afficherListeHistorique();
+
+        function afficherResumeHistorique() {
+            const transactions = obtenirTransactions();
+
+            const totalRevenus = transactions
+                .filter(function (transaction) {
+                    return transaction.type === "revenu";
+                })
+                .reduce(function (total, transaction) {
+                    return total + transaction.montantCentimes;
+                }, 0);
+
+            const totalDepenses = transactions
+                .filter(function (transaction) {
+                    return transaction.type === "depense";
+                })
+                .reduce(function (total, transaction) {
+                    return total + transaction.montantCentimes;
+                }, 0);
+
+            document.querySelector(
+                "#compte-historique"
+            ).textContent =
+                `Compte ${donneesBancaires.numeroCompte}`;
+
+            document.querySelector(
+                "#solde-historique"
+            ).textContent = formaterEuros(
+                donneesBancaires.soldeCentimes
+            );
+
+            document.querySelector(
+                "#revenus-historique"
+            ).textContent =
+                `+${formaterEuros(totalRevenus)}`;
+
+            document.querySelector(
+                "#depenses-historique"
+            ).textContent =
+                `−${formaterEuros(totalDepenses)}`;
+
+            document.querySelector(
+                "#periode-historique"
+            ).textContent =
+                `${transactions.length} opération(s) enregistrée(s)`;
+        }
+
+        function afficherListeHistorique() {
+            const conteneur = document.querySelector(
+                "#liste-historique"
+            );
+
+            const transactionsTriees = obtenirTransactions()
+                .slice()
+                .sort(function (transactionA, transactionB) {
+                    return (
+                        new Date(transactionB.date) -
+                        new Date(transactionA.date)
+                    );
+                });
+
+            if (transactionsTriees.length === 0) {
+                conteneur.innerHTML = `
+                    <p class="aucune-operation">
+                        Aucune opération enregistrée.
+                    </p>
+                `;
+
+                return;
+            }
+
+            conteneur.innerHTML = transactionsTriees
+                .map(function (transaction) {
+                    const estUnRevenu =
+                        transaction.type === "revenu";
+
+                    const signe = estUnRevenu ? "+" : "−";
+
+                    const classeType = estUnRevenu
+                        ? "revenu"
+                        : "depense";
+
+                    const classeMontant = estUnRevenu
+                        ? "positif"
+                        : "negatif";
+
+                    const montant = formaterEuros(
+                        transaction.montantCentimes
+                    );
+
+                    const date = formaterDateHistorique(
+                        transaction.date
+                    );
+
+                    return `
+                        <article class="ligne-operation">
+                            <div
+                                class="icone-operation ${classeType}"
+                            >
+                                ${signe}
+                            </div>
+
+                            <div class="description-operation">
+                                <strong>
+                                    ${securiserValeur(
+                                        transaction.titre
+                                    )}
+                                </strong>
+
+                                <span>
+                                    ${securiserValeur(
+                                        transaction.description
+                                    )}
+                                </span>
+                            </div>
+
+                            <div class="date-operation">
+                                ${date}
+                            </div>
+
+                            <strong
+                                class="montant ${classeMontant}"
+                            >
+                                ${signe}${montant}
+                            </strong>
+                        </article>
+                    `;
+                })
+                .join("");
+        }
+
+        function obtenirTransactions() {
+            return Array.isArray(donneesBancaires.transactions)
+                ? donneesBancaires.transactions
+                : [];
+        }
+
+        function formaterDateHistorique(dateTransaction) {
+            const date = new Date(dateTransaction);
+
+            if (Number.isNaN(date.getTime())) {
+                return "Date inconnue";
+            }
+
+            return date.toLocaleDateString("fr-FR", {
+                day: "numeric",
+                month: "long",
+                year: "numeric"
+            });
+        }
+
+        function securiserValeur(valeur) {
+            const element = document.createElement("div");
+
+            element.textContent =
+                valeur === null || valeur === undefined
+                    ? ""
+                    : String(valeur);
+
+            return element.innerHTML;
+        }
+    </script>
+
     <!-- Mise en évidence de la page active -->
     <script src="./navigation.js?v=1"></script>
 </body>
