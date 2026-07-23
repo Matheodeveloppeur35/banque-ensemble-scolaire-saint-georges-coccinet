@@ -2588,3 +2588,29 @@ button.bouton-deconnexion:disabled {
         margin-left: 0;
     }
 }
+/* Sauvegarde des données bancaires */
+
+.bouton-sauvegarde {
+    padding: 13px 19px;
+    color: #ffffff;
+    background-color: var(--bleu-principal);
+    border: 1px solid var(--bleu-principal);
+    border-radius: 9px;
+    cursor: pointer;
+    font: inherit;
+    font-weight: bold;
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.bouton-sauvegarde:hover {
+    background-color: var(--bleu-fonce);
+    transform: translateY(-2px);
+}
+
+.bouton-sauvegarde:disabled {
+    cursor: wait;
+    opacity: 0.65;
+    transform: none;
+}
