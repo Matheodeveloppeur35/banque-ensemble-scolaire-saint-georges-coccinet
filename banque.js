@@ -211,3 +211,113 @@ function reinitialiserBanqueDemo() {
 function copierDonnees(donnees) {
     return JSON.parse(JSON.stringify(donnees));
 }
+function enregistrerVirement(options) {
+    const donnees = initialiserBanqueDemo();
+
+    const destinataire = String(
+        options.destinataire || ""
+    ).trim();
+
+    const motif = String(
+        options.motif || ""
+    ).trim();
+
+    const montantCentimes = options.montantCentimes;
+
+    const plafondCentimes = 100000;
+
+    if (destinataire.length < 2) {
+        return {
+            succes: false,
+            raison: "destinataire-invalide",
+            message: "Le destinataire indiqué est invalide."
+        };
+    }
+
+    if (
+        !Number.isInteger(montantCentimes) ||
+        montantCentimes <= 0
+    ) {
+        return {
+            succes: false,
+            raison: "montant-invalide",
+            message: "Le montant du virement est invalide."
+        };
+    }
+
+    if (montantCentimes > plafondCentimes) {
+        return {
+            succes: false,
+            raison: "plafond-depasse",
+            message:
+                "Le plafond est limité à 1 000,00 € RP par virement."
+        };
+    }
+
+    if (motif.length < 3) {
+        return {
+            succes: false,
+            raison: "motif-invalide",
+            message: "Le motif du virement est trop court."
+        };
+    }
+
+    if (donnees.statut !== "Actif") {
+        return {
+            succes: false,
+            raison: "compte-inactif",
+            message: "Votre compte bancaire RP n’est pas actif."
+        };
+    }
+
+    if (donnees.soldeCentimes < montantCentimes) {
+        return {
+            succes: false,
+            raison: "solde-insuffisant",
+            message: "Votre solde est insuffisant pour ce virement."
+        };
+    }
+
+    const numeroCompteNormalise =
+        donnees.numeroCompte.toLowerCase();
+
+    const destinataireNormalise =
+        destinataire.toLowerCase();
+
+    if (
+        destinataireNormalise ===
+        donnees.titulaire.toLowerCase()
+        ||
+        destinataireNormalise ===
+        numeroCompteNormalise
+    ) {
+        return {
+            succes: false,
+            raison: "auto-virement",
+            message:
+                "Vous ne pouvez pas effectuer un virement vers votre propre compte."
+        };
+    }
+
+    const transaction = {
+        id: creerReferenceTransaction("VIREMENT"),
+        type: "depense",
+        categorie: "virement",
+        titre: `Virement à ${destinataire}`,
+        description: motif,
+        montantCentimes: montantCentimes,
+        date: new Date().toISOString(),
+        destinataire: destinataire
+    };
+
+    donnees.soldeCentimes -= montantCentimes;
+    donnees.transactions.push(transaction);
+
+    enregistrerDonneesBancaires(donnees);
+
+    return {
+        succes: true,
+        transaction: transaction,
+        nouveauSoldeCentimes: donnees.soldeCentimes
+    };
+}
