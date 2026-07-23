@@ -42,11 +42,20 @@ formulaire.addEventListener("submit", function (evenement) {
         reglementAccepte
     );
 
-    if (erreur) {
-        afficherMessage(erreur, "erreur");
-        virementEnPreparation = null;
-        return;
+ if (erreur) {
+    afficherMessage(erreur, "erreur");
+
+    if (typeof afficherNotification === "function") {
+        afficherNotification(
+            erreur,
+            "erreur",
+            6000
+        );
     }
+
+    virementEnPreparation = null;
+    return;
+}
 
     virementEnPreparation = {
         destinataire: destinataire,
@@ -200,14 +209,24 @@ function confirmerVirement() {
                 virementEnPreparation.motif
         });
 
-        if (!resultat.succes) {
-            afficherMessage(
-                resultat.message,
-                "erreur"
-            );
+       if (!resultat.succes) {
+    afficherMessage(
+        resultat.message,
+        "erreur"
+    );
 
-            virementEnPreparation = null;
-            return;
+    if (typeof afficherNotification === "function") {
+        afficherNotification(
+            resultat.message,
+            "erreur",
+            6000
+        );
+    }
+
+    virementEnPreparation = null;
+    return;
+}
+
         }
 
         afficherRecuVirement(resultat);
@@ -220,6 +239,17 @@ function confirmerVirement() {
 
 function afficherRecuVirement(resultat) {
     const transaction = resultat.transaction;
+if (typeof afficherNotification === "function") {
+    afficherNotification(
+        `Virement de ` +
+        `${formaterEuros(transaction.montantCentimes)} ` +
+        `envoyé à ${transaction.destinataire}. ` +
+        `Nouveau solde : ` +
+        `${formaterEuros(resultat.nouveauSoldeCentimes)}.`,
+        "succes",
+        6000
+    );
+}
 
     const date = new Date(
         transaction.date
