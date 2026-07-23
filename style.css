@@ -2261,3 +2261,54 @@ button.bouton-deconnexion:disabled {
 .badge-compte-inactif .point-statut {
     background-color: #b13a3a;
 }
+/* Actions de sécurité du profil */
+
+.actions-securite-profil {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.bouton-reinitialisation {
+    padding: 13px 19px;
+    color: #6b4e00;
+    background-color: #fff3cd;
+    border: 1px solid #e5c96f;
+    border-radius: 9px;
+    cursor: pointer;
+    font: inherit;
+    font-weight: bold;
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.bouton-reinitialisation:hover {
+    background-color: #f5dda0;
+    transform: translateY(-2px);
+}
+
+.bouton-reinitialisation:disabled {
+    cursor: wait;
+    opacity: 0.65;
+    transform: none;
+}
+
+@media (max-width: 800px) {
+    .actions-securite-profil {
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 520px) {
+    .actions-securite-profil {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .actions-securite-profil button {
+        width: 100%;
+    }
+}
