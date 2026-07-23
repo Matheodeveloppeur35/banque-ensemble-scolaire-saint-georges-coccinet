@@ -15,7 +15,7 @@
 
     <title>Historique — Banque Saint-Georges RP</title>
 
-    <link rel="stylesheet" href="./style.css?v=14">
+    <link rel="stylesheet" href="./style.css?v=15">
 </head>
 
 <body>
@@ -126,6 +126,30 @@
                             autocomplete="off"
                         >
                     </div>
+
+                    <div class="tri-historique">
+                        <label for="tri-historique">
+                            Trier par
+                        </label>
+
+                        <select id="tri-historique">
+                            <option value="recentes">
+                                Plus récentes
+                            </option>
+
+                            <option value="anciennes">
+                                Plus anciennes
+                            </option>
+
+                            <option value="montant-croissant">
+                                Montant croissant
+                            </option>
+
+                            <option value="montant-decroissant">
+                                Montant décroissant
+                            </option>
+                        </select>
+                    </div>
                 </div>
 
                 <div
@@ -212,13 +236,17 @@
     </script>
 
     <!-- Données bancaires -->
-    <script src="./banque.js?v=7"></script>
+    <script src="./banque.js?v=8"></script>
 
     <script>
         const donneesBancaires = initialiserBanqueDemo();
 
         const champRechercheHistorique = document.querySelector(
             "#recherche-historique"
+        );
+
+        const champTriHistorique = document.querySelector(
+            "#tri-historique"
         );
 
         const boutonsFiltresHistorique = document.querySelectorAll(
@@ -232,6 +260,11 @@
 
         champRechercheHistorique.addEventListener(
             "input",
+            actualiserHistoriqueFiltre
+        );
+
+        champTriHistorique.addEventListener(
+            "change",
             actualiserHistoriqueFiltre
         );
 
@@ -370,14 +403,10 @@
                 "#liste-historique"
             );
 
-            const transactionsTriees = transactions
-                .slice()
-                .sort(function (transactionA, transactionB) {
-                    return (
-                        new Date(transactionB.date) -
-                        new Date(transactionA.date)
-                    );
-                });
+            const transactionsTriees = trierTransactions(
+                transactions,
+                champTriHistorique.value
+            );
 
             actualiserCompteurHistorique(
                 transactionsTriees.length,
@@ -452,6 +481,49 @@
                     `;
                 })
                 .join("");
+        }
+
+        function trierTransactions(transactions, typeTri) {
+            const copieTransactions = transactions.slice();
+
+            copieTransactions.sort(function (
+                transactionA,
+                transactionB
+            ) {
+                if (typeTri === "anciennes") {
+                    return (
+                        obtenirTempsTransaction(transactionA) -
+                        obtenirTempsTransaction(transactionB)
+                    );
+                }
+
+                if (typeTri === "montant-croissant") {
+                    return (
+                        transactionA.montantCentimes -
+                        transactionB.montantCentimes
+                    );
+                }
+
+                if (typeTri === "montant-decroissant") {
+                    return (
+                        transactionB.montantCentimes -
+                        transactionA.montantCentimes
+                    );
+                }
+
+                return (
+                    obtenirTempsTransaction(transactionB) -
+                    obtenirTempsTransaction(transactionA)
+                );
+            });
+
+            return copieTransactions;
+        }
+
+        function obtenirTempsTransaction(transaction) {
+            const temps = new Date(transaction.date).getTime();
+
+            return Number.isNaN(temps) ? 0 : temps;
         }
 
         function actualiserCompteurHistorique(
