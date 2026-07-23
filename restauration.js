@@ -80,13 +80,17 @@ async function restaurerDepuisFichier(
             return;
         }
 
-        enregistrerDonneesBancaires(donnees);
+     enregistrerDonneesBancaires(donnees);
 
-        window.alert(
-            "La sauvegarde a été restaurée avec succès."
-        );
+if (typeof memoriserNotification === "function") {
+    memoriserNotification(
+        "La sauvegarde bancaire a été restaurée avec succès.",
+        "succes"
+    );
+}
 
-        window.location.reload();
+window.location.reload();
+
     } catch (erreur) {
         console.error(
             "Erreur pendant la restauration :",
