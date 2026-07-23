@@ -6,10 +6,12 @@ const donneesBancairesInitiales = {
     role: "Élève",
     statut: "Actif",
     soldeCentimes: 124550,
+
     transactions: [
         {
             id: "SGC-TRANSACTION-001",
             type: "revenu",
+            categorie: "allocation",
             titre: "Allocation scolaire",
             description: "Versement hebdomadaire RP",
             montantCentimes: 15000,
@@ -18,6 +20,7 @@ const donneesBancairesInitiales = {
         {
             id: "SGC-TRANSACTION-002",
             type: "depense",
+            categorie: "achat",
             titre: "Cafétéria scolaire",
             description: "Achat RP",
             montantCentimes: 1250,
@@ -26,6 +29,7 @@ const donneesBancairesInitiales = {
         {
             id: "SGC-TRANSACTION-003",
             type: "depense",
+            categorie: "virement",
             titre: "Virement à Marie Martin",
             description: "Participation à un événement scolaire",
             montantCentimes: 5000,
@@ -35,15 +39,22 @@ const donneesBancairesInitiales = {
 };
 
 function initialiserBanqueDemo() {
-    const donneesExistantes = localStorage.getItem(cleBanque);
+    const donneesExistantes = obtenirDonneesBancaires();
 
     if (!donneesExistantes) {
         enregistrerDonneesBancaires(
-            donneesBancairesInitiales
+            copierDonnees(donneesBancairesInitiales)
         );
     }
 
-    return obtenirDonneesBancaires();
+    const donnees = obtenirDonneesBancaires();
+
+    if (!Array.isArray(donnees.transactions)) {
+        donnees.transactions = [];
+        enregistrerDonneesBancaires(donnees);
+    }
+
+    return donnees;
 }
 
 function obtenirDonneesBancaires() {
@@ -75,7 +86,11 @@ function obtenirSoldeCentimes() {
 }
 
 function formaterEuros(montantCentimes) {
-    const montantEuros = montantCentimes / 100;
+    const montantValide = Number.isInteger(montantCentimes)
+        ? montantCentimes
+        : 0;
+
+    const montantEuros = montantValide / 100;
 
     return montantEuros.toLocaleString("fr-FR", {
         minimumFractionDigits: 2,
@@ -83,8 +98,116 @@ function formaterEuros(montantCentimes) {
     }) + " € RP";
 }
 
+function convertirEurosEnCentimes(montantEuros) {
+    const montant = Number(montantEuros);
+
+    if (!Number.isFinite(montant)) {
+        return null;
+    }
+
+    return Math.round(montant * 100);
+}
+
+function enregistrerDepense(options) {
+    const donnees = initialiserBanqueDemo();
+
+    const montantCentimes = options.montantCentimes;
+    const titre = String(options.titre || "").trim();
+    const description = String(
+        options.description || "Dépense RP"
+    ).trim();
+
+    if (
+        !Number.isInteger(montantCentimes) ||
+        montantCentimes <= 0
+    ) {
+        return {
+            succes: false,
+            raison: "montant-invalide",
+            message: "Le montant de l’achat est invalide."
+        };
+    }
+
+    if (donnees.statut !== "Actif") {
+        return {
+            succes: false,
+            raison: "compte-inactif",
+            message: "Votre compte bancaire RP n’est pas actif."
+        };
+    }
+
+    if (donnees.soldeCentimes < montantCentimes) {
+        return {
+            succes: false,
+            raison: "solde-insuffisant",
+            message: "Votre solde est insuffisant pour cet achat."
+        };
+    }
+
+    if (titre.length < 2) {
+        return {
+            succes: false,
+            raison: "titre-invalide",
+            message: "Le nom de l’article est invalide."
+        };
+    }
+
+    const transaction = {
+        id: creerReferenceTransaction("ACHAT"),
+        type: "depense",
+        categorie: "achat",
+        titre: titre,
+        description: description,
+        montantCentimes: montantCentimes,
+        date: new Date().toISOString()
+    };
+
+    donnees.soldeCentimes -= montantCentimes;
+    donnees.transactions.push(transaction);
+
+    enregistrerDonneesBancaires(donnees);
+
+    return {
+        succes: true,
+        transaction: transaction,
+        nouveauSoldeCentimes: donnees.soldeCentimes
+    };
+}
+
+function creerReferenceTransaction(categorie = "TRANSACTION") {
+    const date = new Date();
+
+    const dateCompacte = [
+        date.getFullYear(),
+        String(date.getMonth() + 1).padStart(2, "0"),
+        String(date.getDate()).padStart(2, "0")
+    ].join("");
+
+    const tempsCompact = [
+        String(date.getHours()).padStart(2, "0"),
+        String(date.getMinutes()).padStart(2, "0"),
+        String(date.getSeconds()).padStart(2, "0")
+    ].join("");
+
+    const nombreAleatoire = Math.floor(
+        1000 + Math.random() * 9000
+    );
+
+    return [
+        "SGC",
+        categorie,
+        dateCompacte,
+        tempsCompact,
+        nombreAleatoire
+    ].join("-");
+}
+
 function reinitialiserBanqueDemo() {
     localStorage.removeItem(cleBanque);
 
     return initialiserBanqueDemo();
+}
+
+function copierDonnees(donnees) {
+    return JSON.parse(JSON.stringify(donnees));
 }
