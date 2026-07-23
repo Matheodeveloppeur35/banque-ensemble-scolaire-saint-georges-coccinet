@@ -15,7 +15,7 @@
 
     <title>Boutique — Banque Saint-Georges RP</title>
 
-    <link rel="stylesheet" href="./style.css?v=9">
+    <link rel="stylesheet" href="./style.css?v=13">
 </head>
 
 <body>
@@ -58,14 +58,14 @@
                     </p>
                 </div>
 
-             <div class="solde-boutique">
-    <span>Votre solde</span>
+                <div class="solde-boutique">
+                    <span>Votre solde</span>
 
-    <strong id="solde-boutique">
-        Chargement…
-    </strong>
-</div>
-
+                    <strong id="solde-boutique">
+                        Chargement…
+                    </strong>
+                </div>
+            </div>
 
             <div class="filtres-boutique">
                 <button
@@ -328,8 +328,9 @@
             <div class="encadre-important">
                 <strong>Version de démonstration :</strong>
 
-                les boutons d’achat ne modifieront pas encore votre solde.
-                Les achats définitifs seront ajoutés avec la base de données.
+                les achats modifient uniquement les données locales
+                enregistrées dans votre navigateur. Aucun argent réel
+                n’est utilisé.
             </div>
         </section>
     </main>
@@ -345,8 +346,8 @@
         </p>
     </footer>
 
-    <!-- Vérification de la session de démonstration -->
-    <script src="./session.js?v=1"></script>
+    <!-- Vérification de la session -->
+    <script src="./session.js?v=2"></script>
 
     <script>
         if (!utilisateurConnecte()) {
@@ -354,8 +355,11 @@
         }
     </script>
 
+    <!-- Données bancaires dynamiques -->
+    <script src="./banque.js?v=3"></script>
+
     <!-- Fonctionnement des filtres et des achats -->
-    <script src="./boutique.js?v=3"></script>
+    <script src="./boutique.js?v=4"></script>
 
     <!-- Mise en évidence de la page active -->
     <script src="./navigation.js?v=1"></script>
