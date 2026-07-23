@@ -221,16 +221,35 @@
     const champRechercheHistorique = document.querySelector(
         "#recherche-historique"
     );
+const boutonsFiltresHistorique = document.querySelectorAll(
+    ".filtre-historique"
+);
+
+let filtreHistoriqueActif = "tous";
 
     afficherResumeHistorique();
-    afficherListeHistorique(obtenirTransactions());
+    actualiserHistoriqueFiltre();
+
 
     champRechercheHistorique.addEventListener(
-        "input",
-        function () {
-            const recherche = normaliserTexteHistorique(
-                champRechercheHistorique.value
-            );
+    "input",
+    actualiserHistoriqueFiltre
+);
+boutonsFiltresHistorique.forEach(function (bouton) {
+    bouton.addEventListener("click", function () {
+        filtreHistoriqueActif =
+            bouton.dataset.filtreHistorique;
+
+        boutonsFiltresHistorique.forEach(
+            function (autreBouton) {
+                autreBouton.classList.remove("actif");
+            }
+        );
+
+        bouton.classList.add("actif");
+        actualiserHistoriqueFiltre();
+    });
+});
 
             const transactionsFiltrees = obtenirTransactions()
                 .filter(function (transaction) {
@@ -261,6 +280,66 @@
             );
         }
     );
+function actualiserHistoriqueFiltre() {
+    const recherche = normaliserTexteHistorique(
+        champRechercheHistorique.value
+    );
+
+    const transactionsFiltrees = obtenirTransactions()
+        .filter(function (transaction) {
+            return transactionCorrespondAuFiltre(
+                transaction
+            );
+        })
+        .filter(function (transaction) {
+            if (!recherche) {
+                return true;
+            }
+
+            const montant = formaterEuros(
+                transaction.montantCentimes
+            );
+
+            const contenu = [
+                transaction.id,
+                transaction.type,
+                transaction.categorie,
+                transaction.titre,
+                transaction.description,
+                transaction.destinataire,
+                montant
+            ]
+                .filter(Boolean)
+                .join(" ");
+
+            return normaliserTexteHistorique(
+                contenu
+            ).includes(recherche);
+        });
+
+    const filtrageActif =
+        filtreHistoriqueActif !== "tous" ||
+        recherche.length > 0;
+
+    afficherListeHistorique(
+        transactionsFiltrees,
+        filtrageActif
+    );
+}
+function transactionCorrespondAuFiltre(transaction) {
+    if (filtreHistoriqueActif === "tous") {
+        return true;
+    }
+
+    if (
+        filtreHistoriqueActif === "revenu" ||
+        filtreHistoriqueActif === "depense"
+    ) {
+        return transaction.type === filtreHistoriqueActif;
+    }
+
+    return transaction.categorie === filtreHistoriqueActif;
+}
 
     function afficherResumeHistorique() {
         const transactions = obtenirTransactions();
