@@ -71,10 +71,14 @@
                     class="formulaire-virement"
                     id="formulaire-virement"
                 >
-                    <div class="solde-formulaire">
-                        <span>Solde disponible</span>
-                        <strong>1 245,50 € RP</strong>
-                    </div>
+                   <div class="solde-formulaire">
+    <span>Solde disponible</span>
+
+    <strong id="solde-virement">
+        Chargement…
+    </strong>
+</div>
+
 
                     <div class="champ">
                         <label for="destinataire">
@@ -106,7 +110,6 @@
                                 name="montant"
                                 type="number"
                                 min="0.01"
-                                max="1245.50"
                                 step="0.01"
                                 placeholder="0,00"
                                 required
@@ -216,8 +219,8 @@
         </p>
     </footer>
 
-    <!-- Vérification de la session de démonstration -->
-    <script src="./session.js?v=1"></script>
+      <!-- Vérification de la session -->
+    <script src="./session.js?v=2"></script>
 
     <script>
         if (!utilisateurConnecte()) {
@@ -225,8 +228,11 @@
         }
     </script>
 
+    <!-- Données bancaires dynamiques -->
+    <script src="./banque.js?v=4"></script>
+
     <!-- Fonctionnement du formulaire de virement -->
-    <script src="./virement.js?v=2"></script>
+    <script src="./virement.js?v=3"></script>
 
     <!-- Mise en évidence de la page active -->
     <script src="./navigation.js?v=1"></script>
