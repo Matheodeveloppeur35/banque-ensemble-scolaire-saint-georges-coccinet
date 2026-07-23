@@ -1,6 +1,18 @@
 const boutonsFiltres = document.querySelectorAll(".filtre");
-const articlesBoutique = document.querySelectorAll(".article-boutique");
+
+const articlesBoutique = document.querySelectorAll(
+    ".article-boutique"
+);
+
 const boutonsAchat = document.querySelectorAll(".bouton-achat");
+
+const affichageSoldeBoutique = document.querySelector(
+    "#solde-boutique"
+);
+
+actualiserSoldeBoutique();
+
+/* Gestion des filtres */
 
 boutonsFiltres.forEach(function (bouton) {
     bouton.addEventListener("click", function () {
@@ -24,24 +36,54 @@ boutonsFiltres.forEach(function (bouton) {
     });
 });
 
+/* Gestion des achats */
+
 boutonsAchat.forEach(function (bouton) {
     bouton.addEventListener("click", function () {
         const nomArticle = bouton.dataset.article;
-        const prixArticle = Number(bouton.dataset.prix);
+
+        const prixCentimes = convertirEurosEnCentimes(
+            bouton.dataset.prix
+        );
+
+        if (
+            !Number.isInteger(prixCentimes) ||
+            prixCentimes <= 0
+        ) {
+            window.alert(
+                "Le prix de cet article est invalide."
+            );
+
+            return;
+        }
 
         afficherConfirmationAchat(
             nomArticle,
-            prixArticle
+            prixCentimes
         );
     });
 });
 
-function afficherConfirmationAchat(nomArticle, prixArticle) {
+function actualiserSoldeBoutique() {
+    const donnees = initialiserBanqueDemo();
+
+    if (!affichageSoldeBoutique) {
+        return;
+    }
+
+    affichageSoldeBoutique.textContent = formaterEuros(
+        donnees.soldeCentimes
+    );
+}
+
+function afficherConfirmationAchat(
+    nomArticle,
+    prixCentimes
+) {
     supprimerFenetreAchat();
 
-    const prixFormate = formaterMontant(prixArticle);
-
     const arrierePlan = document.createElement("div");
+
     arrierePlan.className = "arriere-plan-modal";
     arrierePlan.id = "modal-achat";
 
@@ -78,13 +120,18 @@ function afficherConfirmationAchat(nomArticle, prixArticle) {
             </p>
 
             <div class="resume-achat">
-                <span>${securiserTexte(nomArticle)}</span>
-                <strong>${prixFormate} € RP</strong>
+                <span>
+                    ${securiserTexte(nomArticle)}
+                </span>
+
+                <strong>
+                    ${formaterEuros(prixCentimes)}
+                </strong>
             </div>
 
             <p class="avertissement-modal">
-                Cet achat est entièrement fictif et appartient
-                uniquement au système RP.
+                Le prix sera retiré de votre solde de démonstration
+                et l’achat sera ajouté à votre historique.
             </p>
 
             <div class="actions-modal">
@@ -112,99 +159,207 @@ function afficherConfirmationAchat(nomArticle, prixArticle) {
 
     document
         .querySelector("#fermer-modal")
-        .addEventListener("click", supprimerFenetreAchat);
+        .addEventListener(
+            "click",
+            supprimerFenetreAchat
+        );
 
     document
         .querySelector("#annuler-achat")
-        .addEventListener("click", supprimerFenetreAchat);
+        .addEventListener(
+            "click",
+            supprimerFenetreAchat
+        );
 
     document
         .querySelector("#confirmer-achat")
         .addEventListener("click", function () {
-            simulerAchat(nomArticle, prixArticle);
+            effectuerAchat(
+                nomArticle,
+                prixCentimes
+            );
         });
 
-    arrierePlan.addEventListener("click", function (evenement) {
-        if (evenement.target === arrierePlan) {
-            supprimerFenetreAchat();
+    arrierePlan.addEventListener(
+        "click",
+        function (evenement) {
+            if (evenement.target === arrierePlan) {
+                supprimerFenetreAchat();
+            }
         }
-    });
+    );
 }
 
-function simulerAchat(nomArticle, prixArticle) {
+function effectuerAchat(nomArticle, prixCentimes) {
     const boutonConfirmation = document.querySelector(
         "#confirmer-achat"
     );
 
+    if (
+        !boutonConfirmation ||
+        boutonConfirmation.disabled
+    ) {
+        return;
+    }
+
     boutonConfirmation.disabled = true;
-    boutonConfirmation.textContent = "Traitement en cours…";
+    boutonConfirmation.textContent =
+        "Traitement en cours…";
 
     window.setTimeout(function () {
-        const reference = creerReferenceAchat();
-        const prixFormate = formaterMontant(prixArticle);
-
-        const date = new Date().toLocaleString("fr-FR", {
-            dateStyle: "long",
-            timeStyle: "short"
+        const resultat = enregistrerDepense({
+            titre: nomArticle,
+            description: "Achat dans la boutique RP",
+            montantCentimes: prixCentimes
         });
 
-        const modal = document.querySelector(".modal-achat");
+        if (!resultat.succes) {
+            afficherErreurDansModal(
+                resultat.message
+            );
 
-        modal.innerHTML = `
-            <div class="icone-succes-achat">
-                ✓
+            return;
+        }
+
+        actualiserSoldeBoutique();
+        afficherRecuAchat(resultat);
+    }, 600);
+}
+
+function afficherRecuAchat(resultat) {
+    const transaction = resultat.transaction;
+    const modal = document.querySelector(".modal-achat");
+
+    if (!modal) {
+        return;
+    }
+
+    const date = new Date(
+        transaction.date
+    ).toLocaleString("fr-FR", {
+        dateStyle: "long",
+        timeStyle: "short"
+    });
+
+    modal.innerHTML = `
+        <div class="icone-succes-achat">
+            ✓
+        </div>
+
+        <p class="petit-titre">
+            Achat enregistré
+        </p>
+
+        <h2>Reçu d’achat RP</h2>
+
+        <div class="recu-achat">
+            <div>
+                <span>Article</span>
+
+                <strong>
+                    ${securiserTexte(transaction.titre)}
+                </strong>
             </div>
 
-            <p class="petit-titre">
-                Achat confirmé
-            </p>
+            <div>
+                <span>Montant débité</span>
 
-            <h2>Reçu d’achat RP</h2>
-
-            <div class="recu-achat">
-                <div>
-                    <span>Article</span>
-                    <strong>${securiserTexte(nomArticle)}</strong>
-                </div>
-
-                <div>
-                    <span>Montant</span>
-                    <strong>${prixFormate} € RP</strong>
-                </div>
-
-                <div>
-                    <span>Référence</span>
-                    <strong>${reference}</strong>
-                </div>
-
-                <div>
-                    <span>Date</span>
-                    <strong>${date}</strong>
-                </div>
+                <strong>
+                    ${formaterEuros(
+                        transaction.montantCentimes
+                    )}
+                </strong>
             </div>
 
-            <p class="avertissement-modal">
-                Démonstration uniquement : votre solde
-                n’a pas été modifié.
-            </p>
+            <div>
+                <span>Nouveau solde</span>
 
-            <button
-                class="bouton-confirmer-achat"
-                id="terminer-achat"
-                type="button"
-            >
-                Terminer
-            </button>
-        `;
+                <strong>
+                    ${formaterEuros(
+                        resultat.nouveauSoldeCentimes
+                    )}
+                </strong>
+            </div>
 
-        document
-            .querySelector("#terminer-achat")
-            .addEventListener("click", supprimerFenetreAchat);
-    }, 800);
+            <div>
+                <span>Référence</span>
+
+                <strong>
+                    ${securiserTexte(transaction.id)}
+                </strong>
+            </div>
+
+            <div>
+                <span>Date</span>
+                <strong>${date}</strong>
+            </div>
+        </div>
+
+        <p class="avertissement-modal">
+            Cet achat a été enregistré dans les données locales
+            de démonstration.
+        </p>
+
+        <button
+            class="bouton-confirmer-achat"
+            id="terminer-achat"
+            type="button"
+        >
+            Terminer
+        </button>
+    `;
+
+    document
+        .querySelector("#terminer-achat")
+        .addEventListener(
+            "click",
+            supprimerFenetreAchat
+        );
+}
+
+function afficherErreurDansModal(message) {
+    const modal = document.querySelector(".modal-achat");
+
+    if (!modal) {
+        return;
+    }
+
+    modal.innerHTML = `
+        <div class="icone-erreur-achat">
+            !
+        </div>
+
+        <p class="petit-titre">
+            Achat refusé
+        </p>
+
+        <h2>Transaction impossible</h2>
+
+        <p class="message-erreur-achat">
+            ${securiserTexte(message)}
+        </p>
+
+        <button
+            class="bouton-annuler-achat"
+            id="fermer-erreur-achat"
+            type="button"
+        >
+            Fermer
+        </button>
+    `;
+
+    document
+        .querySelector("#fermer-erreur-achat")
+        .addEventListener(
+            "click",
+            supprimerFenetreAchat
+        );
 }
 
 function supprimerFenetreAchat() {
-    const fenetre = document.querySelector("#modal-achat");
+    const fenetre = document.querySelector(
+        "#modal-achat"
+    );
 
     if (fenetre) {
         fenetre.remove();
@@ -213,24 +368,13 @@ function supprimerFenetreAchat() {
     document.body.classList.remove("modal-ouverte");
 }
 
-function formaterMontant(montant) {
-    return montant.toLocaleString("fr-FR", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-    });
-}
-
-function creerReferenceAchat() {
-    const nombre = Math.floor(
-        100000 + Math.random() * 900000
-    );
-
-    return `SGC-ACHAT-${nombre}`;
-}
-
 function securiserTexte(texte) {
     const element = document.createElement("div");
-    element.textContent = texte;
+
+    element.textContent =
+        texte === null || texte === undefined
+            ? ""
+            : String(texte);
 
     return element.innerHTML;
 }
