@@ -2312,3 +2312,63 @@ button.bouton-deconnexion:disabled {
         width: 100%;
     }
 }
+/* Recherche dans l’historique */
+
+.entete-recherche-historique {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 25px;
+    margin-bottom: 20px;
+}
+
+.entete-recherche-historique .titre-section h2 {
+    margin-bottom: 0;
+}
+
+.recherche-historique {
+    width: 100%;
+    max-width: 330px;
+}
+
+.recherche-historique label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--bleu-fonce);
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.recherche-historique input {
+    width: 100%;
+    padding: 12px 14px;
+    color: var(--texte);
+    background-color: #fbfcfd;
+    border: 1px solid #bdc8d3;
+    border-radius: 9px;
+    font: inherit;
+    outline: none;
+}
+
+.recherche-historique input:focus {
+    border-color: var(--bleu-principal);
+    box-shadow: 0 0 0 3px rgba(23, 63, 103, 0.14);
+}
+
+.aucune-operation {
+    padding: 30px 15px;
+    color: #647282;
+    text-align: center;
+    line-height: 1.6;
+}
+
+@media (max-width: 700px) {
+    .entete-recherche-historique {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .recherche-historique {
+        max-width: none;
+    }
+}
