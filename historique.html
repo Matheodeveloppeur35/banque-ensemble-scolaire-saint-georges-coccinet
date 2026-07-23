@@ -15,7 +15,7 @@
 
     <title>Historique — Banque Saint-Georges RP</title>
 
-    <link rel="stylesheet" href="./style.css?v=12">
+    <link rel="stylesheet" href="./style.css?v=14">
 </head>
 
 <body>
@@ -103,81 +103,80 @@
 
             <section class="historique-complet">
                 <div class="entete-recherche-historique">
-    <div class="titre-section">
-        <p
-            class="petit-titre"
-            id="periode-historique"
-        >
-            Toutes les périodes
-        </p>
+                    <div class="titre-section">
+                        <p
+                            class="petit-titre"
+                            id="periode-historique"
+                        >
+                            Toutes les périodes
+                        </p>
 
-        <h2>Toutes les opérations</h2>
-    </div>
+                        <h2>Toutes les opérations</h2>
+                    </div>
 
-    <div class="recherche-historique">
-        <label for="recherche-historique">
-            Rechercher
-        </label>
+                    <div class="recherche-historique">
+                        <label for="recherche-historique">
+                            Rechercher
+                        </label>
 
-        <input
-            id="recherche-historique"
-            type="search"
-            placeholder="Titre, motif, montant…"
-            autocomplete="off"
-        >
-    </div>
-</div>
+                        <input
+                            id="recherche-historique"
+                            type="search"
+                            placeholder="Titre, motif, montant…"
+                            autocomplete="off"
+                        >
+                    </div>
+                </div>
 
+                <div
+                    class="filtres-historique"
+                    aria-label="Filtrer les opérations"
+                >
+                    <button
+                        class="filtre-historique actif"
+                        type="button"
+                        data-filtre-historique="tous"
+                    >
+                        Toutes
+                    </button>
+
+                    <button
+                        class="filtre-historique"
+                        type="button"
+                        data-filtre-historique="revenu"
+                    >
+                        Revenus
+                    </button>
+
+                    <button
+                        class="filtre-historique"
+                        type="button"
+                        data-filtre-historique="depense"
+                    >
+                        Dépenses
+                    </button>
+
+                    <button
+                        class="filtre-historique"
+                        type="button"
+                        data-filtre-historique="achat"
+                    >
+                        Achats
+                    </button>
+
+                    <button
+                        class="filtre-historique"
+                        type="button"
+                        data-filtre-historique="virement"
+                    >
+                        Virements
+                    </button>
+                </div>
 
                 <div
                     class="liste-operations"
                     id="liste-historique"
                 >
-                    <div
-    class="filtres-historique"
-    aria-label="Filtrer les opérations"
->
-    <button
-        class="filtre-historique actif"
-        type="button"
-        data-filtre-historique="tous"
-    >
-        Toutes
-    </button>
-
-    <button
-        class="filtre-historique"
-        type="button"
-        data-filtre-historique="revenu"
-    >
-        Revenus
-    </button>
-
-    <button
-        class="filtre-historique"
-        type="button"
-        data-filtre-historique="depense"
-    >
-        Dépenses
-    </button>
-
-    <button
-        class="filtre-historique"
-        type="button"
-        data-filtre-historique="achat"
-    >
-        Achats
-    </button>
-
-    <button
-        class="filtre-historique"
-        type="button"
-        data-filtre-historique="virement"
-    >
-        Virements
-    </button>
-</div>
-
                     <p>Chargement des opérations…</p>
                 </div>
             </section>
@@ -203,7 +202,7 @@
         </p>
     </footer>
 
-    <!-- Vérification de la session de démonstration -->
+    <!-- Vérification de la session -->
     <script src="./session.js?v=2"></script>
 
     <script>
@@ -212,50 +211,72 @@
         }
     </script>
 
-     <!-- Données bancaires dynamiques -->
-<script src="./banque.js?v=6"></script>
+    <!-- Données bancaires -->
+    <script src="./banque.js?v=7"></script>
 
-<script>
-    const donneesBancaires = initialiserBanqueDemo();
+    <script>
+        const donneesBancaires = initialiserBanqueDemo();
 
-    const champRechercheHistorique = document.querySelector(
-        "#recherche-historique"
-    );
-const boutonsFiltresHistorique = document.querySelectorAll(
-    ".filtre-historique"
-);
-
-let filtreHistoriqueActif = "tous";
-
-    afficherResumeHistorique();
-    actualiserHistoriqueFiltre();
-
-
-    champRechercheHistorique.addEventListener(
-    "input",
-    actualiserHistoriqueFiltre
-);
-boutonsFiltresHistorique.forEach(function (bouton) {
-    bouton.addEventListener("click", function () {
-        filtreHistoriqueActif =
-            bouton.dataset.filtreHistorique;
-
-        boutonsFiltresHistorique.forEach(
-            function (autreBouton) {
-                autreBouton.classList.remove("actif");
-            }
+        const champRechercheHistorique = document.querySelector(
+            "#recherche-historique"
         );
 
-        bouton.classList.add("actif");
+        const boutonsFiltresHistorique = document.querySelectorAll(
+            ".filtre-historique"
+        );
+
+        let filtreHistoriqueActif = "tous";
+
+        afficherResumeHistorique();
         actualiserHistoriqueFiltre();
-    });
-});
+
+        champRechercheHistorique.addEventListener(
+            "input",
+            actualiserHistoriqueFiltre
+        );
+
+        boutonsFiltresHistorique.forEach(function (bouton) {
+            bouton.addEventListener("click", function () {
+                filtreHistoriqueActif =
+                    bouton.dataset.filtreHistorique;
+
+                boutonsFiltresHistorique.forEach(
+                    function (autreBouton) {
+                        autreBouton.classList.remove("actif");
+                    }
+                );
+
+                bouton.classList.add("actif");
+                actualiserHistoriqueFiltre();
+            });
+        });
+
+        function actualiserHistoriqueFiltre() {
+            const recherche = normaliserTexteHistorique(
+                champRechercheHistorique.value
+            );
 
             const transactionsFiltrees = obtenirTransactions()
                 .filter(function (transaction) {
-                    const montant = formaterEuros(
+                    return transactionCorrespondAuFiltre(
+                        transaction
+                    );
+                })
+                .filter(function (transaction) {
+                    if (!recherche) {
+                        return true;
+                    }
+
+                    const montantEuros = formaterEuros(
                         transaction.montantCentimes
                     );
+
+                    const montantSimple = (
+                        transaction.montantCentimes / 100
+                    ).toLocaleString("fr-FR", {
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 2
+                    });
 
                     const contenu = [
                         transaction.id,
@@ -264,7 +285,8 @@ boutonsFiltresHistorique.forEach(function (bouton) {
                         transaction.titre,
                         transaction.description,
                         transaction.destinataire,
-                        montant
+                        montantEuros,
+                        montantSimple
                     ]
                         .filter(Boolean)
                         .join(" ");
@@ -274,259 +296,216 @@ boutonsFiltresHistorique.forEach(function (bouton) {
                     ).includes(recherche);
                 });
 
+            const filtrageActif =
+                filtreHistoriqueActif !== "tous" ||
+                recherche.length > 0;
+
             afficherListeHistorique(
                 transactionsFiltrees,
-                recherche.length > 0
+                filtrageActif
             );
         }
-    );
-function actualiserHistoriqueFiltre() {
-    const recherche = normaliserTexteHistorique(
-        champRechercheHistorique.value
-    );
 
-    const transactionsFiltrees = obtenirTransactions()
-        .filter(function (transaction) {
-            return transactionCorrespondAuFiltre(
-                transaction
-            );
-        })
-        .filter(function (transaction) {
-            if (!recherche) {
+        function transactionCorrespondAuFiltre(transaction) {
+            if (filtreHistoriqueActif === "tous") {
                 return true;
             }
 
-            const montant = formaterEuros(
-                transaction.montantCentimes
+            if (
+                filtreHistoriqueActif === "revenu" ||
+                filtreHistoriqueActif === "depense"
+            ) {
+                return transaction.type === filtreHistoriqueActif;
+            }
+
+            return transaction.categorie === filtreHistoriqueActif;
+        }
+
+        function afficherResumeHistorique() {
+            const transactions = obtenirTransactions();
+
+            const totalRevenus = transactions
+                .filter(function (transaction) {
+                    return transaction.type === "revenu";
+                })
+                .reduce(function (total, transaction) {
+                    return total + transaction.montantCentimes;
+                }, 0);
+
+            const totalDepenses = transactions
+                .filter(function (transaction) {
+                    return transaction.type === "depense";
+                })
+                .reduce(function (total, transaction) {
+                    return total + transaction.montantCentimes;
+                }, 0);
+
+            document.querySelector(
+                "#compte-historique"
+            ).textContent =
+                `Compte ${donneesBancaires.numeroCompte}`;
+
+            document.querySelector(
+                "#solde-historique"
+            ).textContent = formaterEuros(
+                donneesBancaires.soldeCentimes
             );
 
-            const contenu = [
-                transaction.id,
-                transaction.type,
-                transaction.categorie,
-                transaction.titre,
-                transaction.description,
-                transaction.destinataire,
-                montant
-            ]
-                .filter(Boolean)
-                .join(" ");
+            document.querySelector(
+                "#revenus-historique"
+            ).textContent =
+                `+${formaterEuros(totalRevenus)}`;
 
-            return normaliserTexteHistorique(
-                contenu
-            ).includes(recherche);
-        });
-
-    const filtrageActif =
-        filtreHistoriqueActif !== "tous" ||
-        recherche.length > 0;
-
-    afficherListeHistorique(
-        transactionsFiltrees,
-        filtrageActif
-    );
-}
-function transactionCorrespondAuFiltre(transaction) {
-    if (filtreHistoriqueActif === "tous") {
-        return true;
-    }
-
-    if (
-        filtreHistoriqueActif === "revenu" ||
-        filtreHistoriqueActif === "depense"
-    ) {
-        return transaction.type === filtreHistoriqueActif;
-    }
-
-    return transaction.categorie === filtreHistoriqueActif;
-}
-
-    function afficherResumeHistorique() {
-        const transactions = obtenirTransactions();
-
-        const totalRevenus = transactions
-            .filter(function (transaction) {
-                return transaction.type === "revenu";
-            })
-            .reduce(function (total, transaction) {
-                return total + transaction.montantCentimes;
-            }, 0);
-
-        const totalDepenses = transactions
-            .filter(function (transaction) {
-                return transaction.type === "depense";
-            })
-            .reduce(function (total, transaction) {
-                return total + transaction.montantCentimes;
-            }, 0);
-
-        document.querySelector(
-            "#compte-historique"
-        ).textContent =
-            `Compte ${donneesBancaires.numeroCompte}`;
-
-        document.querySelector(
-            "#solde-historique"
-        ).textContent = formaterEuros(
-            donneesBancaires.soldeCentimes
-        );
-
-        document.querySelector(
-            "#revenus-historique"
-        ).textContent =
-            `+${formaterEuros(totalRevenus)}`;
-
-        document.querySelector(
-            "#depenses-historique"
-        ).textContent =
-            `−${formaterEuros(totalDepenses)}`;
-
-        actualiserCompteurHistorique(
-            transactions.length,
-            false
-        );
-    }
-
-    function afficherListeHistorique(
-        transactions,
-        rechercheActive = false
-    ) {
-        const conteneur = document.querySelector(
-            "#liste-historique"
-        );
-
-        const transactionsTriees = transactions
-            .slice()
-            .sort(function (transactionA, transactionB) {
-                return (
-                    new Date(transactionB.date) -
-                    new Date(transactionA.date)
-                );
-            });
-
-        actualiserCompteurHistorique(
-            transactionsTriees.length,
-            rechercheActive
-        );
-
-        if (transactionsTriees.length === 0) {
-            conteneur.innerHTML = `
-                <p class="aucune-operation">
-                    Aucune opération ne correspond à votre recherche.
-                </p>
-            `;
-
-            return;
+            document.querySelector(
+                "#depenses-historique"
+            ).textContent =
+                `−${formaterEuros(totalDepenses)}`;
         }
 
-        conteneur.innerHTML = transactionsTriees
-            .map(function (transaction) {
-                const estUnRevenu =
-                    transaction.type === "revenu";
+        function afficherListeHistorique(
+            transactions,
+            filtrageActif
+        ) {
+            const conteneur = document.querySelector(
+                "#liste-historique"
+            );
 
-                const signe = estUnRevenu ? "+" : "−";
+            const transactionsTriees = transactions
+                .slice()
+                .sort(function (transactionA, transactionB) {
+                    return (
+                        new Date(transactionB.date) -
+                        new Date(transactionA.date)
+                    );
+                });
 
-                const classeType = estUnRevenu
-                    ? "revenu"
-                    : "depense";
+            actualiserCompteurHistorique(
+                transactionsTriees.length,
+                filtrageActif
+            );
 
-                const classeMontant = estUnRevenu
-                    ? "positif"
-                    : "negatif";
+            if (transactionsTriees.length === 0) {
+                const message = filtrageActif
+                    ? "Aucune opération ne correspond aux critères."
+                    : "Aucune opération enregistrée.";
 
-                return `
-                    <article class="ligne-operation">
-                        <div
-                            class="icone-operation ${classeType}"
-                        >
-                            ${signe}
-                        </div>
+                conteneur.innerHTML = `
+                    <p class="aucune-operation">
+                        ${message}
+                    </p>
+                `;
 
-                        <div class="description-operation">
-                            <strong>
-                                ${securiserValeurHistorique(
-                                    transaction.titre
+                return;
+            }
+
+            conteneur.innerHTML = transactionsTriees
+                .map(function (transaction) {
+                    const estUnRevenu =
+                        transaction.type === "revenu";
+
+                    const signe = estUnRevenu ? "+" : "−";
+
+                    const classeType = estUnRevenu
+                        ? "revenu"
+                        : "depense";
+
+                    const classeMontant = estUnRevenu
+                        ? "positif"
+                        : "negatif";
+
+                    return `
+                        <article class="ligne-operation">
+                            <div
+                                class="icone-operation ${classeType}"
+                            >
+                                ${signe}
+                            </div>
+
+                            <div class="description-operation">
+                                <strong>
+                                    ${securiserValeurHistorique(
+                                        transaction.titre
+                                    )}
+                                </strong>
+
+                                <span>
+                                    ${securiserValeurHistorique(
+                                        transaction.description
+                                    )}
+                                </span>
+                            </div>
+
+                            <div class="date-operation">
+                                ${formaterDateHistorique(
+                                    transaction.date
+                                )}
+                            </div>
+
+                            <strong
+                                class="montant ${classeMontant}"
+                            >
+                                ${signe}${formaterEuros(
+                                    transaction.montantCentimes
                                 )}
                             </strong>
-
-                            <span>
-                                ${securiserValeurHistorique(
-                                    transaction.description
-                                )}
-                            </span>
-                        </div>
-
-                        <div class="date-operation">
-                            ${formaterDateHistorique(
-                                transaction.date
-                            )}
-                        </div>
-
-                        <strong
-                            class="montant ${classeMontant}"
-                        >
-                            ${signe}${formaterEuros(
-                                transaction.montantCentimes
-                            )}
-                        </strong>
-                    </article>
-                `;
-            })
-            .join("");
-    }
-
-    function actualiserCompteurHistorique(
-        nombreOperations,
-        rechercheActive
-    ) {
-        const texte = rechercheActive
-            ? `${nombreOperations} résultat(s)`
-            : `${nombreOperations} opération(s) enregistrée(s)`;
-
-        document.querySelector(
-            "#periode-historique"
-        ).textContent = texte;
-    }
-
-    function obtenirTransactions() {
-        return Array.isArray(donneesBancaires.transactions)
-            ? donneesBancaires.transactions
-            : [];
-    }
-
-    function normaliserTexteHistorique(texte) {
-        return String(texte || "")
-            .toLowerCase()
-            .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "")
-            .trim();
-    }
-
-    function formaterDateHistorique(dateTransaction) {
-        const date = new Date(dateTransaction);
-
-        if (Number.isNaN(date.getTime())) {
-            return "Date inconnue";
+                        </article>
+                    `;
+                })
+                .join("");
         }
 
-        return date.toLocaleDateString("fr-FR", {
-            day: "numeric",
-            month: "long",
-            year: "numeric"
-        });
-    }
+        function actualiserCompteurHistorique(
+            nombreOperations,
+            filtrageActif
+        ) {
+            const texte = filtrageActif
+                ? `${nombreOperations} résultat(s)`
+                : `${nombreOperations} opération(s) enregistrée(s)`;
 
-    function securiserValeurHistorique(valeur) {
-        const element = document.createElement("div");
+            document.querySelector(
+                "#periode-historique"
+            ).textContent = texte;
+        }
 
-        element.textContent =
-            valeur === null || valeur === undefined
-                ? ""
-                : String(valeur);
+        function obtenirTransactions() {
+            return Array.isArray(donneesBancaires.transactions)
+                ? donneesBancaires.transactions
+                : [];
+        }
 
-        return element.innerHTML;
-    }
-</script>
+        function normaliserTexteHistorique(texte) {
+            return String(texte || "")
+                .toLowerCase()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .trim();
+        }
+
+        function formaterDateHistorique(dateTransaction) {
+            const date = new Date(dateTransaction);
+
+            if (Number.isNaN(date.getTime())) {
+                return "Date inconnue";
+            }
+
+            return date.toLocaleDateString("fr-FR", {
+                day: "numeric",
+                month: "long",
+                year: "numeric"
+            });
+        }
+
+        function securiserValeurHistorique(valeur) {
+            const element = document.createElement("div");
+
+            element.textContent =
+                valeur === null || valeur === undefined
+                    ? ""
+                    : String(valeur);
+
+            return element.innerHTML;
+        }
+    </script>
 
     <!-- Mise en évidence de la page active -->
     <script src="./navigation.js?v=1"></script>
