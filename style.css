@@ -2403,3 +2403,45 @@ button.bouton-deconnexion:disabled {
     background-color: var(--bleu-principal);
     border-color: var(--bleu-principal);
 }
+/* Tri de l’historique */
+
+.tri-historique {
+    width: 100%;
+    max-width: 230px;
+}
+
+.tri-historique label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--bleu-fonce);
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.tri-historique select {
+    width: 100%;
+    padding: 12px 38px 12px 14px;
+    color: var(--texte);
+    background-color: #fbfcfd;
+    border: 1px solid #bdc8d3;
+    border-radius: 9px;
+    cursor: pointer;
+    font: inherit;
+    outline: none;
+}
+
+.tri-historique select:focus {
+    border-color: var(--bleu-principal);
+    box-shadow: 0 0 0 3px rgba(23, 63, 103, 0.14);
+}
+
+@media (max-width: 1000px) {
+    .entete-recherche-historique {
+        flex-wrap: wrap;
+    }
+
+    .recherche-historique,
+    .tri-historique {
+        max-width: none;
+    }
+}
