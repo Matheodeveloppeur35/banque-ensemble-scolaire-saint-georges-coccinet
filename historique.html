@@ -102,16 +102,32 @@
             </div>
 
             <section class="historique-complet">
-                <div class="titre-section">
-                    <p
-                        class="petit-titre"
-                        id="periode-historique"
-                    >
-                        Toutes les périodes
-                    </p>
+                <div class="entete-recherche-historique">
+    <div class="titre-section">
+        <p
+            class="petit-titre"
+            id="periode-historique"
+        >
+            Toutes les périodes
+        </p>
 
-                    <h2>Toutes les opérations</h2>
-                </div>
+        <h2>Toutes les opérations</h2>
+    </div>
+
+    <div class="recherche-historique">
+        <label for="recherche-historique">
+            Rechercher
+        </label>
+
+        <input
+            id="recherche-historique"
+            type="search"
+            placeholder="Titre, motif, montant…"
+            autocomplete="off"
+        >
+    </div>
+</div>
+
 
                 <div
                     class="liste-operations"
@@ -151,176 +167,242 @@
         }
     </script>
 
-        <!-- Données bancaires dynamiques -->
-    <script src="./banque.js?v=2"></script>
+     <!-- Données bancaires dynamiques -->
+<script src="./banque.js?v=6"></script>
 
-    <script>
-        const donneesBancaires = initialiserBanqueDemo();
+<script>
+    const donneesBancaires = initialiserBanqueDemo();
 
-        afficherResumeHistorique();
-        afficherListeHistorique();
+    const champRechercheHistorique = document.querySelector(
+        "#recherche-historique"
+    );
 
-        function afficherResumeHistorique() {
-            const transactions = obtenirTransactions();
+    afficherResumeHistorique();
+    afficherListeHistorique(obtenirTransactions());
 
-            const totalRevenus = transactions
-                .filter(function (transaction) {
-                    return transaction.type === "revenu";
-                })
-                .reduce(function (total, transaction) {
-                    return total + transaction.montantCentimes;
-                }, 0);
-
-            const totalDepenses = transactions
-                .filter(function (transaction) {
-                    return transaction.type === "depense";
-                })
-                .reduce(function (total, transaction) {
-                    return total + transaction.montantCentimes;
-                }, 0);
-
-            document.querySelector(
-                "#compte-historique"
-            ).textContent =
-                `Compte ${donneesBancaires.numeroCompte}`;
-
-            document.querySelector(
-                "#solde-historique"
-            ).textContent = formaterEuros(
-                donneesBancaires.soldeCentimes
+    champRechercheHistorique.addEventListener(
+        "input",
+        function () {
+            const recherche = normaliserTexteHistorique(
+                champRechercheHistorique.value
             );
 
-            document.querySelector(
-                "#revenus-historique"
-            ).textContent =
-                `+${formaterEuros(totalRevenus)}`;
-
-            document.querySelector(
-                "#depenses-historique"
-            ).textContent =
-                `−${formaterEuros(totalDepenses)}`;
-
-            document.querySelector(
-                "#periode-historique"
-            ).textContent =
-                `${transactions.length} opération(s) enregistrée(s)`;
-        }
-
-        function afficherListeHistorique() {
-            const conteneur = document.querySelector(
-                "#liste-historique"
-            );
-
-            const transactionsTriees = obtenirTransactions()
-                .slice()
-                .sort(function (transactionA, transactionB) {
-                    return (
-                        new Date(transactionB.date) -
-                        new Date(transactionA.date)
-                    );
-                });
-
-            if (transactionsTriees.length === 0) {
-                conteneur.innerHTML = `
-                    <p class="aucune-operation">
-                        Aucune opération enregistrée.
-                    </p>
-                `;
-
-                return;
-            }
-
-            conteneur.innerHTML = transactionsTriees
-                .map(function (transaction) {
-                    const estUnRevenu =
-                        transaction.type === "revenu";
-
-                    const signe = estUnRevenu ? "+" : "−";
-
-                    const classeType = estUnRevenu
-                        ? "revenu"
-                        : "depense";
-
-                    const classeMontant = estUnRevenu
-                        ? "positif"
-                        : "negatif";
-
+            const transactionsFiltrees = obtenirTransactions()
+                .filter(function (transaction) {
                     const montant = formaterEuros(
                         transaction.montantCentimes
                     );
 
-                    const date = formaterDateHistorique(
-                        transaction.date
-                    );
+                    const contenu = [
+                        transaction.id,
+                        transaction.type,
+                        transaction.categorie,
+                        transaction.titre,
+                        transaction.description,
+                        transaction.destinataire,
+                        montant
+                    ]
+                        .filter(Boolean)
+                        .join(" ");
 
-                    return `
-                        <article class="ligne-operation">
-                            <div
-                                class="icone-operation ${classeType}"
-                            >
-                                ${signe}
-                            </div>
+                    return normaliserTexteHistorique(
+                        contenu
+                    ).includes(recherche);
+                });
 
-                            <div class="description-operation">
-                                <strong>
-                                    ${securiserValeur(
-                                        transaction.titre
-                                    )}
-                                </strong>
-
-                                <span>
-                                    ${securiserValeur(
-                                        transaction.description
-                                    )}
-                                </span>
-                            </div>
-
-                            <div class="date-operation">
-                                ${date}
-                            </div>
-
-                            <strong
-                                class="montant ${classeMontant}"
-                            >
-                                ${signe}${montant}
-                            </strong>
-                        </article>
-                    `;
-                })
-                .join("");
+            afficherListeHistorique(
+                transactionsFiltrees,
+                recherche.length > 0
+            );
         }
+    );
 
-        function obtenirTransactions() {
-            return Array.isArray(donneesBancaires.transactions)
-                ? donneesBancaires.transactions
-                : [];
-        }
+    function afficherResumeHistorique() {
+        const transactions = obtenirTransactions();
 
-        function formaterDateHistorique(dateTransaction) {
-            const date = new Date(dateTransaction);
+        const totalRevenus = transactions
+            .filter(function (transaction) {
+                return transaction.type === "revenu";
+            })
+            .reduce(function (total, transaction) {
+                return total + transaction.montantCentimes;
+            }, 0);
 
-            if (Number.isNaN(date.getTime())) {
-                return "Date inconnue";
-            }
+        const totalDepenses = transactions
+            .filter(function (transaction) {
+                return transaction.type === "depense";
+            })
+            .reduce(function (total, transaction) {
+                return total + transaction.montantCentimes;
+            }, 0);
 
-            return date.toLocaleDateString("fr-FR", {
-                day: "numeric",
-                month: "long",
-                year: "numeric"
+        document.querySelector(
+            "#compte-historique"
+        ).textContent =
+            `Compte ${donneesBancaires.numeroCompte}`;
+
+        document.querySelector(
+            "#solde-historique"
+        ).textContent = formaterEuros(
+            donneesBancaires.soldeCentimes
+        );
+
+        document.querySelector(
+            "#revenus-historique"
+        ).textContent =
+            `+${formaterEuros(totalRevenus)}`;
+
+        document.querySelector(
+            "#depenses-historique"
+        ).textContent =
+            `−${formaterEuros(totalDepenses)}`;
+
+        actualiserCompteurHistorique(
+            transactions.length,
+            false
+        );
+    }
+
+    function afficherListeHistorique(
+        transactions,
+        rechercheActive = false
+    ) {
+        const conteneur = document.querySelector(
+            "#liste-historique"
+        );
+
+        const transactionsTriees = transactions
+            .slice()
+            .sort(function (transactionA, transactionB) {
+                return (
+                    new Date(transactionB.date) -
+                    new Date(transactionA.date)
+                );
             });
+
+        actualiserCompteurHistorique(
+            transactionsTriees.length,
+            rechercheActive
+        );
+
+        if (transactionsTriees.length === 0) {
+            conteneur.innerHTML = `
+                <p class="aucune-operation">
+                    Aucune opération ne correspond à votre recherche.
+                </p>
+            `;
+
+            return;
         }
 
-        function securiserValeur(valeur) {
-            const element = document.createElement("div");
+        conteneur.innerHTML = transactionsTriees
+            .map(function (transaction) {
+                const estUnRevenu =
+                    transaction.type === "revenu";
 
-            element.textContent =
-                valeur === null || valeur === undefined
-                    ? ""
-                    : String(valeur);
+                const signe = estUnRevenu ? "+" : "−";
 
-            return element.innerHTML;
+                const classeType = estUnRevenu
+                    ? "revenu"
+                    : "depense";
+
+                const classeMontant = estUnRevenu
+                    ? "positif"
+                    : "negatif";
+
+                return `
+                    <article class="ligne-operation">
+                        <div
+                            class="icone-operation ${classeType}"
+                        >
+                            ${signe}
+                        </div>
+
+                        <div class="description-operation">
+                            <strong>
+                                ${securiserValeurHistorique(
+                                    transaction.titre
+                                )}
+                            </strong>
+
+                            <span>
+                                ${securiserValeurHistorique(
+                                    transaction.description
+                                )}
+                            </span>
+                        </div>
+
+                        <div class="date-operation">
+                            ${formaterDateHistorique(
+                                transaction.date
+                            )}
+                        </div>
+
+                        <strong
+                            class="montant ${classeMontant}"
+                        >
+                            ${signe}${formaterEuros(
+                                transaction.montantCentimes
+                            )}
+                        </strong>
+                    </article>
+                `;
+            })
+            .join("");
+    }
+
+    function actualiserCompteurHistorique(
+        nombreOperations,
+        rechercheActive
+    ) {
+        const texte = rechercheActive
+            ? `${nombreOperations} résultat(s)`
+            : `${nombreOperations} opération(s) enregistrée(s)`;
+
+        document.querySelector(
+            "#periode-historique"
+        ).textContent = texte;
+    }
+
+    function obtenirTransactions() {
+        return Array.isArray(donneesBancaires.transactions)
+            ? donneesBancaires.transactions
+            : [];
+    }
+
+    function normaliserTexteHistorique(texte) {
+        return String(texte || "")
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .trim();
+    }
+
+    function formaterDateHistorique(dateTransaction) {
+        const date = new Date(dateTransaction);
+
+        if (Number.isNaN(date.getTime())) {
+            return "Date inconnue";
         }
-    </script>
+
+        return date.toLocaleDateString("fr-FR", {
+            day: "numeric",
+            month: "long",
+            year: "numeric"
+        });
+    }
+
+    function securiserValeurHistorique(valeur) {
+        const element = document.createElement("div");
+
+        element.textContent =
+            valeur === null || valeur === undefined
+                ? ""
+                : String(valeur);
+
+        return element.innerHTML;
+    }
+</script>
 
     <!-- Mise en évidence de la page active -->
     <script src="./navigation.js?v=1"></script>
