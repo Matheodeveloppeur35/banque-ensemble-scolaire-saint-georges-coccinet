@@ -2614,3 +2614,29 @@ button.bouton-deconnexion:disabled {
     opacity: 0.65;
     transform: none;
 }
+/* Restauration d’une sauvegarde */
+
+.bouton-restauration {
+    padding: 13px 19px;
+    color: #ffffff;
+    background-color: #168851;
+    border: 1px solid #168851;
+    border-radius: 9px;
+    cursor: pointer;
+    font: inherit;
+    font-weight: bold;
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.bouton-restauration:hover {
+    background-color: #12633e;
+    transform: translateY(-2px);
+}
+
+.bouton-restauration:disabled {
+    cursor: wait;
+    opacity: 0.65;
+    transform: none;
+}
