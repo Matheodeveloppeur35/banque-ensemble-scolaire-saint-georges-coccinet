@@ -15,7 +15,7 @@
 
     <title>Mon profil — Banque Saint-Georges RP</title>
 
-    <link rel="stylesheet" href="./style.css?v=13">
+    <link rel="stylesheet" href="./style.css?v=17">
 </head>
 
 <body>
@@ -182,30 +182,30 @@
 
                 <div class="actions-securite-profil">
                     <button
-    class="bouton-sauvegarde"
-    id="bouton-sauvegarde"
-    type="button"
->
-    Télécharger une sauvegarde
+                        class="bouton-sauvegarde"
+                        id="bouton-sauvegarde"
+                        type="button"
+                    >
+                        Télécharger une sauvegarde
                     </button>
 
-    <button
-        class="bouton-reinitialisation"
-        id="bouton-reinitialisation"
-        type="button"
-    >
-        Réinitialiser les données
-    </button>
+                    <button
+                        class="bouton-reinitialisation"
+                        id="bouton-reinitialisation"
+                        type="button"
+                    >
+                        Réinitialiser les données
+                    </button>
 
-    <button
-        class="bouton-deconnexion"
-        id="bouton-deconnexion"
-        type="button"
-    >
-        Se déconnecter
-    </button>
-</div>
-
+                    <button
+                        class="bouton-deconnexion"
+                        id="bouton-deconnexion"
+                        type="button"
+                    >
+                        Se déconnecter
+                    </button>
+                </div>
+            </section>
 
             <div class="encadre-important">
                 <strong>Version de démonstration :</strong>
@@ -238,7 +238,7 @@
     </script>
 
     <!-- Données bancaires dynamiques -->
-    <script src="./banque.js?v=5"></script>
+    <script src="./banque.js?v=10"></script>
 
     <script>
         const donneesProfil = initialiserBanqueDemo();
@@ -276,7 +276,8 @@
 
             document.querySelector(
                 "#statut-badge-profil"
-            ).textContent = `Compte ${statut.toLowerCase()}`;
+            ).textContent =
+                `Compte ${statut.toLowerCase()}`;
 
             document.querySelector(
                 "#titulaire-detail-profil"
@@ -292,7 +293,8 @@
 
             document.querySelector(
                 "#type-detail-profil"
-            ).textContent = `Compte ${role.toLowerCase()} RP`;
+            ).textContent =
+                `Compte ${role.toLowerCase()} RP`;
 
             document.querySelector(
                 "#statut-detail-profil"
@@ -342,55 +344,63 @@
         }
     </script>
 
-   <!-- Réinitialisation et déconnexion -->
-<script>
-    const boutonReinitialisation = document.querySelector(
-        "#bouton-reinitialisation"
-    );
+    <!-- Réinitialisation et déconnexion -->
+    <script>
+        const boutonReinitialisation = document.querySelector(
+            "#bouton-reinitialisation"
+        );
 
-    const boutonDeconnexion = document.querySelector(
-        "#bouton-deconnexion"
-    );
+        const boutonDeconnexion = document.querySelector(
+            "#bouton-deconnexion"
+        );
 
-    boutonReinitialisation.addEventListener(
-        "click",
-        function () {
-            const confirmation = window.confirm(
-                "Voulez-vous vraiment réinitialiser les données " +
-                "bancaires de démonstration ?\n\n" +
-                "Le solde et l’historique retrouveront leurs " +
-                "valeurs initiales."
-            );
+        boutonReinitialisation.addEventListener(
+            "click",
+            function () {
+                const confirmation = window.confirm(
+                    "Voulez-vous vraiment réinitialiser les données " +
+                    "bancaires de démonstration ?\n\n" +
+                    "Le solde et l’historique retrouveront leurs " +
+                    "valeurs initiales."
+                );
 
-            if (!confirmation) {
-                return;
+                if (!confirmation) {
+                    return;
+                }
+
+                boutonReinitialisation.disabled = true;
+                boutonReinitialisation.textContent =
+                    "Réinitialisation…";
+
+                reinitialiserBanqueDemo();
+
+                window.setTimeout(function () {
+                    window.location.reload();
+                }, 500);
             }
+        );
 
-            boutonReinitialisation.disabled = true;
-            boutonReinitialisation.textContent =
-                "Réinitialisation…";
+        boutonDeconnexion.addEventListener(
+            "click",
+            function () {
+                boutonDeconnexion.disabled = true;
+                boutonDeconnexion.textContent =
+                    "Déconnexion…";
 
-            reinitialiserBanqueDemo();
+                fermerSessionDemo();
 
-            window.setTimeout(function () {
-                window.location.reload();
-            }, 500);
-        }
-    );
+                window.setTimeout(function () {
+                    window.location.replace(
+                        "./connexion.html"
+                    );
+                }, 500);
+            }
+        );
+    </script>
 
-    boutonDeconnexion.addEventListener("click", function () {
-        boutonDeconnexion.disabled = true;
-        boutonDeconnexion.textContent = "Déconnexion…";
+    <!-- Sauvegarde des données bancaires -->
+    <script src="./sauvegarde.js?v=2"></script>
 
-        fermerSessionDemo();
-
-        window.setTimeout(function () {
-            window.location.replace("./connexion.html");
-        }, 500);
-    });
-</script>
-<!-- Sauvegarde des données bancaires -->
-<script src="./sauvegarde.js?v=1"></script>
     <!-- Mise en évidence de la page active -->
     <script src="./navigation.js?v=1"></script>
 </body>
