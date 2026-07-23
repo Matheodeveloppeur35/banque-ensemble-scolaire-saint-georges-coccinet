@@ -2250,3 +2250,14 @@ button.bouton-deconnexion:disabled {
 #fermer-erreur-achat {
     width: 100%;
 }
+/* Statut dynamique du profil */
+
+.badge-compte-inactif {
+    color: #812828;
+    background-color: #fdeaea;
+    border-color: #e5aaaa;
+}
+
+.badge-compte-inactif .point-statut {
+    background-color: #b13a3a;
+}
