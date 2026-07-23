@@ -2222,3 +2222,31 @@ button.bouton-deconnexion:disabled {
         align-items: flex-start;
     }
 }
+/* Message d’erreur lors d’un achat */
+
+.icone-erreur-achat {
+    display: grid;
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 20px;
+    place-items: center;
+    color: #ffffff;
+    background-color: #b13a3a;
+    border-radius: 50%;
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.message-erreur-achat {
+    margin: 20px 0;
+    padding: 16px;
+    color: #812828;
+    background-color: #fdeaea;
+    border: 1px solid #e5aaaa;
+    border-radius: 9px;
+    line-height: 1.6;
+}
+
+#fermer-erreur-achat {
+    width: 100%;
+}
