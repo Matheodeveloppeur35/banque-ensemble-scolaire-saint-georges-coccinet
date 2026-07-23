@@ -389,13 +389,16 @@
                 boutonReinitialisation.textContent =
                     "Réinitialisation…";
 
-                reinitialiserBanqueDemo();
+               reinitialiserBanqueDemo();
 
-                window.setTimeout(function () {
-                    window.location.reload();
-                }, 500);
-            }
-        );
+memoriserNotification(
+    "Les données bancaires de démonstration ont été réinitialisées.",
+    "succes"
+);
+
+window.setTimeout(function () {
+    window.location.reload();
+}, 500);
 
         boutonDeconnexion.addEventListener(
             "click",
