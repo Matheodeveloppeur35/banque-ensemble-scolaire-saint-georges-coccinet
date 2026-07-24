@@ -15,7 +15,7 @@
 
     <title>Aide — Banque Saint-Georges RP</title>
 
-    <link rel="stylesheet" href="./style.css?v=21">
+    <link rel="stylesheet" href="./style.css?v=24">
 </head>
 
 <body>
@@ -40,6 +40,7 @@
             <a href="./profil.html">Profil</a>
             <a href="./parametres.html">Paramètres</a>
             <a href="./aide.html">Aide</a>
+            <a href="./reglement.html">Règlement</a>
 
             <button
                 class="bouton-theme"
@@ -315,14 +316,42 @@
         </section>
     </main>
 
-    <footer>
-        <p>
-            Banque Saint-Georges RP —
-            Ensemble Scolaire Saint-Georges Coccinet
-        </p>
+    <footer class="pied-page-site">
+        <div class="contenu-pied-page">
+            <div class="identite-pied-page">
+                <strong>
+                    Banque Saint-Georges RP
+                </strong>
 
-        <p>
-            Monnaie RP fictive, sans valeur réelle.
+                <span>
+                    Ensemble Scolaire Saint-Georges Coccinet
+                </span>
+            </div>
+
+            <div class="informations-pied-page">
+                <span>
+                    © <span data-annee-actuelle></span>
+                </span>
+
+                <span aria-hidden="true">•</span>
+
+                <span>
+                    Version
+                    <span data-version-site></span>
+                </span>
+
+                <span aria-hidden="true">•</span>
+
+                <span>
+                    Mise à jour :
+                    <span data-mise-a-jour-site></span>
+                </span>
+            </div>
+        </div>
+
+        <p class="mention-fictive-pied-page">
+            Plateforme RP fictive — aucun argent réel,
+            paiement réel ou service bancaire réel.
         </p>
     </footer>
 
@@ -339,6 +368,11 @@
     <script src="./notifications.js?v=3"></script>
     <script src="./theme.js?v=3"></script>
     <script src="./deconnexion.js?v=2"></script>
+
+    <!-- Pied de page dynamique -->
+    <script src="./footer.js?v=1"></script>
+
+    <!-- Navigation active -->
     <script src="./navigation.js?v=3"></script>
 
     <!-- Fonctionnement de l’aide -->
@@ -347,34 +381,52 @@
             "#copier-message-aide"
         );
 
-        boutonCopierAide.addEventListener(
-            "click",
-            async function () {
-                const modele =
-                    "Bonjour, j’ai besoin d’aide concernant la " +
-                    "Banque Saint-Georges RP.\n\n" +
-                    "Page concernée : \n" +
-                    "Problème rencontré : \n" +
-                    "Étapes pour reproduire le problème : \n" +
-                    "Message d’erreur éventuel : ";
+        if (boutonCopierAide) {
+            boutonCopierAide.addEventListener(
+                "click",
+                async function () {
+                    const modele =
+                        "Bonjour, j’ai besoin d’aide concernant la " +
+                        "Banque Saint-Georges RP.\n\n" +
+                        "Page concernée : \n" +
+                        "Problème rencontré : \n" +
+                        "Étapes pour reproduire le problème : \n" +
+                        "Message d’erreur éventuel : ";
 
-                try {
-                    await navigator.clipboard.writeText(modele);
+                    try {
+                        await navigator.clipboard.writeText(
+                            modele
+                        );
 
-                    afficherNotification(
-                        "Le modèle de demande a été copié.",
-                        "succes",
-                        4000
-                    );
-                } catch (erreur) {
-                    afficherNotification(
-                        "La copie automatique a échoué.",
-                        "erreur",
-                        5000
-                    );
+                        if (
+                            typeof afficherNotification ===
+                            "function"
+                        ) {
+                            afficherNotification(
+                                "Le modèle de demande a été copié.",
+                                "succes",
+                                4000
+                            );
+                        }
+                    } catch (erreur) {
+                        if (
+                            typeof afficherNotification ===
+                            "function"
+                        ) {
+                            afficherNotification(
+                                "La copie automatique a échoué.",
+                                "erreur",
+                                5000
+                            );
+                        } else {
+                            window.alert(
+                                "La copie automatique a échoué."
+                            );
+                        }
+                    }
                 }
-            }
-        );
+            );
+        }
     </script>
 </body>
 </html>
