@@ -15,7 +15,7 @@
 
     <title>Connexion — Banque Saint-Georges RP</title>
 
-    <link rel="stylesheet" href="./style.css?v=11">
+    <link rel="stylesheet" href="./style.css?v=19">
 </head>
 
 <body>
@@ -36,6 +36,15 @@
             <a href="./index.html">Accueil</a>
             <a href="./reglement.html">Règlement</a>
             <a href="./connexion.html">Connexion</a>
+            <button
+    class="bouton-theme"
+    type="button"
+    data-changer-theme
+>
+    <span aria-hidden="true">🌙</span>
+    <span>Thème sombre</span>
+</button>
+
         </nav>
     </header>
 
@@ -121,11 +130,15 @@
         </p>
     </footer>
 
-    <!-- Gestion des sessions de démonstration -->
+        <!-- Gestion des sessions de démonstration -->
     <script src="./session.js?v=2"></script>
 
-    <!-- Mise en évidence de la page active -->
-    <script src="./navigation.js?v=1"></script>
+    <!-- Notifications et thème -->
+    <script src="./notifications.js?v=3"></script>
+    <script src="./theme.js?v=3"></script>
+
+    <!-- Navigation active -->
+    <script src="./navigation.js?v=3"></script>
 
     <!-- Fonctionnement de la connexion -->
     <script>
@@ -141,13 +154,19 @@
             "#message-connexion"
         );
 
-        boutonConnexion.addEventListener("click", function () {
-            demarrerConnexion(false);
-        });
+        boutonConnexion.addEventListener(
+            "click",
+            function () {
+                demarrerConnexion(false);
+            }
+        );
 
-        boutonConnexionAdmin.addEventListener("click", function () {
-            demarrerConnexion(true);
-        });
+        boutonConnexionAdmin.addEventListener(
+            "click",
+            function () {
+                demarrerConnexion(true);
+            }
+        );
 
         function demarrerConnexion(modeAdministrateur) {
             boutonConnexion.disabled = true;
@@ -159,7 +178,8 @@
                     "Connexion administrateur…";
 
                 messageConnexion.textContent =
-                    "Création de la session administrateur de démonstration…";
+                    "Création de la session administrateur " +
+                    "de démonstration…";
             } else {
                 boutonConnexion.textContent =
                     "Connexion en cours…";
