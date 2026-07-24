@@ -2801,3 +2801,167 @@ button.bouton-deconnexion:disabled {
     opacity: 0.65;
     transform: none;
 }
+/* Thème sombre */
+
+:root[data-theme="sombre"] {
+    --bleu-principal: #6da9df;
+    --bleu-fonce: #d9eaff;
+    --dore: #e3bd64;
+    --blanc: #172330;
+    --texte: #edf4fb;
+    --texte-clair: #dce7f2;
+    --fond: #0f1822;
+    --bordure: #354657;
+}
+
+:root[data-theme="sombre"] body {
+    background-color: var(--fond);
+    color: var(--texte);
+}
+
+:root[data-theme="sombre"] header {
+    background-color: #172330;
+    border-bottom-color: #354657;
+}
+
+:root[data-theme="sombre"] .identite strong,
+:root[data-theme="sombre"] nav a {
+    color: #edf4fb;
+}
+
+:root[data-theme="sombre"] .identite p,
+:root[data-theme="sombre"] .description-operation span,
+:root[data-theme="sombre"] .date-operation,
+:root[data-theme="sombre"] .contenu-article p,
+:root[data-theme="sombre"] .note-formulaire {
+    color: #adbdcc;
+}
+
+:root[data-theme="sombre"] .page-interieure {
+    background-color: #0f1822;
+}
+
+:root[data-theme="sombre"] .carte-information,
+:root[data-theme="sombre"] .operations,
+:root[data-theme="sombre"] .formulaire-virement,
+:root[data-theme="sombre"] .aide-virement,
+:root[data-theme="sombre"] .historique-complet,
+:root[data-theme="sombre"] .article-boutique,
+:root[data-theme="sombre"] .carte-identite-profil,
+:root[data-theme="sombre"] .informations-profil,
+:root[data-theme="sombre"] .securite-profil,
+:root[data-theme="sombre"] .actions-admin,
+:root[data-theme="sombre"] .tableau-admin,
+:root[data-theme="sombre"] .resume-historique article,
+:root[data-theme="sombre"] .statistiques-admin article,
+:root[data-theme="sombre"] .bloc-reglement,
+:root[data-theme="sombre"] .carte-connexion,
+:root[data-theme="sombre"] .carte-erreur {
+    color: #edf4fb;
+    background-color: #172330;
+    border-color: #354657;
+}
+
+:root[data-theme="sombre"] .carte-information h2,
+:root[data-theme="sombre"] .operations h2,
+:root[data-theme="sombre"] .contenu-article h2,
+:root[data-theme="sombre"] .informations-profil h2,
+:root[data-theme="sombre"] .securite-profil h2,
+:root[data-theme="sombre"] .bloc-reglement h2,
+:root[data-theme="sombre"] .modal-achat h2,
+:root[data-theme="sombre"] .modal-transaction h2 {
+    color: #d9eaff;
+}
+
+:root[data-theme="sombre"] .illustration-article,
+:root[data-theme="sombre"] .action-admin,
+:root[data-theme="sombre"] .categorie-article {
+    background-color: #223243;
+}
+
+:root[data-theme="sombre"] .champ input,
+:root[data-theme="sombre"] .champ textarea,
+:root[data-theme="sombre"] .recherche-historique input,
+:root[data-theme="sombre"] .tri-historique select,
+:root[data-theme="sombre"] .entete-tableau-admin input {
+    color: #edf4fb;
+    background-color: #101a24;
+    border-color: #465a6d;
+}
+
+:root[data-theme="sombre"] .filtre,
+:root[data-theme="sombre"] .filtre-historique {
+    color: #d9eaff;
+    background-color: #172330;
+    border-color: #465a6d;
+}
+
+:root[data-theme="sombre"] .filtre.actif,
+:root[data-theme="sombre"] .filtre:hover,
+:root[data-theme="sombre"] .filtre-historique.actif,
+:root[data-theme="sombre"] .filtre-historique:hover {
+    color: #0f1822;
+    background-color: #6da9df;
+    border-color: #6da9df;
+}
+
+:root[data-theme="sombre"] .ligne-operation:hover,
+:root[data-theme="sombre"] .transaction-cliquable:hover {
+    background-color: #203040;
+}
+
+:root[data-theme="sombre"] .modal-achat,
+:root[data-theme="sombre"] .modal-transaction,
+:root[data-theme="sombre"] .notification-site {
+    color: #edf4fb;
+    background-color: #172330;
+    border-color: #4f6173;
+}
+
+:root[data-theme="sombre"] .contenu-notification strong,
+:root[data-theme="sombre"] .details-transaction strong,
+:root[data-theme="sombre"] .recu-achat strong {
+    color: #edf4fb;
+}
+
+:root[data-theme="sombre"] .contenu-notification span,
+:root[data-theme="sombre"] .details-transaction span,
+:root[data-theme="sombre"] .recu-achat span {
+    color: #adbdcc;
+}
+
+:root[data-theme="sombre"] nav a.page-active {
+    color: #f6d783;
+    background-color: rgba(227, 189, 100, 0.18);
+}
+
+/* Bouton permettant de changer de thème */
+
+.bouton-theme {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 9px 12px;
+    color: var(--bleu-principal);
+    background-color: var(--blanc);
+    border: 1px solid var(--bordure);
+    border-radius: 8px;
+    cursor: pointer;
+    font: inherit;
+    font-weight: bold;
+    transition:
+        color 0.2s ease,
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.bouton-theme:hover {
+    transform: translateY(-1px);
+}
+
+:root[data-theme="sombre"] .bouton-theme {
+    color: #f6d783;
+    background-color: #223243;
+    border-color: #465a6d;
+}
