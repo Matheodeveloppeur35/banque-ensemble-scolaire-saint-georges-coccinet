@@ -15,7 +15,7 @@
 
     <title>Administration — Banque Saint-Georges RP</title>
 
-    <link rel="stylesheet" href="./style.css?v=12">
+    <link rel="stylesheet" href="./style.css?v=19">
 </head>
 
 <body>
@@ -37,6 +37,15 @@
             <a href="./dashboard.html">Mon compte</a>
             <a href="./admin.html">Administration</a>
             <a href="./profil.html">Profil</a>
+            <button
+    class="bouton-theme"
+    type="button"
+    data-changer-theme
+>
+    <span aria-hidden="true">🌙</span>
+    <span>Thème sombre</span>
+</button>
+
         </nav>
     </header>
 
@@ -286,7 +295,7 @@
         </p>
     </footer>
 
-    <!-- Vérification de la session administrateur -->
+       <!-- Vérification de la session administrateur -->
     <script src="./session.js?v=2"></script>
 
     <script>
@@ -297,7 +306,7 @@
         }
     </script>
 
-    <!-- Fonctionnement du panneau d’administration -->
+    <!-- Fonctionnement de l’administration -->
     <script src="./admin.js?v=2"></script>
 
     <!-- Gestion de la déconnexion administrateur -->
@@ -306,19 +315,29 @@
             "#deconnexion-admin"
         );
 
-        boutonDeconnexionAdmin.addEventListener("click", function () {
-            boutonDeconnexionAdmin.disabled = true;
-            boutonDeconnexionAdmin.textContent = "Déconnexion…";
+        boutonDeconnexionAdmin.addEventListener(
+            "click",
+            function () {
+                boutonDeconnexionAdmin.disabled = true;
+                boutonDeconnexionAdmin.textContent =
+                    "Déconnexion…";
 
-            fermerSessionDemo();
+                fermerSessionDemo();
 
-            window.setTimeout(function () {
-                window.location.replace("./connexion.html");
-            }, 500);
-        });
+                window.setTimeout(function () {
+                    window.location.replace(
+                        "./connexion.html"
+                    );
+                }, 500);
+            }
+        );
     </script>
 
-    <!-- Mise en évidence de la page active -->
-    <script src="./navigation.js?v=1"></script>
+    <!-- Notifications et thème -->
+    <script src="./notifications.js?v=3"></script>
+    <script src="./theme.js?v=3"></script>
+
+    <!-- Navigation active -->
+    <script src="./navigation.js?v=3"></script>
 </body>
 </html>
