@@ -8,70 +8,79 @@ const affichageSoldeVirement = document.querySelector(
 
 let virementEnPreparation = null;
 
-actualiserSoldeVirement();
+if (formulaire && affichageSoldeVirement) {
+    actualiserSoldeVirement();
 
-formulaire.addEventListener("submit", function (evenement) {
-    evenement.preventDefault();
+    formulaire.addEventListener(
+        "submit",
+        function (evenement) {
+            evenement.preventDefault();
 
-    const destinataire = document
-        .querySelector("#destinataire")
-        .value
-        .trim();
+            const destinataire = document
+                .querySelector("#destinataire")
+                .value
+                .trim();
 
-    const montantEuros = Number(
-        document.querySelector("#montant").value
+            const montantEuros = Number(
+                document.querySelector("#montant").value
+            );
+
+            const motif = document
+                .querySelector("#motif")
+                .value
+                .trim();
+
+            const reglementAccepte = document
+                .querySelector("#confirmation")
+                .checked;
+
+            const montantCentimes =
+                convertirEurosEnCentimes(montantEuros);
+
+            const erreur = verifierVirement(
+                destinataire,
+                montantCentimes,
+                motif,
+                reglementAccepte
+            );
+
+            if (erreur) {
+                afficherMessage(erreur, "erreur");
+
+                if (
+                    typeof afficherNotification ===
+                    "function"
+                ) {
+                    afficherNotification(
+                        erreur,
+                        "erreur",
+                        6000
+                    );
+                }
+
+                virementEnPreparation = null;
+                return;
+            }
+
+            virementEnPreparation = {
+                destinataire: destinataire,
+                montantCentimes: montantCentimes,
+                motif: motif
+            };
+
+            afficherRecapitulatif(
+                virementEnPreparation
+            );
+        }
     );
-
-    const motif = document
-        .querySelector("#motif")
-        .value
-        .trim();
-
-    const reglementAccepte = document
-        .querySelector("#confirmation")
-        .checked;
-
-    const montantCentimes = convertirEurosEnCentimes(
-        montantEuros
-    );
-
-    const erreur = verifierVirement(
-        destinataire,
-        montantCentimes,
-        motif,
-        reglementAccepte
-    );
-
- if (erreur) {
-    afficherMessage(erreur, "erreur");
-
-    if (typeof afficherNotification === "function") {
-        afficherNotification(
-            erreur,
-            "erreur",
-            6000
-        );
-    }
-
-    virementEnPreparation = null;
-    return;
 }
 
-    virementEnPreparation = {
-        destinataire: destinataire,
-        montantCentimes: montantCentimes,
-        motif: motif
-    };
-
-    afficherRecapitulatif(virementEnPreparation);
-});
-
 function actualiserSoldeVirement() {
-    const donnees = initialiserBanqueDemo();
-
     if (!affichageSoldeVirement) {
         return;
     }
+
+    const donnees = initialiserBanqueDemo();
 
     affichageSoldeVirement.textContent = formaterEuros(
         donnees.soldeCentimes
@@ -105,24 +114,37 @@ function verifierVirement(
     }
 
     if (montantCentimes > donnees.soldeCentimes) {
-        return "Votre solde est insuffisant pour ce virement.";
+        return (
+            "Votre solde est insuffisant pour ce virement."
+        );
     }
 
     if (motif.length < 3) {
-        return "Veuillez fournir un motif RP suffisamment précis.";
+        return (
+            "Veuillez fournir un motif RP suffisamment précis."
+        );
     }
 
     if (!reglementAccepte) {
-        return "Vous devez confirmer le respect du règlement.";
+        return (
+            "Vous devez confirmer le respect du règlement."
+        );
     }
 
-    const destinataireNormalise = destinataire.toLowerCase();
+    const destinataireNormalise =
+        destinataire.toLowerCase();
+
+    const titulaireNormalise = String(
+        donnees.titulaire || ""
+    ).toLowerCase();
+
+    const numeroCompteNormalise = String(
+        donnees.numeroCompte || ""
+    ).toLowerCase();
 
     if (
-        destinataireNormalise ===
-            donnees.titulaire.toLowerCase() ||
-        destinataireNormalise ===
-            donnees.numeroCompte.toLowerCase()
+        destinataireNormalise === titulaireNormalise ||
+        destinataireNormalise === numeroCompteNormalise
     ) {
         return (
             "Vous ne pouvez pas effectuer un virement " +
@@ -139,12 +161,16 @@ function afficherRecapitulatif(virement) {
 
         <span>
             Destinataire :
-            <b>${securiserTexte(virement.destinataire)}</b>
+            <b>
+                ${securiserTexte(virement.destinataire)}
+            </b>
         </span>
 
         <span>
             Montant :
-            <b>${formaterEuros(virement.montantCentimes)}</b>
+            <b>
+                ${formaterEuros(virement.montantCentimes)}
+            </b>
         </span>
 
         <span>
@@ -171,9 +197,12 @@ function afficherRecapitulatif(virement) {
         "#confirmer-virement"
     );
 
-    boutonConfirmation.addEventListener("click", function () {
-        confirmerVirement();
-    });
+    if (boutonConfirmation) {
+        boutonConfirmation.addEventListener(
+            "click",
+            confirmerVirement
+        );
+    }
 }
 
 function confirmerVirement() {
@@ -209,24 +238,25 @@ function confirmerVirement() {
                 virementEnPreparation.motif
         });
 
-       if (!resultat.succes) {
-    afficherMessage(
-        resultat.message,
-        "erreur"
-    );
+        if (!resultat.succes) {
+            afficherMessage(
+                resultat.message,
+                "erreur"
+            );
 
-    if (typeof afficherNotification === "function") {
-        afficherNotification(
-            resultat.message,
-            "erreur",
-            6000
-        );
-    }
+            if (
+                typeof afficherNotification ===
+                "function"
+            ) {
+                afficherNotification(
+                    resultat.message,
+                    "erreur",
+                    6000
+                );
+            }
 
-    virementEnPreparation = null;
-    return;
-}
-
+            virementEnPreparation = null;
+            return;
         }
 
         afficherRecuVirement(resultat);
@@ -239,27 +269,42 @@ function confirmerVirement() {
 
 function afficherRecuVirement(resultat) {
     const transaction = resultat.transaction;
-if (typeof afficherNotification === "function") {
-    afficherNotification(
-        `Virement de ` +
-        `${formaterEuros(transaction.montantCentimes)} ` +
-        `envoyé à ${transaction.destinataire}. ` +
-        `Nouveau solde : ` +
-        `${formaterEuros(resultat.nouveauSoldeCentimes)}.`,
-        "succes",
-        6000
-    );
-}
 
-    const date = new Date(
+    if (
+        typeof afficherNotification === "function"
+    ) {
+        afficherNotification(
+            "Virement de " +
+            formaterEuros(transaction.montantCentimes) +
+            " envoyé à " +
+            transaction.destinataire +
+            ". Nouveau solde : " +
+            formaterEuros(
+                resultat.nouveauSoldeCentimes
+            ) +
+            ".",
+            "succes",
+            6000
+        );
+    }
+
+    const dateTransaction = new Date(
         transaction.date
-    ).toLocaleString("fr-FR", {
-        dateStyle: "long",
-        timeStyle: "short"
-    });
+    );
+
+    const date = Number.isNaN(
+        dateTransaction.getTime()
+    )
+        ? "Date inconnue"
+        : dateTransaction.toLocaleString("fr-FR", {
+            dateStyle: "long",
+            timeStyle: "short"
+        });
 
     const recu = `
-        <strong>Virement RP enregistré avec succès</strong>
+        <strong>
+            Virement RP enregistré avec succès
+        </strong>
 
         <span>
             Référence :
@@ -269,14 +314,18 @@ if (typeof afficherNotification === "function") {
         <span>
             Destinataire :
             <b>
-                ${securiserTexte(transaction.destinataire)}
+                ${securiserTexte(
+                    transaction.destinataire
+                )}
             </b>
         </span>
 
         <span>
             Montant débité :
             <b>
-                ${formaterEuros(transaction.montantCentimes)}
+                ${formaterEuros(
+                    transaction.montantCentimes
+                )}
             </b>
         </span>
 
@@ -291,7 +340,11 @@ if (typeof afficherNotification === "function") {
 
         <span>
             Motif :
-            <b>${securiserTexte(transaction.description)}</b>
+            <b>
+                ${securiserTexte(
+                    transaction.description
+                )}
+            </b>
         </span>
 
         <span>
@@ -309,6 +362,10 @@ if (typeof afficherNotification === "function") {
 }
 
 function afficherMessage(contenu, type) {
+    if (!formulaire) {
+        return;
+    }
+
     let message = document.querySelector(
         "#message-virement"
     );
@@ -319,7 +376,9 @@ function afficherMessage(contenu, type) {
         formulaire.appendChild(message);
     }
 
-    message.className = `message-virement ${type}`;
+    message.className =
+        `message-virement ${type}`;
+
     message.innerHTML = contenu;
 
     message.scrollIntoView({
