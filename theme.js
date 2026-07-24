@@ -51,27 +51,42 @@ function appliquerThemeEnregistre() {
         return;
     }
 
-    const prefereThemeSombre = window.matchMedia(
+    const requeteThemeSombre = window.matchMedia(
         "(prefers-color-scheme: dark)"
-    ).matches;
+    );
 
     appliquerTheme(
-        prefereThemeSombre ? "sombre" : "clair"
+        requeteThemeSombre.matches
+            ? "sombre"
+            : "clair"
     );
 }
 
 function appliquerTheme(theme) {
-    document.documentElement.dataset.theme = theme;
+    document.documentElement.setAttribute(
+        "data-theme",
+        theme
+    );
+
     document.documentElement.style.colorScheme =
-        theme === "sombre" ? "dark" : "light";
+        theme === "sombre"
+            ? "dark"
+            : "light";
 }
 
 function enregistrerTheme(theme) {
-    localStorage.setItem(cleTheme, theme);
+    localStorage.setItem(
+        cleTheme,
+        theme
+    );
 }
 
 function obtenirThemeActuel() {
-    return document.documentElement.dataset.theme || "clair";
+    return (
+        document.documentElement.getAttribute(
+            "data-theme"
+        ) || "clair"
+    );
 }
 
 function actualiserBoutonsTheme(boutons) {
@@ -83,16 +98,23 @@ function actualiserBoutonsTheme(boutons) {
             ? "Thème clair"
             : "Thème sombre";
 
-        const icone = themeSombre ? "☀️" : "🌙";
+        const icone = themeSombre
+            ? "☀️"
+            : "🌙";
 
         bouton.innerHTML = `
-            <span aria-hidden="true">${icone}</span>
+            <span aria-hidden="true">
+                ${icone}
+            </span>
+
             <span>${texte}</span>
         `;
 
         bouton.setAttribute(
             "aria-label",
-            `Activer le ${texte.toLowerCase()}`
+            themeSombre
+                ? "Activer le thème clair"
+                : "Activer le thème sombre"
         );
 
         bouton.setAttribute(
