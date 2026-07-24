@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Aide de la Banque Saint-Georges RP"
+    >
+
+    <title>Aide — Banque Saint-Georges RP</title>
+
+    <link rel="stylesheet" href="./style.css?v=21">
+</head>
+
+<body>
+    <header>
+        <div class="identite">
+            <div class="logo">SG</div>
+
+            <div>
+                <strong>Banque Saint-Georges RP</strong>
+
+                <p>
+                    Ensemble Scolaire Saint-Georges Coccinet
+                </p>
+            </div>
+        </div>
+
+        <nav>
+            <a href="./index.html">Accueil</a>
+            <a href="./dashboard.html">Mon compte</a>
+            <a href="./historique.html">Historique</a>
+            <a href="./boutique.html">Boutique</a>
+            <a href="./profil.html">Profil</a>
+            <a href="./parametres.html">Paramètres</a>
+            <a href="./aide.html">Aide</a>
+
+            <button
+                class="bouton-theme"
+                type="button"
+                data-changer-theme
+            >
+                <span aria-hidden="true">🌙</span>
+                <span>Thème sombre</span>
+            </button>
+
+            <button
+                class="deconnexion-menu"
+                type="button"
+                data-deconnexion
+            >
+                Déconnexion
+            </button>
+        </nav>
+    </header>
+
+    <main class="page-interieure">
+        <section class="conteneur">
+            <div class="entete-aide">
+                <div>
+                    <p class="petit-titre">
+                        Centre d’assistance
+                    </p>
+
+                    <h1>Comment pouvons-nous vous aider ?</h1>
+
+                    <p>
+                        Retrouvez les explications essentielles pour
+                        utiliser la Banque Saint-Georges RP.
+                    </p>
+                </div>
+
+                <a
+                    class="retour-dashboard"
+                    href="./dashboard.html"
+                >
+                    ← Retour au compte
+                </a>
+            </div>
+
+            <section class="avertissement-aide">
+                <div class="icone-avertissement-aide">
+                    ℹ️
+                </div>
+
+                <div>
+                    <h2>Plateforme entièrement fictive</h2>
+
+                    <p>
+                        Les comptes, les euros, les achats et les
+                        virements appartiennent uniquement au jeu de
+                        rôle. Aucun argent réel n’est utilisé.
+                    </p>
+                </div>
+            </section>
+
+            <div class="grille-guides-aide">
+                <article class="guide-aide">
+                    <div class="icone-guide-aide">
+                        🏦
+                    </div>
+
+                    <h2>Mon compte</h2>
+
+                    <p>
+                        Consultez votre solde, vos informations
+                        bancaires RP et vos dernières opérations.
+                    </p>
+
+                    <a href="./dashboard.html">
+                        Accéder à mon compte →
+                    </a>
+                </article>
+
+                <article class="guide-aide">
+                    <div class="icone-guide-aide">
+                        🔄
+                    </div>
+
+                    <h2>Effectuer un virement</h2>
+
+                    <p>
+                        Envoyez des euros RP à un autre personnage,
+                        dans la limite du plafond autorisé.
+                    </p>
+
+                    <a href="./virement.html">
+                        Faire un virement →
+                    </a>
+                </article>
+
+                <article class="guide-aide">
+                    <div class="icone-guide-aide">
+                        🛍️
+                    </div>
+
+                    <h2>Utiliser la boutique</h2>
+
+                    <p>
+                        Achetez des fournitures, des activités ou des
+                        services avec votre solde fictif.
+                    </p>
+
+                    <a href="./boutique.html">
+                        Ouvrir la boutique →
+                    </a>
+                </article>
+
+                <article class="guide-aide">
+                    <div class="icone-guide-aide">
+                        🧾
+                    </div>
+
+                    <h2>Consulter l’historique</h2>
+
+                    <p>
+                        Recherchez, filtrez, triez et exportez les
+                        opérations enregistrées.
+                    </p>
+
+                    <a href="./historique.html">
+                        Voir l’historique →
+                    </a>
+                </article>
+
+                <article class="guide-aide">
+                    <div class="icone-guide-aide">
+                        💾
+                    </div>
+
+                    <h2>Sauvegarder les données</h2>
+
+                    <p>
+                        Téléchargez une copie JSON de vos données
+                        locales afin de pouvoir les restaurer.
+                    </p>
+
+                    <a href="./parametres.html">
+                        Ouvrir les paramètres →
+                    </a>
+                </article>
+
+                <article class="guide-aide">
+                    <div class="icone-guide-aide">
+                        🛡️
+                    </div>
+
+                    <h2>Sécurité</h2>
+
+                    <p>
+                        Ne transmettez jamais de mot de passe, de carte
+                        bancaire, d’IBAN ou de donnée financière réelle.
+                    </p>
+
+                    <a href="./reglement.html">
+                        Lire le règlement →
+                    </a>
+                </article>
+            </div>
+
+            <section class="faq-aide">
+                <div class="titre-section">
+                    <p class="petit-titre">
+                        Questions fréquentes
+                    </p>
+
+                    <h2>FAQ</h2>
+                </div>
+
+                <div class="liste-faq">
+                    <details>
+                        <summary>
+                            Les euros affichés sont-ils réels ?
+                        </summary>
+
+                        <p>
+                            Non. Tous les montants sont fictifs et
+                            réservés au RP de l’établissement.
+                        </p>
+                    </details>
+
+                    <details>
+                        <summary>
+                            Où sont enregistrées mes données ?
+                        </summary>
+
+                        <p>
+                            Dans cette version, les données sont
+                            conservées localement dans votre navigateur.
+                            Elles ne sont pas partagées entre appareils.
+                        </p>
+                    </details>
+
+                    <details>
+                        <summary>
+                            Le destinataire reçoit-il un virement ?
+                        </summary>
+
+                        <p>
+                            Pas encore. Le virement débite seulement
+                            le compte local de démonstration. Une base
+                            partagée sera nécessaire pour créditer un
+                            autre membre.
+                        </p>
+                    </details>
+
+                    <details>
+                        <summary>
+                            Puis-je annuler une transaction ?
+                        </summary>
+
+                        <p>
+                            Il n’existe pas encore de fonction
+                            d’annulation. Vous pouvez toutefois
+                            restaurer une sauvegarde ou réinitialiser
+                            les données de démonstration.
+                        </p>
+                    </details>
+
+                    <details>
+                        <summary>
+                            Pourquoi mon solde diffère sur un autre appareil ?
+                        </summary>
+
+                        <p>
+                            Chaque navigateur possède son propre
+                            stockage local. Les données ne sont donc
+                            pas encore synchronisées.
+                        </p>
+                    </details>
+
+                    <details>
+                        <summary>
+                            Puis-je utiliser de véritables données bancaires ?
+                        </summary>
+
+                        <p>
+                            Non. Il est interdit de saisir ou demander
+                            une carte bancaire, un IBAN, un mot de
+                            passe ou toute autre donnée financière réelle.
+                        </p>
+                    </details>
+                </div>
+            </section>
+
+            <section class="contact-aide">
+                <div>
+                    <p class="petit-titre">
+                        Besoin d’assistance ?
+                    </p>
+
+                    <h2>Contacter l’équipe du serveur</h2>
+
+                    <p>
+                        Pour signaler un bug ou demander de l’aide,
+                        utilisez le système de tickets de votre serveur
+                        Discord. Ne publiez aucune information personnelle.
+                    </p>
+                </div>
+
+                <button
+                    class="bouton-contact-aide"
+                    id="copier-message-aide"
+                    type="button"
+                >
+                    Copier un modèle de demande
+                </button>
+            </section>
+        </section>
+    </main>
+
+    <footer>
+        <p>
+            Banque Saint-Georges RP —
+            Ensemble Scolaire Saint-Georges Coccinet
+        </p>
+
+        <p>
+            Monnaie RP fictive, sans valeur réelle.
+        </p>
+    </footer>
+
+    <!-- Vérification de la session -->
+    <script src="./session.js?v=3"></script>
+
+    <script>
+        if (!utilisateurConnecte()) {
+            window.location.replace("./connexion.html");
+        }
+    </script>
+
+    <!-- Services communs -->
+    <script src="./notifications.js?v=3"></script>
+    <script src="./theme.js?v=3"></script>
+    <script src="./deconnexion.js?v=2"></script>
+    <script src="./navigation.js?v=3"></script>
+
+    <!-- Fonctionnement de l’aide -->
+    <script>
+        const boutonCopierAide = document.querySelector(
+            "#copier-message-aide"
+        );
+
+        boutonCopierAide.addEventListener(
+            "click",
+            async function () {
+                const modele =
+                    "Bonjour, j’ai besoin d’aide concernant la " +
+                    "Banque Saint-Georges RP.\n\n" +
+                    "Page concernée : \n" +
+                    "Problème rencontré : \n" +
+                    "Étapes pour reproduire le problème : \n" +
+                    "Message d’erreur éventuel : ";
+
+                try {
+                    await navigator.clipboard.writeText(modele);
+
+                    afficherNotification(
+                        "Le modèle de demande a été copié.",
+                        "succes",
+                        4000
+                    );
+                } catch (erreur) {
+                    afficherNotification(
+                        "La copie automatique a échoué.",
+                        "erreur",
+                        5000
+                    );
+                }
+            }
+        );
+    </script>
+</body>
+</html>
