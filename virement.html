@@ -40,6 +40,15 @@
             <a href="./profil.html">Profil</a>
             <a href="./reglement.html">Règlement</a>
             <button
+    class="bouton-theme"
+    type="button"
+    data-changer-theme
+>
+    <span aria-hidden="true">🌙</span>
+    <span>Thème sombre</span>
+</button>
+
+            <button
     class="deconnexion-menu"
     type="button"
     data-deconnexion
@@ -244,12 +253,15 @@
         }
     </script>
 
-    <!-- Données et services communs -->
+      <!-- Données et services communs -->
     <script src="./banque.js?v=11"></script>
     <script src="./notifications.js?v=3"></script>
 
-    <!-- Fonctionnement du formulaire de virement -->
+    <!-- Fonctionnement du formulaire -->
     <script src="./virement.js?v=6"></script>
+
+    <!-- Thème -->
+    <script src="./theme.js?v=2"></script>
 
     <!-- Déconnexion commune -->
     <script src="./deconnexion.js?v=2"></script>
@@ -258,3 +270,4 @@
     <script src="./navigation.js?v=2"></script>
 </body>
 </html>
+
