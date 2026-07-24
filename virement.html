@@ -41,24 +41,23 @@
             <a href="./parametres.html">Paramètres</a>
             <a href="./aide.html">Aide</a>
             <a href="./reglement.html">Règlement</a>
-            <button
-    class="bouton-theme"
-    type="button"
-    data-changer-theme
->
-    <span aria-hidden="true">🌙</span>
-    <span>Thème sombre</span>
-</button>
 
-           
             <button
-    class="deconnexion-menu"
-    type="button"
-    data-deconnexion
->
-    Déconnexion
-</button>
+                class="bouton-theme"
+                type="button"
+                data-changer-theme
+            >
+                <span aria-hidden="true">🌙</span>
+                <span>Thème sombre</span>
+            </button>
 
+            <button
+                class="deconnexion-menu"
+                type="button"
+                data-deconnexion
+            >
+                Déconnexion
+            </button>
         </nav>
     </header>
 
@@ -91,14 +90,13 @@
                     class="formulaire-virement"
                     id="formulaire-virement"
                 >
-                   <div class="solde-formulaire">
-    <span>Solde disponible</span>
+                    <div class="solde-formulaire">
+                        <span>Solde disponible</span>
 
-    <strong id="solde-virement">
-        Chargement…
-    </strong>
-</div>
-
+                        <strong id="solde-virement">
+                            Chargement…
+                        </strong>
+                    </div>
 
                     <div class="champ">
                         <label for="destinataire">
@@ -221,62 +219,53 @@
             <div class="encadre-important">
                 <strong>Version de démonstration :</strong>
 
-                le bouton ne réalisera pas encore de véritable transaction.
-                Nous ajouterons le fonctionnement et les vérifications
-                lors d’une prochaine étape.
+                le virement débite uniquement le solde local enregistré
+                dans votre navigateur. Le destinataire n’est pas encore
+                réellement crédité.
             </div>
         </section>
     </main>
 
-   <footer class="pied-page-site">
-    <div class="contenu-pied-page">
-        <div class="identite-pied-page">
-            <strong>
-                Banque Saint-Georges RP
-            </strong>
+    <footer class="pied-page-site">
+        <div class="contenu-pied-page">
+            <div class="identite-pied-page">
+                <strong>
+                    Banque Saint-Georges RP
+                </strong>
 
-            <span>
-                Ensemble Scolaire Saint-Georges Coccinet
-            </span>
+                <span>
+                    Ensemble Scolaire Saint-Georges Coccinet
+                </span>
+            </div>
+
+            <div class="informations-pied-page">
+                <span>
+                    © <span data-annee-actuelle></span>
+                </span>
+
+                <span aria-hidden="true">•</span>
+
+                <span>
+                    Version
+                    <span data-version-site></span>
+                </span>
+
+                <span aria-hidden="true">•</span>
+
+                <span>
+                    Mise à jour :
+                    <span data-mise-a-jour-site></span>
+                </span>
+            </div>
         </div>
 
-        <div class="informations-pied-page">
-            <span>
-                © <span data-annee-actuelle></span>
-            </span>
+        <p class="mention-fictive-pied-page">
+            Plateforme RP fictive — aucun argent réel,
+            paiement réel ou service bancaire réel.
+        </p>
+    </footer>
 
-            <span aria-hidden="true">•</span>
-
-            <span>
-                Version
-                <span data-version-site></span>
-            </span>
-
-            <span aria-hidden="true">•</span>
-
-            <span>
-                Mise à jour :
-                <span data-mise-a-jour-site></span>
-            </span>
-        </div>
-    </div>
-
-    <p class="mention-fictive-pied-page">
-        Plateforme RP fictive — aucun argent réel,
-        paiement réel ou service bancaire réel.
-    </p>
-</footer>
-
-
-      <!-- Vérification de la session -->
-    <script src="./session.js?v=2"></script>
-
-    <script>
-        if (!utilisateurConnecte()) {
-            window.location.replace("./connexion.html");
-        }
-    </script>
-    <!-- Vérification de la session -->
+    <!-- Vérification de la session : un seul chargement -->
     <script src="./session.js?v=3"></script>
 
     <script>
@@ -285,25 +274,23 @@
         }
     </script>
 
-         <!-- Données et services communs -->
+    <!-- Données et services communs -->
     <script src="./banque.js?v=11"></script>
     <script src="./notifications.js?v=3"></script>
 
-    <!-- Fonctionnement du formulaire -->
-    <script src="./virement.js?v=6"></script>
+    <!-- Fonctionnement dynamique du formulaire -->
+    <script src="./virement.js?v=7"></script>
 
-    <!-- Thème -->
-    <script src="./theme.js?v=2"></script>
+    <!-- Thème clair et sombre -->
+    <script src="./theme.js?v=3"></script>
 
     <!-- Déconnexion commune -->
     <script src="./deconnexion.js?v=2"></script>
 
     <!-- Pied de page dynamique -->
-<script src="./footer.js?v=1"></script>
+    <script src="./footer.js?v=1"></script>
 
     <!-- Navigation active -->
-    <script src="./navigation.js?v=2"></script>
+    <script src="./navigation.js?v=3"></script>
 </body>
 </html>
-
-
