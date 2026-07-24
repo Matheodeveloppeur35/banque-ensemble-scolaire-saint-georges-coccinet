@@ -2965,3 +2965,60 @@ button.bouton-deconnexion:disabled {
     background-color: #223243;
     border-color: #465a6d;
 }
+/* Administration en thème sombre */
+
+:root[data-theme="sombre"] .avertissement-admin {
+    color: #ffcaca;
+    background-color: #3a2024;
+    border-color: #754047;
+    border-left-color: #d96b73;
+}
+
+:root[data-theme="sombre"] .badge-administrateur {
+    color: #f6d783;
+    background-color: #3a321d;
+    border-color: #74632c;
+}
+
+:root[data-theme="sombre"] .action-admin {
+    color: #edf4fb;
+    background-color: #1c2a38;
+    border-color: #354657;
+}
+
+:root[data-theme="sombre"] .action-admin:hover {
+    background-color: #26394b;
+    border-color: #6da9df;
+}
+
+:root[data-theme="sombre"] .action-admin > span {
+    background-color: #2b3d4f;
+}
+
+:root[data-theme="sombre"] .action-admin strong {
+    color: #d9eaff;
+}
+
+:root[data-theme="sombre"] .action-admin small {
+    color: #adbdcc;
+}
+
+:root[data-theme="sombre"] .tableau-admin th {
+    color: #c2d1df;
+    background-color: #202f3e;
+}
+
+:root[data-theme="sombre"] .tableau-admin td {
+    color: #edf4fb;
+    border-bottom-color: #354657;
+}
+
+:root[data-theme="sombre"] .tableau-admin tbody tr:hover {
+    background-color: #203040;
+}
+
+:root[data-theme="sombre"] .message-action-admin {
+    color: #f6d783;
+    background-color: #3a321d;
+    border-color: #74632c;
+}
