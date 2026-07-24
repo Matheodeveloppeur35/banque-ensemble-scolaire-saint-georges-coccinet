@@ -3489,3 +3489,145 @@ button.bouton-deconnexion:disabled {
         width: 100%;
     }
 }
+/* Bannière d’état du système */
+
+.banniere-statut-systeme {
+    position: relative;
+    z-index: 1500;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 13px;
+    padding: 11px 7%;
+    color: #543d00;
+    background-color: #fff3cd;
+    border-bottom: 1px solid #e5c96f;
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease;
+}
+
+.banniere-statut-systeme.fermeture {
+    opacity: 0;
+    transform: translateY(-100%);
+}
+
+.indicateur-statut-systeme {
+    width: 11px;
+    height: 11px;
+    background-color: #d6a62f;
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px rgba(214, 166, 47, 0.18);
+}
+
+.contenu-statut-systeme {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 5px 10px;
+    min-width: 0;
+}
+
+.contenu-statut-systeme strong {
+    color: #543d00;
+}
+
+.message-statut-systeme {
+    line-height: 1.5;
+}
+
+.contenu-statut-systeme small {
+    color: #7a641f;
+}
+
+.fermer-statut-systeme {
+    display: grid;
+    width: 30px;
+    height: 30px;
+    place-items: center;
+    padding: 0;
+    color: #6b560d;
+    background-color: transparent;
+    border: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 21px;
+}
+
+.fermer-statut-systeme:hover {
+    color: #ffffff;
+    background-color: #9a7516;
+}
+
+/* Variantes disponibles pour plus tard */
+
+.banniere-statut-systeme.operationnel {
+    color: #12633e;
+    background-color: #e3f6eb;
+    border-bottom-color: #acd8bd;
+}
+
+.banniere-statut-systeme.operationnel
+.indicateur-statut-systeme {
+    background-color: #168851;
+}
+
+.banniere-statut-systeme.maintenance {
+    color: #543d00;
+    background-color: #fff3cd;
+    border-bottom-color: #e5c96f;
+}
+
+.banniere-statut-systeme.panne {
+    color: #812828;
+    background-color: #fdeaea;
+    border-bottom-color: #e5aaaa;
+}
+
+.banniere-statut-systeme.panne
+.indicateur-statut-systeme {
+    background-color: #b13a3a;
+}
+
+/* Thème sombre */
+
+:root[data-theme="sombre"]
+.banniere-statut-systeme {
+    color: #f6d783;
+    background-color: #3a321d;
+    border-bottom-color: #74632c;
+}
+
+:root[data-theme="sombre"]
+.contenu-statut-systeme strong {
+    color: #ffe5a0;
+}
+
+:root[data-theme="sombre"]
+.contenu-statut-systeme small {
+    color: #d7bd72;
+}
+
+:root[data-theme="sombre"]
+.fermer-statut-systeme {
+    color: #f6d783;
+}
+
+@media (max-width: 700px) {
+    .banniere-statut-systeme {
+        align-items: start;
+        padding: 12px 15px;
+    }
+
+    .contenu-statut-systeme {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 3px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .banniere-statut-systeme {
+        transition: none;
+    }
+}
