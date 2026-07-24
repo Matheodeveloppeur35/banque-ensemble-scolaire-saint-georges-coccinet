@@ -2,7 +2,16 @@ const cleTheme = "saintGeorgesTheme";
 
 appliquerThemeEnregistre();
 
-document.addEventListener("DOMContentLoaded", function () {
+if (document.readyState === "loading") {
+    document.addEventListener(
+        "DOMContentLoaded",
+        initialiserBoutonsTheme
+    );
+} else {
+    initialiserBoutonsTheme();
+}
+
+function initialiserBoutonsTheme() {
     const boutonsTheme = document.querySelectorAll(
         "[data-changer-theme]"
     );
@@ -10,6 +19,12 @@ document.addEventListener("DOMContentLoaded", function () {
     actualiserBoutonsTheme(boutonsTheme);
 
     boutonsTheme.forEach(function (bouton) {
+        if (bouton.dataset.themeInitialise === "true") {
+            return;
+        }
+
+        bouton.dataset.themeInitialise = "true";
+
         bouton.addEventListener("click", function () {
             const themeActuel = obtenirThemeActuel();
 
@@ -23,20 +38,17 @@ document.addEventListener("DOMContentLoaded", function () {
             actualiserBoutonsTheme(boutonsTheme);
 
             if (typeof afficherNotification === "function") {
-                const message =
+                afficherNotification(
                     nouveauTheme === "sombre"
                         ? "Le thème sombre est activé."
-                        : "Le thème clair est activé.";
-
-                afficherNotification(
-                    message,
+                        : "Le thème clair est activé.",
                     "information",
                     3500
                 );
             }
         });
     });
-});
+}
 
 function appliquerThemeEnregistre() {
     const themeEnregistre = localStorage.getItem(
@@ -51,15 +63,18 @@ function appliquerThemeEnregistre() {
         return;
     }
 
-    const requeteThemeSombre = window.matchMedia(
-        "(prefers-color-scheme: dark)"
-    );
+    let themeInitial = "clair";
 
-    appliquerTheme(
-        requeteThemeSombre.matches
-            ? "sombre"
-            : "clair"
-    );
+    if (
+        typeof window.matchMedia === "function" &&
+        window.matchMedia(
+            "(prefers-color-scheme: dark)"
+        ).matches
+    ) {
+        themeInitial = "sombre";
+    }
+
+    appliquerTheme(themeInitial);
 }
 
 function appliquerTheme(theme) {
