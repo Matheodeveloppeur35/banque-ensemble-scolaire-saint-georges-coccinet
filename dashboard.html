@@ -15,7 +15,7 @@
 
     <title>Mon compte — Banque Saint-Georges RP</title>
 
-    <link rel="stylesheet" href="./style.css?v=12">
+    <link rel="stylesheet" href="./style.css?v=21">
 </head>
 
 <body>
@@ -41,22 +41,23 @@
             <a href="./parametres.html">Paramètres</a>
             <a href="./aide.html">Aide</a>
             <a href="./reglement.html">Règlement</a>
-            <button
-    class="bouton-theme"
-    type="button"
-    data-changer-theme
->
-    <span aria-hidden="true">🌙</span>
-    <span>Thème sombre</span>
-</button>
 
             <button
-    class="deconnexion-menu"
-    type="button"
-    data-deconnexion
->
-    Déconnexion
-</button>
+                class="bouton-theme"
+                type="button"
+                data-changer-theme
+            >
+                <span aria-hidden="true">🌙</span>
+                <span>Thème sombre</span>
+            </button>
+
+            <button
+                class="deconnexion-menu"
+                type="button"
+                data-deconnexion
+            >
+                Déconnexion
+            </button>
         </nav>
     </header>
 
@@ -193,8 +194,8 @@
         </p>
     </footer>
 
-    <!-- Vérification de la session -->
-    <script src="./session.js?v=2"></script>
+    <!-- Protection de la page -->
+    <script src="./session.js?v=3"></script>
 
     <script>
         if (!utilisateurConnecte()) {
@@ -202,49 +203,62 @@
         }
     </script>
 
-    <!-- Données bancaires dynamiques -->
-    <script src="./banque.js?v=1"></script>
+    <!-- Données bancaires -->
+    <script src="./banque.js?v=11"></script>
 
+    <!-- Affichage dynamique du tableau de bord -->
     <script>
         const donneesBancaires = initialiserBanqueDemo();
 
-        const nomTitulaire = donneesBancaires.titulaire;
-        const roleTitulaire = donneesBancaires.role;
-        const statutCompte = donneesBancaires.statut;
-
-        document.querySelector(
-            "#bienvenue-dashboard"
-        ).textContent = `Bonjour, ${nomTitulaire}`;
-
-        document.querySelector(
-            "#solde-dashboard"
-        ).textContent = formaterEuros(
-            donneesBancaires.soldeCentimes
-        );
-
-        document.querySelector(
-            "#titulaire-dashboard"
-        ).textContent = nomTitulaire;
-
-        document.querySelector(
-            "#numero-compte-dashboard"
-        ).textContent = donneesBancaires.numeroCompte;
-
-        document.querySelector(
-            "#type-compte-dashboard"
-        ).textContent =
-            `Compte ${roleTitulaire.toLowerCase()} RP`;
-
-        document.querySelector(
-            "#statut-dashboard"
-        ).textContent =
-            `Compte ${statutCompte.toLowerCase()}`;
-
-        document.querySelector(
-            "#statut-information-dashboard"
-        ).textContent = statutCompte;
-
+        afficherInformationsCompte();
         afficherOperationsRecentes();
+
+        function afficherInformationsCompte() {
+            const nomTitulaire = String(
+                donneesBancaires.titulaire || "Utilisateur"
+            );
+
+            const roleTitulaire = String(
+                donneesBancaires.role || "Membre"
+            );
+
+            const statutCompte = String(
+                donneesBancaires.statut || "Inconnu"
+            );
+
+            document.querySelector(
+                "#bienvenue-dashboard"
+            ).textContent = `Bonjour, ${nomTitulaire}`;
+
+            document.querySelector(
+                "#solde-dashboard"
+            ).textContent = formaterEuros(
+                donneesBancaires.soldeCentimes
+            );
+
+            document.querySelector(
+                "#titulaire-dashboard"
+            ).textContent = nomTitulaire;
+
+            document.querySelector(
+                "#numero-compte-dashboard"
+            ).textContent =
+                donneesBancaires.numeroCompte || "Non attribué";
+
+            document.querySelector(
+                "#type-compte-dashboard"
+            ).textContent =
+                `Compte ${roleTitulaire.toLowerCase()} RP`;
+
+            document.querySelector(
+                "#statut-dashboard"
+            ).textContent =
+                `Compte ${statutCompte.toLowerCase()}`;
+
+            document.querySelector(
+                "#statut-information-dashboard"
+            ).textContent = statutCompte;
+        }
 
         function afficherOperationsRecentes() {
             const conteneurOperations = document.querySelector(
@@ -259,10 +273,13 @@
 
             const operationsRecentes = transactions
                 .slice()
-                .sort(function (transactionA, transactionB) {
+                .sort(function (
+                    transactionA,
+                    transactionB
+                ) {
                     return (
-                        new Date(transactionB.date) -
-                        new Date(transactionA.date)
+                        obtenirTempsTransaction(transactionB) -
+                        obtenirTempsTransaction(transactionA)
                     );
                 })
                 .slice(0, 3);
@@ -310,7 +327,9 @@
 
                             <div class="description-operation">
                                 <strong>
-                                    ${securiserValeur(transaction.titre)}
+                                    ${securiserValeur(
+                                        transaction.titre
+                                    )}
                                 </strong>
 
                                 <span>
@@ -333,6 +352,14 @@
                     `;
                 })
                 .join("");
+        }
+
+        function obtenirTempsTransaction(transaction) {
+            const temps = new Date(
+                transaction.date
+            ).getTime();
+
+            return Number.isNaN(temps) ? 0 : temps;
         }
 
         function formaterDateTransaction(dateTransaction) {
@@ -360,22 +387,18 @@
             return element.innerHTML;
         }
     </script>
-<!-- Notifications et thème -->
-<script src="./notifications.js?v=2"></script>
-<script src="./theme.js?v=1"></script>
 
-<!-- Déconnexion commune -->
-<script src="./deconnexion.js?v=1"></script>
+    <!-- Bannière d’état du système -->
+    <script src="./statut-systeme.js?v=1"></script>
 
     <!-- Notifications et thème -->
     <script src="./notifications.js?v=3"></script>
-    <script src="./theme.js?v=2"></script>
+    <script src="./theme.js?v=3"></script>
 
-    <!-- Déconnexion commune -->
+    <!-- Déconnexion -->
     <script src="./deconnexion.js?v=2"></script>
 
     <!-- Navigation active -->
-    <script src="./navigation.js?v=2"></script>
+    <script src="./navigation.js?v=3"></script>
 </body>
 </html>
-
