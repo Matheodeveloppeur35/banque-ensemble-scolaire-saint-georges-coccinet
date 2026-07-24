@@ -40,6 +40,15 @@
             <a href="./profil.html">Profil</a>
             <a href="./reglement.html">Règlement</a>
         <button
+    class="bouton-theme"
+    type="button"
+    data-changer-theme
+>
+    <span aria-hidden="true">🌙</span>
+    <span>Thème sombre</span>
+</button>
+
+            <button
     class="deconnexion-menu"
     type="button"
     data-deconnexion
@@ -363,16 +372,20 @@
         }
     </script>
 
- <!-- Données et services communs -->
+<!-- Données et services communs -->
 <script src="./banque.js?v=10"></script>
-<script src="./notifications.js?v=2"></script>
+<script src="./notifications.js?v=3"></script>
 
 <!-- Fonctionnement des filtres et des achats -->
 <script src="./boutique.js?v=5"></script>
 
+<!-- Thème -->
+<script src="./theme.js?v=2"></script>
+
 <!-- Déconnexion commune -->
-<script src="./deconnexion.js?v=1"></script>
-    <!-- Mise en évidence de la page active -->
-    <script src="./navigation.js?v=1"></script>
+<script src="./deconnexion.js?v=2"></script>
+
+<!-- Navigation active -->
+<script src="./navigation.js?v=2"></script>
 </body>
 </html>
