@@ -36,15 +36,15 @@
             <a href="./index.html">Accueil</a>
             <a href="./reglement.html">Règlement</a>
             <a href="./connexion.html">Connexion</a>
-            <button
-    class="bouton-theme"
-    type="button"
-    data-changer-theme
->
-    <span aria-hidden="true">🌙</span>
-    <span>Thème sombre</span>
-</button>
 
+            <button
+                class="bouton-theme"
+                type="button"
+                data-changer-theme
+            >
+                <span aria-hidden="true">🌙</span>
+                <span>Thème sombre</span>
+            </button>
         </nav>
     </header>
 
@@ -120,48 +120,55 @@
     </main>
 
     <footer class="pied-page-site">
-    <div class="contenu-pied-page">
-        <div class="identite-pied-page">
-            <strong>Banque Saint-Georges RP</strong>
+        <div class="contenu-pied-page">
+            <div class="identite-pied-page">
+                <strong>
+                    Banque Saint-Georges RP
+                </strong>
 
-            <span>
-                Ensemble Scolaire Saint-Georges Coccinet
-            </span>
+                <span>
+                    Ensemble Scolaire Saint-Georges Coccinet
+                </span>
+            </div>
+
+            <div class="informations-pied-page">
+                <span>
+                    © <span data-annee-actuelle></span>
+                </span>
+
+                <span aria-hidden="true">•</span>
+
+                <span>
+                    Version
+                    <span data-version-site></span>
+                </span>
+
+                <span aria-hidden="true">•</span>
+
+                <span>
+                    Mise à jour :
+                    <span data-mise-a-jour-site></span>
+                </span>
+            </div>
         </div>
 
-        <div class="informations-pied-page">
-            <span>
-                © <span data-annee-actuelle></span>
-            </span>
+        <p class="mention-fictive-pied-page">
+            Plateforme RP fictive — aucun argent réel,
+            paiement réel ou service bancaire réel.
+        </p>
+    </footer>
 
-            <span aria-hidden="true">•</span>
+    <!-- Gestion des sessions de démonstration -->
+    <script src="./session.js?v=3"></script>
 
-            <span>
-                Version <span data-version-site></span>
-            </span>
-
-            <span aria-hidden="true">•</span>
-
-            <span>
-                Mise à jour :
-                <span data-mise-a-jour-site></span>
-            </span>
-        </div>
-    </div>
-
-    <p class="mention-fictive-pied-page">
-        Plateforme RP fictive — aucun argent réel,
-        paiement réel ou service bancaire réel.
-    </p>
-</footer>
-
-
-        <!-- Gestion des sessions de démonstration -->
-    <script src="./session.js?v=2"></script>
-
-    <!-- Notifications et thème -->
+    <!-- Notifications -->
     <script src="./notifications.js?v=3"></script>
+
+    <!-- Thème clair et sombre -->
     <script src="./theme.js?v=3"></script>
+
+    <!-- Pied de page dynamique -->
+    <script src="./footer.js?v=2"></script>
 
     <!-- Navigation active -->
     <script src="./navigation.js?v=3"></script>
@@ -180,19 +187,25 @@
             "#message-connexion"
         );
 
-        boutonConnexion.addEventListener(
-            "click",
-            function () {
-                demarrerConnexion(false);
-            }
-        );
+        if (
+            boutonConnexion &&
+            boutonConnexionAdmin &&
+            messageConnexion
+        ) {
+            boutonConnexion.addEventListener(
+                "click",
+                function () {
+                    demarrerConnexion(false);
+                }
+            );
 
-        boutonConnexionAdmin.addEventListener(
-            "click",
-            function () {
-                demarrerConnexion(true);
-            }
-        );
+            boutonConnexionAdmin.addEventListener(
+                "click",
+                function () {
+                    demarrerConnexion(true);
+                }
+            );
+        }
 
         function demarrerConnexion(modeAdministrateur) {
             boutonConnexion.disabled = true;
@@ -224,15 +237,6 @@
                 }
             }, 800);
         }
-        <!-- Thème clair et sombre -->
-<script src="./theme.js?v=3"></script>
-
-<!-- Pied de page dynamique -->
-<script src="./footer.js?v=1"></script>
-
-<!-- Navigation active -->
-<script src="./navigation.js?v=3"></script>
-
     </script>
 </body>
 </html>
