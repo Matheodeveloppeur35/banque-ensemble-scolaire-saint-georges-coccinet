@@ -16,26 +16,52 @@ if (formulaire && affichageSoldeVirement) {
         function (evenement) {
             evenement.preventDefault();
 
-            const destinataire = document
-                .querySelector("#destinataire")
-                .value
-                .trim();
-
-            const montantEuros = Number(
-                document.querySelector("#montant").value
+            const champDestinataire = document.querySelector(
+                "#destinataire"
             );
 
-            const motif = document
-                .querySelector("#motif")
-                .value
-                .trim();
+            const champMontant = document.querySelector(
+                "#montant"
+            );
 
-            const reglementAccepte = document
-                .querySelector("#confirmation")
-                .checked;
+            const champMotif = document.querySelector(
+                "#motif"
+            );
+
+            const champConfirmation = document.querySelector(
+                "#confirmation"
+            );
+
+            if (
+                !champDestinataire ||
+                !champMontant ||
+                !champMotif ||
+                !champConfirmation
+            ) {
+                afficherErreurVirement(
+                    "Le formulaire de virement est incomplet."
+                );
+
+                return;
+            }
+
+            const destinataire =
+                champDestinataire.value.trim();
+
+            const montantEuros = Number(
+                champMontant.value
+            );
+
+            const motif =
+                champMotif.value.trim();
+
+            const reglementAccepte =
+                champConfirmation.checked;
 
             const montantCentimes =
-                convertirEurosEnCentimes(montantEuros);
+                convertirEurosEnCentimes(
+                    montantEuros
+                );
 
             const erreur = verifierVirement(
                 destinataire,
@@ -45,19 +71,7 @@ if (formulaire && affichageSoldeVirement) {
             );
 
             if (erreur) {
-                afficherMessage(erreur, "erreur");
-
-                if (
-                    typeof afficherNotification ===
-                    "function"
-                ) {
-                    afficherNotification(
-                        erreur,
-                        "erreur",
-                        6000
-                    );
-                }
-
+                afficherErreurVirement(erreur);
                 virementEnPreparation = null;
                 return;
             }
@@ -80,6 +94,20 @@ function actualiserSoldeVirement() {
         return;
     }
 
+    if (
+        typeof initialiserBanqueDemo !== "function" ||
+        typeof formaterEuros !== "function"
+    ) {
+        affichageSoldeVirement.textContent =
+            "Solde indisponible";
+
+        console.error(
+            "Les fonctions de banque.js sont indisponibles."
+        );
+
+        return;
+    }
+
     const donnees = initialiserBanqueDemo();
 
     affichageSoldeVirement.textContent = formaterEuros(
@@ -95,15 +123,25 @@ function verifierVirement(
 ) {
     const donnees = initialiserBanqueDemo();
 
+    if (donnees.statut !== "Actif") {
+        return (
+            "Votre compte bancaire RP n’est pas actif."
+        );
+    }
+
     if (destinataire.length < 2) {
-        return "Veuillez indiquer un destinataire valide.";
+        return (
+            "Veuillez indiquer un destinataire valide."
+        );
     }
 
     if (
         !Number.isInteger(montantCentimes) ||
         montantCentimes <= 0
     ) {
-        return "Le montant doit être supérieur à 0 € RP.";
+        return (
+            "Le montant doit être supérieur à 0 € RP."
+        );
     }
 
     if (montantCentimes > 100000) {
@@ -125,6 +163,12 @@ function verifierVirement(
         );
     }
 
+    if (motif.length > 150) {
+        return (
+            "Le motif ne peut pas dépasser 150 caractères."
+        );
+    }
+
     if (!reglementAccepte) {
         return (
             "Vous devez confirmer le respect du règlement."
@@ -132,15 +176,17 @@ function verifierVirement(
     }
 
     const destinataireNormalise =
-        destinataire.toLowerCase();
+        normaliserTexteVirement(destinataire);
 
-    const titulaireNormalise = String(
-        donnees.titulaire || ""
-    ).toLowerCase();
+    const titulaireNormalise =
+        normaliserTexteVirement(
+            donnees.titulaire
+        );
 
-    const numeroCompteNormalise = String(
-        donnees.numeroCompte || ""
-    ).toLowerCase();
+    const numeroCompteNormalise =
+        normaliserTexteVirement(
+            donnees.numeroCompte
+        );
 
     if (
         destinataireNormalise === titulaireNormalise ||
@@ -156,26 +202,34 @@ function verifierVirement(
 }
 
 function afficherRecapitulatif(virement) {
-    const texte = `
+    const contenu = `
         <strong>Virement vérifié</strong>
 
         <span>
             Destinataire :
             <b>
-                ${securiserTexte(virement.destinataire)}
+                ${securiserTexteVirement(
+                    virement.destinataire
+                )}
             </b>
         </span>
 
         <span>
             Montant :
             <b>
-                ${formaterEuros(virement.montantCentimes)}
+                ${formaterEuros(
+                    virement.montantCentimes
+                )}
             </b>
         </span>
 
         <span>
             Motif :
-            <b>${securiserTexte(virement.motif)}</b>
+            <b>
+                ${securiserTexteVirement(
+                    virement.motif
+                )}
+            </b>
         </span>
 
         <em>
@@ -191,7 +245,10 @@ function afficherRecapitulatif(virement) {
         </button>
     `;
 
-    afficherMessage(texte, "succes");
+    afficherMessageVirement(
+        contenu,
+        "succes"
+    );
 
     const boutonConfirmation = document.querySelector(
         "#confirmer-virement"
@@ -207,64 +264,85 @@ function afficherRecapitulatif(virement) {
 
 function confirmerVirement() {
     if (!virementEnPreparation) {
-        afficherMessage(
-            "Aucun virement n’est en attente de confirmation.",
-            "erreur"
+        afficherErreurVirement(
+            "Aucun virement n’est en attente de confirmation."
         );
 
         return;
     }
 
-    const bouton = document.querySelector(
+    const boutonConfirmation = document.querySelector(
         "#confirmer-virement"
     );
 
-    if (!bouton || bouton.disabled) {
+    if (
+        !boutonConfirmation ||
+        boutonConfirmation.disabled
+    ) {
         return;
     }
 
-    bouton.disabled = true;
-    bouton.textContent = "Traitement en cours…";
+    boutonConfirmation.disabled = true;
+    boutonConfirmation.textContent =
+        "Traitement en cours…";
 
-    window.setTimeout(function () {
-        const resultat = enregistrerVirement({
-            destinataire:
-                virementEnPreparation.destinataire,
-
-            montantCentimes:
-                virementEnPreparation.montantCentimes,
-
-            motif:
-                virementEnPreparation.motif
-        });
-
-        if (!resultat.succes) {
-            afficherMessage(
-                resultat.message,
-                "erreur"
-            );
-
+    window.setTimeout(
+        function () {
             if (
-                typeof afficherNotification ===
+                typeof enregistrerVirement !==
                 "function"
             ) {
-                afficherNotification(
-                    resultat.message,
-                    "erreur",
-                    6000
+                afficherErreurVirement(
+                    "Le service de virement est indisponible."
                 );
+
+                boutonConfirmation.disabled = false;
+                boutonConfirmation.textContent =
+                    "Confirmer le virement";
+
+                return;
             }
 
+            const resultat = enregistrerVirement({
+                destinataire:
+                    virementEnPreparation.destinataire,
+
+                montantCentimes:
+                    virementEnPreparation.montantCentimes,
+
+                motif:
+                    virementEnPreparation.motif
+            });
+
+            if (!resultat.succes) {
+                afficherErreurVirement(
+                    resultat.message ||
+                    "Le virement n’a pas pu être enregistré."
+                );
+
+                virementEnPreparation = null;
+                return;
+            }
+
+            afficherRecuVirement(resultat);
+            actualiserSoldeVirement();
+
+            /*
+             * Le virement est terminé. La protection contre la
+             * fermeture d’un formulaire commencé peut être retirée.
+             */
+            if (
+                typeof window.autoriserSortieVirement ===
+                "function"
+            ) {
+                window.autoriserSortieVirement();
+            }
+
+            formulaire.reset();
             virementEnPreparation = null;
-            return;
-        }
-
-        afficherRecuVirement(resultat);
-        actualiserSoldeVirement();
-
-        formulaire.reset();
-        virementEnPreparation = null;
-    }, 700);
+        },
+        700
+    );
 }
 
 function afficherRecuVirement(resultat) {
@@ -275,7 +353,9 @@ function afficherRecuVirement(resultat) {
     ) {
         afficherNotification(
             "Virement de " +
-            formaterEuros(transaction.montantCentimes) +
+            formaterEuros(
+                transaction.montantCentimes
+            ) +
             " envoyé à " +
             transaction.destinataire +
             ". Nouveau solde : " +
@@ -292,29 +372,36 @@ function afficherRecuVirement(resultat) {
         transaction.date
     );
 
-    const date = Number.isNaN(
+    const dateFormatee = Number.isNaN(
         dateTransaction.getTime()
     )
         ? "Date inconnue"
-        : dateTransaction.toLocaleString("fr-FR", {
-            dateStyle: "long",
-            timeStyle: "short"
-        });
+        : dateTransaction.toLocaleString(
+            "fr-FR",
+            {
+                dateStyle: "long",
+                timeStyle: "short"
+            }
+        );
 
-    const recu = `
+    const contenu = `
         <strong>
             Virement RP enregistré avec succès
         </strong>
 
         <span>
             Référence :
-            <b>${securiserTexte(transaction.id)}</b>
+            <b>
+                ${securiserTexteVirement(
+                    transaction.id
+                )}
+            </b>
         </span>
 
         <span>
             Destinataire :
             <b>
-                ${securiserTexte(
+                ${securiserTexteVirement(
                     transaction.destinataire
                 )}
             </b>
@@ -341,7 +428,7 @@ function afficherRecuVirement(resultat) {
         <span>
             Motif :
             <b>
-                ${securiserTexte(
+                ${securiserTexteVirement(
                     transaction.description
                 )}
             </b>
@@ -349,7 +436,7 @@ function afficherRecuVirement(resultat) {
 
         <span>
             Date :
-            <b>${date}</b>
+            <b>${dateFormatee}</b>
         </span>
 
         <em>
@@ -358,10 +445,30 @@ function afficherRecuVirement(resultat) {
         </em>
     `;
 
-    afficherMessage(recu, "succes-final");
+    afficherMessageVirement(
+        contenu,
+        "succes-final"
+    );
 }
 
-function afficherMessage(contenu, type) {
+function afficherErreurVirement(message) {
+    afficherMessageVirement(
+        securiserTexteVirement(message),
+        "erreur"
+    );
+
+    if (
+        typeof afficherNotification === "function"
+    ) {
+        afficherNotification(
+            message,
+            "erreur",
+            6000
+        );
+    }
+}
+
+function afficherMessageVirement(contenu, type) {
     if (!formulaire) {
         return;
     }
@@ -387,7 +494,15 @@ function afficherMessage(contenu, type) {
     });
 }
 
-function securiserTexte(texte) {
+function normaliserTexteVirement(texte) {
+    return String(texte || "")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .trim();
+}
+
+function securiserTexteVirement(texte) {
     const element = document.createElement("div");
 
     element.textContent =
