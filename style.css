@@ -3932,3 +3932,34 @@ body.theme-sombre .bouton-menu-mobile:hover {
         border-color: #365570;
     }
 }
+/* Compteur du motif du virement */
+
+.compteur-motif {
+    display: block;
+    margin-top: 7px;
+
+    color: #64748b;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-align: right;
+}
+
+.compteur-motif.proche-limite {
+    color: #b7791f;
+}
+
+.compteur-motif.limite-atteinte {
+    color: #c53030;
+}
+
+body.theme-sombre .compteur-motif {
+    color: #b7c8d8;
+}
+
+body.theme-sombre .compteur-motif.proche-limite {
+    color: #f3d17a;
+}
+
+body.theme-sombre .compteur-motif.limite-atteinte {
+    color: #ff8f8f;
+}
