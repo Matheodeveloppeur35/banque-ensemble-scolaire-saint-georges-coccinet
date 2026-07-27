@@ -1,410 +1,360 @@
-const formulaire = document.querySelector(
-    "#formulaire-virement"
-);
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
 
-const affichageSoldeVirement = document.querySelector(
-    "#solde-virement"
-);
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-let virementEnPreparation = null;
+    <meta
+        name="description"
+        content="Effectuer un virement à la Banque Saint-Georges RP"
+    >
 
-if (formulaire && affichageSoldeVirement) {
-    actualiserSoldeVirement();
+    <title>Virement — Banque Saint-Georges RP</title>
 
-    formulaire.addEventListener(
-        "submit",
-        function (evenement) {
-            evenement.preventDefault();
+    <link rel="stylesheet" href="./style.css?v=28">
+</head>
 
-            const destinataire = document
-                .querySelector("#destinataire")
-                .value
-                .trim();
+<body>
+    <header>
+        <div class="identite">
+            <div class="logo">
+                SG
+            </div>
 
-            const montantEuros = Number(
-                document.querySelector("#montant").value
-            );
+            <div>
+                <strong>
+                    Banque Saint-Georges RP
+                </strong>
 
-            const motif = document
-                .querySelector("#motif")
-                .value
-                .trim();
+                <p>
+                    Ensemble Scolaire Saint-Georges Coccinet
+                </p>
+            </div>
+        </div>
 
-            const reglementAccepte = document
-                .querySelector("#confirmation")
-                .checked;
+        <nav>
+            <a href="./index.html">
+                Accueil
+            </a>
 
-            const montantCentimes =
-                convertirEurosEnCentimes(montantEuros);
+            <a href="./dashboard.html">
+                Mon compte
+            </a>
 
-            const erreur = verifierVirement(
-                destinataire,
-                montantCentimes,
-                motif,
-                reglementAccepte
-            );
+            <a href="./historique.html">
+                Historique
+            </a>
 
-            if (erreur) {
-                afficherMessage(erreur, "erreur");
+            <a href="./boutique.html">
+                Boutique
+            </a>
 
-                if (
-                    typeof afficherNotification ===
-                    "function"
-                ) {
-                    afficherNotification(
-                        erreur,
-                        "erreur",
-                        6000
-                    );
-                }
+            <a href="./profil.html">
+                Profil
+            </a>
 
-                virementEnPreparation = null;
-                return;
-            }
+            <a href="./parametres.html">
+                Paramètres
+            </a>
 
-            virementEnPreparation = {
-                destinataire: destinataire,
-                montantCentimes: montantCentimes,
-                motif: motif
-            };
+            <a href="./aide.html">
+                Aide
+            </a>
 
-            afficherRecapitulatif(
-                virementEnPreparation
-            );
-        }
-    );
-}
+            <a href="./reglement.html">
+                Règlement
+            </a>
 
-function actualiserSoldeVirement() {
-    if (!affichageSoldeVirement) {
-        return;
-    }
+            <button
+                class="bouton-theme"
+                type="button"
+                data-changer-theme
+            >
+                <span aria-hidden="true">
+                    🌙
+                </span>
 
-    const donnees = initialiserBanqueDemo();
+                <span>
+                    Thème sombre
+                </span>
+            </button>
 
-    affichageSoldeVirement.textContent = formaterEuros(
-        donnees.soldeCentimes
-    );
-}
+            <button
+                class="deconnexion-menu"
+                type="button"
+                data-deconnexion
+            >
+                Déconnexion
+            </button>
+        </nav>
+    </header>
 
-function verifierVirement(
-    destinataire,
-    montantCentimes,
-    motif,
-    reglementAccepte
-) {
-    const donnees = initialiserBanqueDemo();
+    <main class="page-interieure">
+        <section class="conteneur">
+            <div class="entete-virement">
+                <div>
+                    <p class="petit-titre">
+                        Nouvelle opération
+                    </p>
 
-    if (destinataire.length < 2) {
-        return "Veuillez indiquer un destinataire valide.";
-    }
+                    <h1>
+                        Effectuer un virement
+                    </h1>
 
-    if (
-        !Number.isInteger(montantCentimes) ||
-        montantCentimes <= 0
-    ) {
-        return "Le montant doit être supérieur à 0 € RP.";
-    }
+                    <p>
+                        Envoyez des euros RP à un autre membre de
+                        l’établissement.
+                    </p>
+                </div>
 
-    if (montantCentimes > 100000) {
-        return (
-            "Le plafond est limité à 1 000,00 € RP " +
-            "par virement."
-        );
-    }
+                <a
+                    class="retour-dashboard"
+                    href="./dashboard.html"
+                >
+                    ← Retour au compte
+                </a>
+            </div>
 
-    if (montantCentimes > donnees.soldeCentimes) {
-        return (
-            "Votre solde est insuffisant pour ce virement."
-        );
-    }
+            <div class="grille-virement">
+                <form
+                    class="formulaire-virement"
+                    id="formulaire-virement"
+                >
+                    <div class="solde-formulaire">
+                        <span>
+                            Solde disponible
+                        </span>
 
-    if (motif.length < 3) {
-        return (
-            "Veuillez fournir un motif RP suffisamment précis."
-        );
-    }
+                        <strong id="solde-virement">
+                            Chargement…
+                        </strong>
+                    </div>
 
-    if (!reglementAccepte) {
-        return (
-            "Vous devez confirmer le respect du règlement."
-        );
-    }
+                    <div class="champ">
+                        <label for="destinataire">
+                            Destinataire
+                        </label>
 
-    const destinataireNormalise =
-        destinataire.toLowerCase();
+                        <input
+                            id="destinataire"
+                            name="destinataire"
+                            type="text"
+                            placeholder="Nom du membre ou numéro de compte"
+                            autocomplete="off"
+                            required
+                        >
 
-    const titulaireNormalise = String(
-        donnees.titulaire || ""
-    ).toLowerCase();
+                        <small>
+                            Exemple : Marie Martin ou SGC-000043
+                        </small>
+                    </div>
 
-    const numeroCompteNormalise = String(
-        donnees.numeroCompte || ""
-    ).toLowerCase();
+                    <div class="champ">
+                        <label for="montant">
+                            Montant du virement
+                        </label>
 
-    if (
-        destinataireNormalise === titulaireNormalise ||
-        destinataireNormalise === numeroCompteNormalise
-    ) {
-        return (
-            "Vous ne pouvez pas effectuer un virement " +
-            "vers votre propre compte."
-        );
-    }
+                        <div class="champ-montant">
+                            <input
+                                id="montant"
+                                name="montant"
+                                type="number"
+                                min="0.01"
+                                max="1000"
+                                step="0.01"
+                                placeholder="0,00"
+                                required
+                            >
 
-    return null;
-}
+                            <span>
+                                € RP
+                            </span>
+                        </div>
+                    </div>
 
-function afficherRecapitulatif(virement) {
-    const texte = `
-        <strong>Virement vérifié</strong>
+                    <div class="champ">
+                        <label for="motif">
+                            Motif du virement
+                        </label>
 
-        <span>
-            Destinataire :
-            <b>
-                ${securiserTexte(virement.destinataire)}
-            </b>
-        </span>
+                        <textarea
+                            id="motif"
+                            name="motif"
+                            maxlength="150"
+                            rows="4"
+                            placeholder="Indiquez la raison RP du virement"
+                            required
+                        ></textarea>
 
-        <span>
-            Montant :
-            <b>
-                ${formaterEuros(virement.montantCentimes)}
-            </b>
-        </span>
+                        <small>
+                            150 caractères maximum.
+                        </small>
+                    </div>
 
-        <span>
-            Motif :
-            <b>${securiserTexte(virement.motif)}</b>
-        </span>
+                    <label class="confirmation-reglement">
+                        <input
+                            id="confirmation"
+                            name="confirmation"
+                            type="checkbox"
+                            required
+                        >
 
-        <em>
-            Vérifiez les informations avant de confirmer.
-        </em>
+                        <span>
+                            Je confirme que ce virement est fictif et
+                            respecte le règlement du serveur.
+                        </span>
+                    </label>
 
-        <button
-            id="confirmer-virement"
-            class="bouton confirmer-virement"
-            type="button"
-        >
-            Confirmer le virement
-        </button>
-    `;
+                    <button
+                        class="bouton bouton-validation"
+                        type="submit"
+                    >
+                        Vérifier le virement
+                    </button>
 
-    afficherMessage(texte, "succes");
+                    <p class="note-formulaire">
+                        Aucun argent réel ne sera envoyé. Ce formulaire
+                        appartient uniquement au système RP.
+                    </p>
+                </form>
 
-    const boutonConfirmation = document.querySelector(
-        "#confirmer-virement"
-    );
+                <aside class="aide-virement">
+                    <h2>
+                        Avant de continuer
+                    </h2>
 
-    if (boutonConfirmation) {
-        boutonConfirmation.addEventListener(
-            "click",
-            confirmerVirement
-        );
-    }
-}
+                    <ul>
+                        <li>
+                            Vérifiez soigneusement le nom du destinataire.
+                        </li>
 
-function confirmerVirement() {
-    if (!virementEnPreparation) {
-        afficherMessage(
-            "Aucun virement n’est en attente de confirmation.",
-            "erreur"
-        );
+                        <li>
+                            Assurez-vous de posséder un solde suffisant.
+                        </li>
 
-        return;
-    }
+                        <li>
+                            Indiquez un motif clair et conforme au RP.
+                        </li>
 
-    const bouton = document.querySelector(
-        "#confirmer-virement"
-    );
+                        <li>
+                            Ne communiquez aucune donnée bancaire réelle.
+                        </li>
+                    </ul>
 
-    if (!bouton || bouton.disabled) {
-        return;
-    }
+                    <div class="limite-virement">
+                        <span>
+                            Plafond de démonstration
+                        </span>
 
-    bouton.disabled = true;
-    bouton.textContent = "Traitement en cours…";
+                        <strong>
+                            1 000,00 € RP par virement
+                        </strong>
+                    </div>
+                </aside>
+            </div>
 
-    window.setTimeout(function () {
-        const resultat = enregistrerVirement({
-            destinataire:
-                virementEnPreparation.destinataire,
+            <div class="encadre-important">
+                <strong>
+                    Version de démonstration :
+                </strong>
 
-            montantCentimes:
-                virementEnPreparation.montantCentimes,
+                le virement débite uniquement le solde local enregistré
+                dans votre navigateur. Le destinataire n’est pas encore
+                réellement crédité.
+            </div>
+        </section>
+    </main>
 
-            motif:
-                virementEnPreparation.motif
-        });
+    <footer class="pied-page-site">
+        <div class="contenu-pied-page">
+            <div class="identite-pied-page">
+                <strong>
+                    Banque Saint-Georges RP
+                </strong>
 
-        if (!resultat.succes) {
-            afficherMessage(
-                resultat.message,
-                "erreur"
-            );
+                <span>
+                    Ensemble Scolaire Saint-Georges Coccinet
+                </span>
+            </div>
 
-            if (
-                typeof afficherNotification ===
-                "function"
-            ) {
-                afficherNotification(
-                    resultat.message,
-                    "erreur",
-                    6000
-                );
-            }
+            <div class="informations-pied-page">
+                <span>
+                    © <span data-annee-actuelle></span>
+                </span>
 
-            virementEnPreparation = null;
-            return;
-        }
+                <span aria-hidden="true">
+                    •
+                </span>
 
-        afficherRecuVirement(resultat);
-        actualiserSoldeVirement();
+                <span>
+                    Version
+                    <span data-version-site></span>
+                </span>
 
-        /*
-         * Le virement est terminé : la page peut maintenant
-         * être quittée sans afficher d’avertissement.
-         */
+                <span aria-hidden="true">
+                    •
+                </span>
+
+                <span>
+                    Mise à jour :
+                    <span data-mise-a-jour-site></span>
+                </span>
+            </div>
+        </div>
+
+        <p class="mention-fictive-pied-page">
+            Plateforme RP fictive — aucun argent réel,
+            paiement réel ou service bancaire réel.
+        </p>
+    </footer>
+
+    <!-- Vérification de la session -->
+    <script src="./session.js?v=3"></script>
+
+    <script>
         if (
-            typeof window.autoriserSortieVirement ===
-            "function"
+            typeof utilisateurConnecte !== "function" ||
+            !utilisateurConnecte()
         ) {
-            window.autoriserSortieVirement();
+            window.location.replace("./connexion.html");
         }
+    </script>
 
-        formulaire.reset();
-        virementEnPreparation = null;
-    }, 700);
-}
+    <!-- Données bancaires -->
+    <script src="./banque.js?v=12"></script>
 
-function afficherRecuVirement(resultat) {
-    const transaction = resultat.transaction;
+    <!-- Notifications -->
+    <script src="./notifications.js?v=3"></script>
 
-    if (
-        typeof afficherNotification === "function"
-    ) {
-        afficherNotification(
-            "Virement de " +
-            formaterEuros(transaction.montantCentimes) +
-            " envoyé à " +
-            transaction.destinataire +
-            ". Nouveau solde : " +
-            formaterEuros(
-                resultat.nouveauSoldeCentimes
-            ) +
-            ".",
-            "succes",
-            6000
-        );
-    }
+    <!-- Fonctionnement dynamique du formulaire -->
+    <script src="./virement.js?v=10"></script>
 
-    const dateTransaction = new Date(
-        transaction.date
-    );
+    <!-- Protection du formulaire non terminé -->
+    <script src="./protection-formulaire.js?v=1"></script>
 
-    const date = Number.isNaN(
-        dateTransaction.getTime()
-    )
-        ? "Date inconnue"
-        : dateTransaction.toLocaleString("fr-FR", {
-            dateStyle: "long",
-            timeStyle: "short"
-        });
+    <!-- Thème clair et sombre -->
+    <script src="./theme.js?v=3"></script>
 
-    const recu = `
-        <strong>
-            Virement RP enregistré avec succès
-        </strong>
+    <!-- Déconnexion commune -->
+    <script src="./deconnexion.js?v=2"></script>
 
-        <span>
-            Référence :
-            <b>${securiserTexte(transaction.id)}</b>
-        </span>
+    <!-- Pied de page dynamique -->
+    <script src="./footer.js?v=3"></script>
 
-        <span>
-            Destinataire :
-            <b>
-                ${securiserTexte(
-                    transaction.destinataire
-                )}
-            </b>
-        </span>
+    <!-- Retour en haut de la page -->
+    <script src="./retour-haut.js?v=1"></script>
 
-        <span>
-            Montant débité :
-            <b>
-                ${formaterEuros(
-                    transaction.montantCentimes
-                )}
-            </b>
-        </span>
+    <!-- Progression de lecture -->
+    <script src="./progression-page.js?v=1"></script>
 
-        <span>
-            Nouveau solde :
-            <b>
-                ${formaterEuros(
-                    resultat.nouveauSoldeCentimes
-                )}
-            </b>
-        </span>
+    <!-- Menu mobile -->
+    <script src="./menu-mobile.js?v=1"></script>
 
-        <span>
-            Motif :
-            <b>
-                ${securiserTexte(
-                    transaction.description
-                )}
-            </b>
-        </span>
-
-        <span>
-            Date :
-            <b>${date}</b>
-        </span>
-
-        <em>
-            Le virement est enregistré localement.
-            Le destinataire n’est pas réellement crédité.
-        </em>
-    `;
-
-    afficherMessage(recu, "succes-final");
-}
-
-function afficherMessage(contenu, type) {
-    if (!formulaire) {
-        return;
-    }
-
-    let message = document.querySelector(
-        "#message-virement"
-    );
-
-    if (!message) {
-        message = document.createElement("div");
-        message.id = "message-virement";
-        formulaire.appendChild(message);
-    }
-
-    message.className =
-        `message-virement ${type}`;
-
-    message.innerHTML = contenu;
-
-    message.scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-    });
-}
-
-function securiserTexte(texte) {
-    const element = document.createElement("div");
-
-    element.textContent =
-        texte === null || texte === undefined
-            ? ""
-            : String(texte);
-
-    return element.innerHTML;
-}
+    <!-- Navigation active -->
+    <script src="./navigation.js?v=3"></script>
+</body>
+</html>
