@@ -15,16 +15,20 @@
 
     <title>Connexion — Banque Saint-Georges RP</title>
 
-    <link rel="stylesheet" href="./style.css?v=24">
+    <link rel="stylesheet" href="./style.css?v=25">
 </head>
 
 <body>
     <header>
         <div class="identite">
-            <div class="logo">SG</div>
+            <div class="logo">
+                SG
+            </div>
 
             <div>
-                <strong>Banque Saint-Georges RP</strong>
+                <strong>
+                    Banque Saint-Georges RP
+                </strong>
 
                 <p>
                     Ensemble Scolaire Saint-Georges Coccinet
@@ -33,17 +37,30 @@
         </div>
 
         <nav>
-            <a href="./index.html">Accueil</a>
-            <a href="./reglement.html">Règlement</a>
-            <a href="./connexion.html">Connexion</a>
+            <a href="./index.html">
+                Accueil
+            </a>
+
+            <a href="./reglement.html">
+                Règlement
+            </a>
+
+            <a href="./connexion.html">
+                Connexion
+            </a>
 
             <button
                 class="bouton-theme"
                 type="button"
                 data-changer-theme
             >
-                <span aria-hidden="true">🌙</span>
-                <span>Thème sombre</span>
+                <span aria-hidden="true">
+                    🌙
+                </span>
+
+                <span>
+                    Thème sombre
+                </span>
             </button>
         </nav>
     </header>
@@ -58,7 +75,9 @@
                 Espace personnel RP
             </p>
 
-            <h1>Connexion</h1>
+            <h1>
+                Connexion
+            </h1>
 
             <p class="description-connexion">
                 Connectez-vous pour consulter votre compte bancaire,
@@ -70,7 +89,10 @@
                 id="connexion-demo"
                 type="button"
             >
-                <span class="logo-discord">◉</span>
+                <span class="logo-discord">
+                    ◉
+                </span>
+
                 Continuer en mode démonstration
             </button>
 
@@ -79,7 +101,10 @@
                 id="connexion-admin-demo"
                 type="button"
             >
-                <span>⚙️</span>
+                <span aria-hidden="true">
+                    ⚙️
+                </span>
+
                 Connexion administrateur de démonstration
             </button>
 
@@ -91,7 +116,9 @@
             ></p>
 
             <div class="separation">
-                <span>Informations importantes</span>
+                <span>
+                    Informations importantes
+                </span>
             </div>
 
             <ul class="securite-connexion">
@@ -113,7 +140,10 @@
                 </li>
             </ul>
 
-            <a class="lien-retour" href="./index.html">
+            <a
+                class="lien-retour"
+                href="./index.html"
+            >
                 ← Retour à l’accueil
             </a>
         </section>
@@ -136,14 +166,18 @@
                     © <span data-annee-actuelle></span>
                 </span>
 
-                <span aria-hidden="true">•</span>
+                <span aria-hidden="true">
+                    •
+                </span>
 
                 <span>
                     Version
                     <span data-version-site></span>
                 </span>
 
-                <span aria-hidden="true">•</span>
+                <span aria-hidden="true">
+                    •
+                </span>
 
                 <span>
                     Mise à jour :
@@ -159,7 +193,7 @@
     </footer>
 
     <!-- Gestion des sessions de démonstration -->
-    <script src="./session.js?v=3"></script>
+    <script src="./session.js?v=5"></script>
 
     <!-- Notifications -->
     <script src="./notifications.js?v=3"></script>
@@ -173,70 +207,168 @@
     <!-- Navigation active -->
     <script src="./navigation.js?v=3"></script>
 
-    <!-- Fonctionnement de la connexion -->
+    <!-- Fonctionnement autonome de la connexion -->
     <script>
-        const boutonConnexion = document.querySelector(
-            "#connexion-demo"
-        );
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+                const boutonUtilisateur =
+                    document.querySelector(
+                        "#connexion-demo"
+                    );
 
-        const boutonConnexionAdmin = document.querySelector(
-            "#connexion-admin-demo"
-        );
+                const boutonAdministrateur =
+                    document.querySelector(
+                        "#connexion-admin-demo"
+                    );
 
-        const messageConnexion = document.querySelector(
-            "#message-connexion"
-        );
+                const messageConnexion =
+                    document.querySelector(
+                        "#message-connexion"
+                    );
 
-        if (
-            boutonConnexion &&
-            boutonConnexionAdmin &&
-            messageConnexion
-        ) {
-            boutonConnexion.addEventListener(
-                "click",
-                function () {
-                    demarrerConnexion(false);
+                if (
+                    !boutonUtilisateur ||
+                    !boutonAdministrateur ||
+                    !messageConnexion
+                ) {
+                    console.error(
+                        "Les éléments de connexion sont introuvables."
+                    );
+
+                    return;
                 }
-            );
 
-            boutonConnexionAdmin.addEventListener(
-                "click",
-                function () {
-                    demarrerConnexion(true);
+                boutonUtilisateur.addEventListener(
+                    "click",
+                    function () {
+                        connecterUtilisateur(false);
+                    }
+                );
+
+                boutonAdministrateur.addEventListener(
+                    "click",
+                    function () {
+                        connecterUtilisateur(true);
+                    }
+                );
+
+                function connecterUtilisateur(
+                    modeAdministrateur
+                ) {
+                    boutonUtilisateur.disabled = true;
+                    boutonAdministrateur.disabled = true;
+
+                    messageConnexion.hidden = false;
+
+                    if (modeAdministrateur) {
+                        boutonAdministrateur.textContent =
+                            "Connexion administrateur…";
+
+                        messageConnexion.textContent =
+                            "Création de la session administrateur " +
+                            "de démonstration…";
+                    } else {
+                        boutonUtilisateur.textContent =
+                            "Connexion en cours…";
+
+                        messageConnexion.textContent =
+                            "Création de votre session " +
+                            "de démonstration…";
+                    }
+
+                    try {
+                        if (
+                            typeof ouvrirSessionDemo ===
+                            "function"
+                        ) {
+                            ouvrirSessionDemo(
+                                modeAdministrateur
+                            );
+                        } else {
+                            enregistrerSessionDeSecours(
+                                modeAdministrateur
+                            );
+                        }
+
+                        window.setTimeout(
+                            function () {
+                                window.location.replace(
+                                    modeAdministrateur
+                                        ? "./admin.html"
+                                        : "./dashboard.html"
+                                );
+                            },
+                            700
+                        );
+                    } catch (erreur) {
+                        console.error(
+                            "Erreur pendant la connexion :",
+                            erreur
+                        );
+
+                        try {
+                            enregistrerSessionDeSecours(
+                                modeAdministrateur
+                            );
+
+                            window.location.replace(
+                                modeAdministrateur
+                                    ? "./admin.html"
+                                    : "./dashboard.html"
+                            );
+                        } catch (erreurSecondaire) {
+                            boutonUtilisateur.disabled = false;
+                            boutonAdministrateur.disabled = false;
+
+                            boutonUtilisateur.innerHTML =
+                                '<span class="logo-discord">◉</span>' +
+                                " Continuer en mode démonstration";
+
+                            boutonAdministrateur.innerHTML =
+                                "<span>⚙️</span> " +
+                                "Connexion administrateur " +
+                                "de démonstration";
+
+                            messageConnexion.textContent =
+                                "La connexion a échoué. " +
+                                "Veuillez réessayer.";
+                        }
+                    }
                 }
-            );
-        }
 
-        function demarrerConnexion(modeAdministrateur) {
-            boutonConnexion.disabled = true;
-            boutonConnexionAdmin.disabled = true;
-            messageConnexion.hidden = false;
+                function enregistrerSessionDeSecours(
+                    modeAdministrateur
+                ) {
+                    /*
+                     * Compatibilité avec plusieurs anciennes versions
+                     * du système de session.
+                     */
+                    localStorage.setItem(
+                        "saintGeorgesSessionDemo",
+                        JSON.stringify({
+                            connecte: true,
+                            administrateur:
+                                modeAdministrateur,
+                            dateConnexion:
+                                new Date().toISOString()
+                        })
+                    );
 
-            if (modeAdministrateur) {
-                boutonConnexionAdmin.textContent =
-                    "Connexion administrateur…";
+                    localStorage.setItem(
+                        "saintGeorgesUtilisateurConnecte",
+                        "true"
+                    );
 
-                messageConnexion.textContent =
-                    "Création de la session administrateur " +
-                    "de démonstration…";
-            } else {
-                boutonConnexion.textContent =
-                    "Connexion en cours…";
-
-                messageConnexion.textContent =
-                    "Création de votre session de démonstration…";
+                    localStorage.setItem(
+                        "saintGeorgesAdministrateur",
+                        modeAdministrateur
+                            ? "true"
+                            : "false"
+                    );
+                }
             }
-
-            ouvrirSessionDemo(modeAdministrateur);
-
-            window.setTimeout(function () {
-                if (modeAdministrateur) {
-                    window.location.href = "./admin.html";
-                } else {
-                    window.location.href = "./dashboard.html";
-                }
-            }, 800);
-        }
+        );
     </script>
 </body>
 </html>
