@@ -1,6 +1,6 @@
 const configurationSite = {
     version: "1.0.0-demo",
-    derniereMiseAJour: "24 juillet 2026"
+    derniereMiseAJour: "27 juillet 2026"
 };
 
 initialiserPiedDePage();
