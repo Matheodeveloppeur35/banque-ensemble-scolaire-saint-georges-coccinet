@@ -3963,3 +3963,60 @@ body.theme-sombre .compteur-motif.proche-limite {
 body.theme-sombre .compteur-motif.limite-atteinte {
     color: #ff8f8f;
 }
+/* Montants rapides du virement */
+
+.montants-rapides {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    margin-top: 10px;
+}
+
+.montants-rapides button {
+    padding: 7px 12px;
+
+    color: #0c2d4d;
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 700;
+
+    background: #f7f9fb;
+    border: 1px solid #cad5e0;
+    border-radius: 999px;
+
+    cursor: pointer;
+
+    transition:
+        color 0.2s ease,
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.montants-rapides button:hover {
+    background: #e8eef4;
+    transform: translateY(-1px);
+}
+
+.montants-rapides button.actif {
+    color: #ffffff;
+    background: #0c2d4d;
+    border-color: #0c2d4d;
+}
+
+body.theme-sombre .montants-rapides button {
+    color: #f8fafc;
+    background: #173754;
+    border-color: #365570;
+}
+
+body.theme-sombre .montants-rapides button:hover {
+    background: #214764;
+}
+
+body.theme-sombre .montants-rapides button.actif {
+    color: #08213a;
+    background: #ddb44d;
+    border-color: #ddb44d;
+}
