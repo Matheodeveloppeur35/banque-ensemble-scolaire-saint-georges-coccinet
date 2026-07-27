@@ -3795,3 +3795,55 @@ body.theme-sombre .bouton-retour-haut:hover {
         transition: none;
     }
 }
+/* Barre de progression de la page */
+
+.barre-progression-page {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 3000;
+
+    width: 100%;
+    height: 4px;
+
+    background: transparent;
+
+    opacity: 0;
+    pointer-events: none;
+
+    transition: opacity 0.2s ease;
+}
+
+.barre-progression-page.visible {
+    opacity: 1;
+}
+
+.progression-page {
+    width: 0;
+    height: 100%;
+
+    background: linear-gradient(
+        90deg,
+        #ddb44d,
+        #f3d17a
+    );
+
+    box-shadow: 0 0 10px rgba(221, 180, 77, 0.65);
+
+    transition: width 0.08s linear;
+}
+
+body.theme-sombre .progression-page {
+    background: linear-gradient(
+        90deg,
+        #f3d17a,
+        #ffffff
+    );
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .barre-progression-page,
+    .progression-page {
+        transition: none;
+    }
+}
