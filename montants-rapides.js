@@ -1,105 +1,358 @@
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
-        const champMontant = document.querySelector(
-            "#montant"
-        );
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
 
-        const boutonsMontants = document.querySelectorAll(
-            "[data-montant-rapide]"
-        );
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
+    <meta
+        name="description"
+        content="Effectuer un virement à la Banque Saint-Georges RP"
+    >
+
+    <title>Virement — Banque Saint-Georges RP</title>
+
+    <link rel="stylesheet" href="./style.css?v=30">
+</head>
+
+<body>
+    <header>
+        <div class="identite">
+            <div class="logo">SG</div>
+
+            <div>
+                <strong>Banque Saint-Georges RP</strong>
+
+                <p>
+                    Ensemble Scolaire Saint-Georges Coccinet
+                </p>
+            </div>
+        </div>
+
+        <nav>
+            <a href="./index.html">Accueil</a>
+            <a href="./dashboard.html">Mon compte</a>
+            <a href="./historique.html">Historique</a>
+            <a href="./boutique.html">Boutique</a>
+            <a href="./profil.html">Profil</a>
+            <a href="./parametres.html">Paramètres</a>
+            <a href="./aide.html">Aide</a>
+            <a href="./reglement.html">Règlement</a>
+
+            <button
+                class="bouton-theme"
+                type="button"
+                data-changer-theme
+            >
+                <span aria-hidden="true">🌙</span>
+                <span>Thème sombre</span>
+            </button>
+
+            <button
+                class="deconnexion-menu"
+                type="button"
+                data-deconnexion
+            >
+                Déconnexion
+            </button>
+        </nav>
+    </header>
+
+    <main class="page-interieure">
+        <section class="conteneur">
+            <div class="entete-virement">
+                <div>
+                    <p class="petit-titre">
+                        Nouvelle opération
+                    </p>
+
+                    <h1>Effectuer un virement</h1>
+
+                    <p>
+                        Envoyez des euros RP à un autre membre de
+                        l’établissement.
+                    </p>
+                </div>
+
+                <a
+                    class="retour-dashboard"
+                    href="./dashboard.html"
+                >
+                    ← Retour au compte
+                </a>
+            </div>
+
+            <div class="grille-virement">
+                <form
+                    class="formulaire-virement"
+                    id="formulaire-virement"
+                >
+                    <div class="solde-formulaire">
+                        <span>Solde disponible</span>
+
+                        <strong id="solde-virement">
+                            Chargement…
+                        </strong>
+                    </div>
+
+                    <div class="champ">
+                        <label for="destinataire">
+                            Destinataire
+                        </label>
+
+                        <input
+                            id="destinataire"
+                            name="destinataire"
+                            type="text"
+                            placeholder="Nom du membre ou numéro de compte"
+                            autocomplete="off"
+                            required
+                        >
+
+                        <small>
+                            Exemple : Marie Martin ou SGC-000043
+                        </small>
+                    </div>
+
+                    <div class="champ">
+                        <label for="montant">
+                            Montant du virement
+                        </label>
+
+                        <div class="champ-montant">
+                            <input
+                                id="montant"
+                                name="montant"
+                                type="number"
+                                min="0.01"
+                                max="1000"
+                                step="0.01"
+                                placeholder="0,00"
+                                required
+                            >
+
+                            <span>€ RP</span>
+                        </div>
+
+                        <div
+                            class="montants-rapides"
+                            aria-label="Choisir rapidement un montant"
+                        >
+                            <button
+                                type="button"
+                                data-montant-rapide="10"
+                            >
+                                10 €
+                            </button>
+
+                            <button
+                                type="button"
+                                data-montant-rapide="25"
+                            >
+                                25 €
+                            </button>
+
+                            <button
+                                type="button"
+                                data-montant-rapide="50"
+                            >
+                                50 €
+                            </button>
+
+                            <button
+                                type="button"
+                                data-montant-rapide="100"
+                            >
+                                100 €
+                            </button>
+
+                            <button
+                                type="button"
+                                data-montant-rapide="solde"
+                            >
+                                Tout le solde
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="champ">
+                        <label for="motif">
+                            Motif du virement
+                        </label>
+
+                        <textarea
+                            id="motif"
+                            name="motif"
+                            maxlength="150"
+                            rows="4"
+                            placeholder="Indiquez la raison RP du virement"
+                            required
+                        ></textarea>
+
+                        <small>
+                            150 caractères maximum.
+                        </small>
+                    </div>
+
+                    <label class="confirmation-reglement">
+                        <input
+                            id="confirmation"
+                            name="confirmation"
+                            type="checkbox"
+                            required
+                        >
+
+                        <span>
+                            Je confirme que ce virement est fictif et
+                            respecte le règlement du serveur.
+                        </span>
+                    </label>
+
+                    <button
+                        class="bouton bouton-validation"
+                        type="submit"
+                    >
+                        Vérifier le virement
+                    </button>
+
+                    <p class="note-formulaire">
+                        Aucun argent réel ne sera envoyé. Ce formulaire
+                        appartient uniquement au système RP.
+                    </p>
+                </form>
+
+                <aside class="aide-virement">
+                    <h2>Avant de continuer</h2>
+
+                    <ul>
+                        <li>
+                            Vérifiez soigneusement le nom du destinataire.
+                        </li>
+
+                        <li>
+                            Assurez-vous de posséder un solde suffisant.
+                        </li>
+
+                        <li>
+                            Indiquez un motif clair et conforme au RP.
+                        </li>
+
+                        <li>
+                            Ne communiquez aucune donnée bancaire réelle.
+                        </li>
+                    </ul>
+
+                    <div class="limite-virement">
+                        <span>
+                            Plafond de démonstration
+                        </span>
+
+                        <strong>
+                            1 000,00 € RP par virement
+                        </strong>
+                    </div>
+                </aside>
+            </div>
+
+            <div class="encadre-important">
+                <strong>Version de démonstration :</strong>
+
+                le virement débite uniquement le solde local enregistré
+                dans votre navigateur. Le destinataire n’est pas encore
+                réellement crédité.
+            </div>
+        </section>
+    </main>
+
+    <footer class="pied-page-site">
+        <div class="contenu-pied-page">
+            <div class="identite-pied-page">
+                <strong>Banque Saint-Georges RP</strong>
+
+                <span>
+                    Ensemble Scolaire Saint-Georges Coccinet
+                </span>
+            </div>
+
+            <div class="informations-pied-page">
+                <span>
+                    © <span data-annee-actuelle></span>
+                </span>
+
+                <span aria-hidden="true">•</span>
+
+                <span>
+                    Version
+                    <span data-version-site></span>
+                </span>
+
+                <span aria-hidden="true">•</span>
+
+                <span>
+                    Mise à jour :
+                    <span data-mise-a-jour-site></span>
+                </span>
+            </div>
+        </div>
+
+        <p class="mention-fictive-pied-page">
+            Plateforme RP fictive — aucun argent réel,
+            paiement réel ou service bancaire réel.
+        </p>
+    </footer>
+
+    <!-- Vérification de la session -->
+    <script src="./session.js?v=3"></script>
+
+    <script>
         if (
-            !champMontant ||
-            boutonsMontants.length === 0
+            typeof utilisateurConnecte !== "function" ||
+            !utilisateurConnecte()
         ) {
-            return;
+            window.location.replace("./connexion.html");
         }
+    </script>
 
-        boutonsMontants.forEach(function (bouton) {
-            bouton.addEventListener(
-                "click",
-                function () {
-                    const valeur =
-                        bouton.dataset.montantRapide;
+    <!-- Données bancaires -->
+    <script src="./banque.js?v=12"></script>
 
-                    let montantEuros;
+    <!-- Notifications -->
+    <script src="./notifications.js?v=3"></script>
 
-                    if (valeur === "solde") {
-                        if (
-                            typeof obtenirSoldeCentimes !==
-                            "function"
-                        ) {
-                            return;
-                        }
+    <!-- Fonctionnement du formulaire -->
+    <script src="./virement.js?v=10"></script>
 
-                        const soldeCentimes =
-                            obtenirSoldeCentimes();
+    <!-- Compteur du motif -->
+    <script src="./compteur-motif.js?v=1"></script>
 
-                        /*
-                         * Le plafond reste fixé à 1 000 € RP.
-                         */
-                        montantEuros = Math.min(
-                            soldeCentimes / 100,
-                            1000
-                        );
-                    } else {
-                        montantEuros = Number(valeur);
-                    }
+    <!-- Montants rapides -->
+    <script src="./montants-rapides.js?v=2"></script>
 
-                    if (
-                        !Number.isFinite(montantEuros) ||
-                        montantEuros <= 0
-                    ) {
-                        return;
-                    }
+    <!-- Protection du formulaire non terminé -->
+    <script src="./protection-formulaire.js?v=1"></script>
 
-                    champMontant.value =
-                        montantEuros.toFixed(2);
+    <!-- Thème clair et sombre -->
+    <script src="./theme.js?v=3"></script>
 
-                    champMontant.dispatchEvent(
-                        new Event("input", {
-                            bubbles: true
-                        })
-                    );
+    <!-- Déconnexion commune -->
+    <script src="./deconnexion.js?v=2"></script>
 
-                    boutonsMontants.forEach(
-                        function (autreBouton) {
-                            autreBouton.classList.remove(
-                                "actif"
-                            );
-                        }
-                    );
+    <!-- Pied de page dynamique -->
+    <script src="./footer.js?v=3"></script>
 
-                    bouton.classList.add("actif");
-                    champMontant.focus();
-                }
-            );
-        });
+    <!-- Retour en haut -->
+    <script src="./retour-haut.js?v=1"></script>
 
-        champMontant.addEventListener(
-            "input",
-            function () {
-                const montantSaisi = Number(
-                    champMontant.value
-                );
+    <!-- Progression de lecture -->
+    <script src="./progression-page.js?v=1"></script>
 
-                boutonsMontants.forEach(
-                    function (bouton) {
-                        const valeur =
-                            bouton.dataset.montantRapide;
+    <!-- Menu mobile -->
+    <script src="./menu-mobile.js?v=1"></script>
 
-                        if (valeur === "solde") {
-                            return;
-                        }
-
-                        bouton.classList.toggle(
-                            "actif",
-                            montantSaisi === Number(valeur)
-                        );
-                    }
-                );
-            }
-        );
-    }
-);
+    <!-- Navigation active -->
+    <script src="./navigation.js?v=3"></script>
+</body>
+</html>
