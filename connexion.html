@@ -15,7 +15,7 @@
 
     <title>Connexion — Banque Saint-Georges RP</title>
 
-    <link rel="stylesheet" href="./style.css?v=28">
+    <link rel="stylesheet" href="./style.css?v=33">
 </head>
 
 <body>
@@ -80,9 +80,31 @@
             </h1>
 
             <p class="description-connexion">
-                Connectez-vous pour consulter votre compte bancaire,
-                votre solde et vos opérations RP.
+                Connectez-vous avec Discord pour accéder à votre
+                véritable compte bancaire RP partagé.
             </p>
+
+            <!-- Connexion réelle avec Discord -->
+
+            <button
+                class="bouton-discord"
+                id="connexion-discord"
+                type="button"
+            >
+                <span class="logo-discord">
+                    ◉
+                </span>
+
+                Se connecter avec Discord
+            </button>
+
+            <div class="separation">
+                <span>
+                    Modes de démonstration
+                </span>
+            </div>
+
+            <!-- Connexion locale de démonstration -->
 
             <button
                 class="bouton-discord"
@@ -123,6 +145,11 @@
 
             <ul class="securite-connexion">
                 <li>
+                    La connexion réelle passe par la page officielle
+                    de Discord.
+                </li>
+
+                <li>
                     Nous ne demanderons jamais votre mot de passe Discord.
                 </li>
 
@@ -132,11 +159,12 @@
                 </li>
 
                 <li>
-                    Les montants du site sont entièrement fictifs.
+                    Tous les montants sont des euros RP fictifs.
                 </li>
 
                 <li>
-                    Le mode administrateur est réservé aux tests.
+                    Les modes de démonstration restent enregistrés
+                    uniquement dans ce navigateur.
                 </li>
             </ul>
 
@@ -192,7 +220,18 @@
         </p>
     </footer>
 
-    <!-- Gestion des sessions de démonstration -->
+    <!-- Bibliothèque officielle Supabase -->
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
+
+    <!-- Configuration publique Supabase -->
+    <script src="./supabase-config.js?v=2"></script>
+
+    <!-- Authentification Discord avec Supabase -->
+    <script src="./auth-supabase.js?v=2"></script>
+
+    <!-- Sessions locales de démonstration -->
     <script src="./session.js?v=5"></script>
 
     <!-- Notifications -->
@@ -204,23 +243,28 @@
     <!-- Pied de page dynamique -->
     <script src="./footer.js?v=3"></script>
 
-    <!-- Retour en haut de la page -->
-<script src="./retour-haut.js?v=1"></script>
+    <!-- Retour en haut -->
+    <script src="./retour-haut.js?v=1"></script>
 
     <!-- Progression de lecture -->
-<script src="./progression-page.js?v=1"></script>
+    <script src="./progression-page.js?v=1"></script>
 
     <!-- Menu mobile -->
-<script src="./menu-mobile.js?v=1"></script>
+    <script src="./menu-mobile.js?v=1"></script>
 
     <!-- Navigation active -->
     <script src="./navigation.js?v=3"></script>
 
-    <!-- Fonctionnement autonome de la connexion -->
+    <!-- Fonctionnement de la page de connexion -->
     <script>
         document.addEventListener(
             "DOMContentLoaded",
             function () {
+                const boutonDiscord =
+                    document.querySelector(
+                        "#connexion-discord"
+                    );
+
                 const boutonUtilisateur =
                     document.querySelector(
                         "#connexion-demo"
@@ -237,6 +281,7 @@
                     );
 
                 if (
+                    !boutonDiscord ||
                     !boutonUtilisateur ||
                     !boutonAdministrateur ||
                     !messageConnexion
@@ -248,42 +293,107 @@
                     return;
                 }
 
+                /*
+                 * Connexion Discord réelle
+                 */
+
+                boutonDiscord.addEventListener(
+                    "click",
+                    async function () {
+                        desactiverBoutons();
+
+                        boutonDiscord.textContent =
+                            "Redirection vers Discord…";
+
+                        afficherMessage(
+                            "Ouverture de la page officielle Discord…"
+                        );
+
+                        try {
+                            if (
+                                typeof connexionAvecDiscord !==
+                                "function"
+                            ) {
+                                throw new Error(
+                                    "Le service Discord est indisponible."
+                                );
+                            }
+
+                            await connexionAvecDiscord();
+                        } catch (erreur) {
+                            console.error(
+                                "Connexion Discord impossible :",
+                                erreur
+                            );
+
+                            reactiverBoutons();
+
+                            boutonDiscord.innerHTML =
+                                '<span class="logo-discord">◉</span>' +
+                                " Se connecter avec Discord";
+
+                            afficherMessage(
+                                "La connexion Discord a échoué. " +
+                                "Veuillez vérifier la configuration."
+                            );
+
+                            if (
+                                typeof afficherNotification ===
+                                "function"
+                            ) {
+                                afficherNotification(
+                                    "La connexion Discord a échoué.",
+                                    "erreur",
+                                    6000
+                                );
+                            }
+                        }
+                    }
+                );
+
+                /*
+                 * Connexion utilisateur de démonstration
+                 */
+
                 boutonUtilisateur.addEventListener(
                     "click",
                     function () {
-                        connecterUtilisateur(false);
+                        connecterModeDemonstration(false);
                     }
                 );
+
+                /*
+                 * Connexion administrateur de démonstration
+                 */
 
                 boutonAdministrateur.addEventListener(
                     "click",
                     function () {
-                        connecterUtilisateur(true);
+                        connecterModeDemonstration(true);
                     }
                 );
 
-                function connecterUtilisateur(
+                function connecterModeDemonstration(
                     modeAdministrateur
                 ) {
-                    boutonUtilisateur.disabled = true;
-                    boutonAdministrateur.disabled = true;
-
-                    messageConnexion.hidden = false;
+                    desactiverBoutons();
 
                     if (modeAdministrateur) {
                         boutonAdministrateur.textContent =
                             "Connexion administrateur…";
 
-                        messageConnexion.textContent =
+                        afficherMessage(
                             "Création de la session administrateur " +
-                            "de démonstration…";
+                            "de démonstration…"
+                        );
                     } else {
                         boutonUtilisateur.textContent =
                             "Connexion en cours…";
 
-                        messageConnexion.textContent =
+                        afficherMessage(
                             "Création de votre session " +
-                            "de démonstration…";
+                            "de démonstration…"
+                        );
                     }
 
                     try {
@@ -312,7 +422,7 @@
                         );
                     } catch (erreur) {
                         console.error(
-                            "Erreur pendant la connexion :",
+                            "Connexion de démonstration impossible :",
                             erreur
                         );
 
@@ -327,32 +437,52 @@
                                     : "./dashboard.html"
                             );
                         } catch (erreurSecondaire) {
-                            boutonUtilisateur.disabled = false;
-                            boutonAdministrateur.disabled = false;
+                            reactiverBoutons();
 
-                            boutonUtilisateur.innerHTML =
-                                '<span class="logo-discord">◉</span>' +
-                                " Continuer en mode démonstration";
+                            restaurerTexteBoutons();
 
-                            boutonAdministrateur.innerHTML =
-                                "<span>⚙️</span> " +
-                                "Connexion administrateur " +
-                                "de démonstration";
-
-                            messageConnexion.textContent =
-                                "La connexion a échoué. " +
-                                "Veuillez réessayer.";
+                            afficherMessage(
+                                "La connexion de démonstration " +
+                                "a échoué."
+                            );
                         }
                     }
+                }
+
+                function afficherMessage(texte) {
+                    messageConnexion.hidden = false;
+                    messageConnexion.textContent = texte;
+                }
+
+                function desactiverBoutons() {
+                    boutonDiscord.disabled = true;
+                    boutonUtilisateur.disabled = true;
+                    boutonAdministrateur.disabled = true;
+                }
+
+                function reactiverBoutons() {
+                    boutonDiscord.disabled = false;
+                    boutonUtilisateur.disabled = false;
+                    boutonAdministrateur.disabled = false;
+                }
+
+                function restaurerTexteBoutons() {
+                    boutonDiscord.innerHTML =
+                        '<span class="logo-discord">◉</span>' +
+                        " Se connecter avec Discord";
+
+                    boutonUtilisateur.innerHTML =
+                        '<span class="logo-discord">◉</span>' +
+                        " Continuer en mode démonstration";
+
+                    boutonAdministrateur.innerHTML =
+                        "<span>⚙️</span> " +
+                        "Connexion administrateur de démonstration";
                 }
 
                 function enregistrerSessionDeSecours(
                     modeAdministrateur
                 ) {
-                    /*
-                     * Compatibilité avec plusieurs anciennes versions
-                     * du système de session.
-                     */
                     localStorage.setItem(
                         "saintGeorgesSessionDemo",
                         JSON.stringify({
