@@ -337,7 +337,12 @@ function confirmerVirement() {
             ) {
                 window.autoriserSortieVirement();
             }
-
+if (
+    typeof window.supprimerBrouillonVirement ===
+    "function"
+) {
+    window.supprimerBrouillonVirement();
+}
             formulaire.reset();
             virementEnPreparation = null;
         },
