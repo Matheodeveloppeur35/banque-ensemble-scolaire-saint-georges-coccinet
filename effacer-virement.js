@@ -27,6 +27,12 @@ function initialiserEffacementVirement() {
                     return;
                 }
             }
+if (
+    typeof window.supprimerBrouillonVirement ===
+    "function"
+) {
+    window.supprimerBrouillonVirement();
+}
 
             formulaire.reset();
 
