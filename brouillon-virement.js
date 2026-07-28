@@ -22,6 +22,10 @@ function initialiserBrouillonVirement() {
         "#confirmation"
     );
 
+    const etatBrouillon = document.querySelector(
+        "#etat-brouillon-virement"
+    );
+
     if (
         !formulaire ||
         !destinataire ||
@@ -32,38 +36,61 @@ function initialiserBrouillonVirement() {
         return;
     }
 
+    let minuterieSauvegarde = null;
+
     restaurerBrouillon();
 
     formulaire.addEventListener(
         "input",
-        enregistrerBrouillon
+        programmerSauvegarde
     );
 
     formulaire.addEventListener(
         "change",
-        enregistrerBrouillon
+        programmerSauvegarde
     );
 
-    /*
-     * Cette fonction pourra être utilisée par virement.js
-     * et effacer-virement.js.
-     */
     window.supprimerBrouillonVirement =
         supprimerBrouillon;
 
+    function programmerSauvegarde() {
+        window.clearTimeout(minuterieSauvegarde);
+
+        afficherEtat(
+            "Enregistrement du brouillon…",
+            "enregistrement"
+        );
+
+        minuterieSauvegarde = window.setTimeout(
+            enregistrerBrouillon,
+            400
+        );
+    }
+
     function enregistrerBrouillon() {
+        if (!formulaireContientDesDonnees()) {
+            supprimerBrouillon();
+            return;
+        }
+
+        const dateEnregistrement =
+            new Date().toISOString();
+
         const donneesBrouillon = {
             destinataire: destinataire.value,
             montant: montant.value,
             motif: motif.value,
             confirmation: confirmation.checked,
-            dateEnregistrement:
-                new Date().toISOString()
+            dateEnregistrement: dateEnregistrement
         };
 
         localStorage.setItem(
             cleBrouillonVirement,
             JSON.stringify(donneesBrouillon)
+        );
+
+        afficherBrouillonEnregistre(
+            dateEnregistrement
         );
     }
 
@@ -73,6 +100,11 @@ function initialiserBrouillonVirement() {
         );
 
         if (!contenu) {
+            afficherEtat(
+                "Aucun brouillon enregistré",
+                "vide"
+            );
+
             return;
         }
 
@@ -106,13 +138,16 @@ function initialiserBrouillonVirement() {
                 })
             );
 
+            afficherBrouillonEnregistre(
+                brouillon.dateEnregistrement
+            );
+
             if (
                 typeof afficherNotification ===
                 "function"
             ) {
                 afficherNotification(
-                    "Votre brouillon de virement " +
-                    "a été restauré.",
+                    "Votre brouillon de virement a été restauré.",
                     "information",
                     4000
                 );
@@ -128,9 +163,60 @@ function initialiserBrouillonVirement() {
     }
 
     function supprimerBrouillon() {
+        window.clearTimeout(minuterieSauvegarde);
+
         localStorage.removeItem(
             cleBrouillonVirement
         );
+
+        afficherEtat(
+            "Aucun brouillon enregistré",
+            "vide"
+        );
+    }
+
+    function formulaireContientDesDonnees() {
+        return Boolean(
+            destinataire.value.trim() ||
+            montant.value.trim() ||
+            motif.value.trim() ||
+            confirmation.checked
+        );
+    }
+
+    function afficherBrouillonEnregistre(dateTexte) {
+        const date = new Date(dateTexte);
+
+        if (Number.isNaN(date.getTime())) {
+            afficherEtat(
+                "Brouillon enregistré",
+                "enregistre"
+            );
+
+            return;
+        }
+
+        const heure = date.toLocaleTimeString(
+            "fr-FR",
+            {
+                hour: "2-digit",
+                minute: "2-digit"
+            }
+        );
+
+        afficherEtat(
+            `Brouillon enregistré à ${heure}`,
+            "enregistre"
+        );
+    }
+
+    function afficherEtat(texte, type) {
+        if (!etatBrouillon) {
+            return;
+        }
+
+        etatBrouillon.textContent = texte;
+        etatBrouillon.dataset.etat = type;
     }
 }
 
