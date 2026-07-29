@@ -15,16 +15,20 @@
 
     <title>Mon compte — Banque Saint-Georges RP</title>
 
-    <link rel="stylesheet" href="./style.css?v=34">
+    <link rel="stylesheet" href="./style.css?v=35">
 </head>
 
 <body>
     <header>
         <div class="identite">
-            <div class="logo">SG</div>
+            <div class="logo">
+                SG
+            </div>
 
             <div>
-                <strong>Banque Saint-Georges RP</strong>
+                <strong>
+                    Banque Saint-Georges RP
+                </strong>
 
                 <p>
                     Ensemble Scolaire Saint-Georges Coccinet
@@ -33,28 +37,56 @@
         </div>
 
         <nav>
-            <a href="./index.html">Accueil</a>
-            <a href="./dashboard.html">Mon compte</a>
-            <a href="./historique.html">Historique</a>
-            <a href="./boutique.html">Boutique</a>
-            <a href="./profil.html">Profil</a>
-            <a href="./parametres.html">Paramètres</a>
-            <a href="./aide.html">Aide</a>
-            <a href="./reglement.html">Règlement</a>
+            <a href="./index.html">
+                Accueil
+            </a>
+
+            <a href="./dashboard.html">
+                Mon compte
+            </a>
+
+            <a href="./historique.html">
+                Historique
+            </a>
+
+            <a href="./boutique.html">
+                Boutique
+            </a>
+
+            <a href="./profil.html">
+                Profil
+            </a>
+
+            <a href="./parametres.html">
+                Paramètres
+            </a>
+
+            <a href="./aide.html">
+                Aide
+            </a>
+
+            <a href="./reglement.html">
+                Règlement
+            </a>
 
             <button
                 class="bouton-theme"
                 type="button"
                 data-changer-theme
             >
-                <span aria-hidden="true">🌙</span>
-                <span>Thème sombre</span>
+                <span aria-hidden="true">
+                    🌙
+                </span>
+
+                <span>
+                    Thème sombre
+                </span>
             </button>
 
             <button
                 class="deconnexion-menu"
                 type="button"
-                data-deconnexion
+                data-deconnexion-supabase
             >
                 Déconnexion
             </button>
@@ -70,11 +102,12 @@
                     </p>
 
                     <h1 id="bienvenue-dashboard">
-                        Bonjour
+                        Chargement du compte…
                     </h1>
 
                     <p>
-                        Voici un aperçu de votre compte Saint-Georges RP.
+                        Voici un aperçu de votre compte
+                        Saint-Georges RP.
                     </p>
                 </div>
 
@@ -89,14 +122,18 @@
 
             <div class="grille-dashboard">
                 <article class="carte-solde">
-                    <p>Solde disponible</p>
+                    <p>
+                        Solde disponible
+                    </p>
 
                     <h2 id="solde-dashboard">
                         Chargement…
                     </h2>
 
                     <div class="details-compte">
-                        <span>Compte scolaire</span>
+                        <span>
+                            Compte scolaire
+                        </span>
 
                         <strong id="numero-compte-dashboard">
                             Chargement…
@@ -121,11 +158,15 @@
                 </article>
 
                 <article class="carte-information">
-                    <h2>Informations du compte</h2>
+                    <h2>
+                        Informations du compte
+                    </h2>
 
                     <dl>
                         <div>
-                            <dt>Titulaire</dt>
+                            <dt>
+                                Titulaire
+                            </dt>
 
                             <dd id="titulaire-dashboard">
                                 Chargement…
@@ -133,7 +174,9 @@
                         </div>
 
                         <div>
-                            <dt>Type de compte</dt>
+                            <dt>
+                                Type de compte
+                            </dt>
 
                             <dd id="type-compte-dashboard">
                                 Chargement…
@@ -141,7 +184,9 @@
                         </div>
 
                         <div>
-                            <dt>Statut</dt>
+                            <dt>
+                                Statut
+                            </dt>
 
                             <dd
                                 class="texte-vert"
@@ -154,14 +199,19 @@
                 </article>
             </div>
 
-            <section class="operations" id="operations">
+            <section
+                class="operations"
+                id="operations"
+            >
                 <div class="titre-section">
                     <div>
                         <p class="petit-titre">
                             Historique récent
                         </p>
 
-                        <h2>Dernières opérations</h2>
+                        <h2>
+                            Dernières opérations
+                        </h2>
                     </div>
                 </div>
 
@@ -169,17 +219,20 @@
                     class="liste-operations"
                     id="operations-dashboard"
                 >
-                    <p>Chargement des opérations…</p>
+                    <p>
+                        Chargement des opérations…
+                    </p>
                 </div>
             </section>
 
             <div class="encadre-important">
-                <strong>Migration en cours :</strong>
+                <strong>
+                    Compte connecté :
+                </strong>
 
-                l’accès à cette page utilise maintenant votre vraie
-                session Discord avec Supabase. Les informations bancaires
-                locales seront remplacées par les données partagées à
-                l’étape suivante.
+                les informations affichées proviennent de la base de
+                données sécurisée Supabase et sont associées à votre
+                compte Discord.
             </div>
         </section>
     </main>
@@ -201,14 +254,18 @@
                     © <span data-annee-actuelle></span>
                 </span>
 
-                <span aria-hidden="true">•</span>
+                <span aria-hidden="true">
+                    •
+                </span>
 
                 <span>
                     Version
                     <span data-version-site></span>
                 </span>
 
-                <span aria-hidden="true">•</span>
+                <span aria-hidden="true">
+                    •
+                </span>
 
                 <span>
                     Mise à jour :
@@ -231,209 +288,82 @@
     <!-- Configuration publique Supabase -->
     <script src="./supabase-config.js?v=2"></script>
 
-    <!-- Authentification Supabase -->
+    <!-- Authentification Discord et Supabase -->
     <script src="./auth-supabase.js?v=2"></script>
 
-    <!-- Protection réelle de la page -->
+    <!-- Protection de la page -->
     <script src="./protection-supabase.js?v=1"></script>
 
-    <!-- Vérification de la vraie session Discord -->
+    <!-- Service bancaire Supabase -->
+    <script src="./banque-supabase.js?v=1"></script>
+
+    <!-- Notifications -->
+    <script src="./notifications.js?v=3"></script>
+
+    <!-- Affichage réel du tableau de bord -->
+    <script src="./dashboard-supabase.js?v=1"></script>
+
+    <!-- Déconnexion Supabase -->
     <script>
-        protegerPageSupabase();
-    </script>
-
-    <!-- Données bancaires locales temporaires -->
-    <script src="./banque.js?v=12"></script>
-
-    <!-- Affichage temporaire du tableau de bord -->
-    <script>
-        const donneesBancaires = initialiserBanqueDemo();
-
-        afficherInformationsCompte();
-        afficherOperationsRecentes();
-
-        function afficherInformationsCompte() {
-            const nomTitulaire = String(
-                donneesBancaires.titulaire || "Utilisateur"
-            );
-
-            const roleTitulaire = String(
-                donneesBancaires.role || "Membre"
-            );
-
-            const statutCompte = String(
-                donneesBancaires.statut || "Inconnu"
-            );
-
-            document.querySelector(
-                "#bienvenue-dashboard"
-            ).textContent = `Bonjour, ${nomTitulaire}`;
-
-            document.querySelector(
-                "#solde-dashboard"
-            ).textContent = formaterEuros(
-                donneesBancaires.soldeCentimes
-            );
-
-            document.querySelector(
-                "#titulaire-dashboard"
-            ).textContent = nomTitulaire;
-
-            document.querySelector(
-                "#numero-compte-dashboard"
-            ).textContent =
-                donneesBancaires.numeroCompte || "Non attribué";
-
-            document.querySelector(
-                "#type-compte-dashboard"
-            ).textContent =
-                `Compte ${roleTitulaire.toLowerCase()} RP`;
-
-            document.querySelector(
-                "#statut-dashboard"
-            ).textContent =
-                `Compte ${statutCompte.toLowerCase()}`;
-
-            document.querySelector(
-                "#statut-information-dashboard"
-            ).textContent = statutCompte;
-        }
-
-        function afficherOperationsRecentes() {
-            const conteneurOperations = document.querySelector(
-                "#operations-dashboard"
-            );
-
-            const transactions = Array.isArray(
-                donneesBancaires.transactions
-            )
-                ? donneesBancaires.transactions
-                : [];
-
-            const operationsRecentes = transactions
-                .slice()
-                .sort(function (
-                    transactionA,
-                    transactionB
-                ) {
-                    return (
-                        obtenirTempsTransaction(transactionB) -
-                        obtenirTempsTransaction(transactionA)
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+                const boutonDeconnexion =
+                    document.querySelector(
+                        "[data-deconnexion-supabase]"
                     );
-                })
-                .slice(0, 3);
 
-            if (operationsRecentes.length === 0) {
-                conteneurOperations.innerHTML = `
-                    <p class="aucune-operation">
-                        Aucune opération enregistrée.
-                    </p>
-                `;
+                if (!boutonDeconnexion) {
+                    return;
+                }
 
-                return;
+                boutonDeconnexion.addEventListener(
+                    "click",
+                    async function () {
+                        boutonDeconnexion.disabled = true;
+
+                        boutonDeconnexion.textContent =
+                            "Déconnexion…";
+
+                        try {
+                            await deconnexionSupabase();
+
+                            window.location.replace(
+                                "./connexion.html"
+                            );
+                        } catch (erreur) {
+                            console.error(
+                                "Déconnexion impossible :",
+                                erreur
+                            );
+
+                            boutonDeconnexion.disabled = false;
+
+                            boutonDeconnexion.textContent =
+                                "Déconnexion";
+
+                            if (
+                                typeof afficherNotification ===
+                                "function"
+                            ) {
+                                afficherNotification(
+                                    "La déconnexion a échoué.",
+                                    "erreur",
+                                    5000
+                                );
+                            }
+                        }
+                    }
+                );
             }
-
-            conteneurOperations.innerHTML = operationsRecentes
-                .map(function (transaction) {
-                    const estUnRevenu =
-                        transaction.type === "revenu";
-
-                    const signe = estUnRevenu ? "+" : "−";
-
-                    const classeType = estUnRevenu
-                        ? "revenu"
-                        : "depense";
-
-                    const classeMontant = estUnRevenu
-                        ? "positif"
-                        : "negatif";
-
-                    return `
-                        <article class="ligne-operation">
-                            <div
-                                class="icone-operation ${classeType}"
-                            >
-                                ${signe}
-                            </div>
-
-                            <div class="description-operation">
-                                <strong>
-                                    ${securiserValeur(
-                                        transaction.titre
-                                    )}
-                                </strong>
-
-                                <span>
-                                    ${securiserValeur(
-                                        transaction.description
-                                    )}
-                                </span>
-                            </div>
-
-                            <div class="date-operation">
-                                ${formaterDateTransaction(
-                                    transaction.date
-                                )}
-                            </div>
-
-                            <strong
-                                class="montant ${classeMontant}"
-                            >
-                                ${signe}${formaterEuros(
-                                    transaction.montantCentimes
-                                )}
-                            </strong>
-                        </article>
-                    `;
-                })
-                .join("");
-        }
-
-        function obtenirTempsTransaction(transaction) {
-            const temps = new Date(
-                transaction.date
-            ).getTime();
-
-            return Number.isNaN(temps) ? 0 : temps;
-        }
-
-        function formaterDateTransaction(dateTransaction) {
-            const date = new Date(dateTransaction);
-
-            if (Number.isNaN(date.getTime())) {
-                return "Date inconnue";
-            }
-
-            return date.toLocaleDateString("fr-FR", {
-                day: "numeric",
-                month: "long",
-                year: "numeric"
-            });
-        }
-
-        function securiserValeur(valeur) {
-            const element = document.createElement("div");
-
-            element.textContent =
-                valeur === null || valeur === undefined
-                    ? ""
-                    : String(valeur);
-
-            return element.innerHTML;
-        }
+        );
     </script>
 
     <!-- Bannière d’état du système -->
     <script src="./statut-systeme.js?v=1"></script>
 
-    <!-- Notifications -->
-    <script src="./notifications.js?v=3"></script>
-
     <!-- Thème clair et sombre -->
     <script src="./theme.js?v=3"></script>
-
-    <!-- Déconnexion temporaire -->
-    <script src="./deconnexion.js?v=2"></script>
 
     <!-- Pied de page dynamique -->
     <script src="./footer.js?v=3"></script>
