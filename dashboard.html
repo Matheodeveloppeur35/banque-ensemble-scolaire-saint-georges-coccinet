@@ -15,7 +15,7 @@
 
     <title>Mon compte — Banque Saint-Georges RP</title>
 
-    <link rel="stylesheet" href="./style.css?v=28">
+    <link rel="stylesheet" href="./style.css?v=34">
 </head>
 
 <body>
@@ -66,7 +66,7 @@
             <div class="entete-dashboard">
                 <div>
                     <p class="petit-titre">
-                        Espace bancaire fictif
+                        Espace bancaire RP
                     </p>
 
                     <h1 id="bienvenue-dashboard">
@@ -82,7 +82,7 @@
                     <span class="point-statut"></span>
 
                     <span id="statut-dashboard">
-                        Compte actif
+                        Chargement…
                     </span>
                 </div>
             </div>
@@ -174,68 +174,78 @@
             </section>
 
             <div class="encadre-important">
-                <strong>Version de démonstration :</strong>
+                <strong>Migration en cours :</strong>
 
-                les informations du compte sont enregistrées localement
-                dans votre navigateur. Elles ne proviennent pas encore
-                d’une base de données sécurisée.
+                l’accès à cette page utilise maintenant votre vraie
+                session Discord avec Supabase. Les informations bancaires
+                locales seront remplacées par les données partagées à
+                l’étape suivante.
             </div>
         </section>
     </main>
 
     <footer class="pied-page-site">
-    <div class="contenu-pied-page">
-        <div class="identite-pied-page">
-            <strong>
-                Banque Saint-Georges RP
-            </strong>
+        <div class="contenu-pied-page">
+            <div class="identite-pied-page">
+                <strong>
+                    Banque Saint-Georges RP
+                </strong>
 
-            <span>
-                Ensemble Scolaire Saint-Georges Coccinet
-            </span>
+                <span>
+                    Ensemble Scolaire Saint-Georges Coccinet
+                </span>
+            </div>
+
+            <div class="informations-pied-page">
+                <span>
+                    © <span data-annee-actuelle></span>
+                </span>
+
+                <span aria-hidden="true">•</span>
+
+                <span>
+                    Version
+                    <span data-version-site></span>
+                </span>
+
+                <span aria-hidden="true">•</span>
+
+                <span>
+                    Mise à jour :
+                    <span data-mise-a-jour-site></span>
+                </span>
+            </div>
         </div>
 
-        <div class="informations-pied-page">
-            <span>
-                © <span data-annee-actuelle></span>
-            </span>
+        <p class="mention-fictive-pied-page">
+            Plateforme RP fictive — aucun argent réel,
+            paiement réel ou service bancaire réel.
+        </p>
+    </footer>
 
-            <span aria-hidden="true">•</span>
+    <!-- Bibliothèque officielle Supabase -->
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
 
-            <span>
-                Version
-                <span data-version-site></span>
-            </span>
+    <!-- Configuration publique Supabase -->
+    <script src="./supabase-config.js?v=2"></script>
 
-            <span aria-hidden="true">•</span>
+    <!-- Authentification Supabase -->
+    <script src="./auth-supabase.js?v=2"></script>
 
-            <span>
-                Mise à jour :
-                <span data-mise-a-jour-site></span>
-            </span>
-        </div>
-    </div>
+    <!-- Protection réelle de la page -->
+    <script src="./protection-supabase.js?v=1"></script>
 
-    <p class="mention-fictive-pied-page">
-        Plateforme RP fictive — aucun argent réel,
-        paiement réel ou service bancaire réel.
-    </p>
-</footer>
-
-
-    <!-- Protection de la page -->
-    <script src="./session.js?v=3"></script>
-
+    <!-- Vérification de la vraie session Discord -->
     <script>
-        if (!utilisateurConnecte()) {
-            window.location.replace("./connexion.html");
-        }
+        protegerPageSupabase();
     </script>
 
-    <!-- Données bancaires -->
-    <script src="./banque.js?v=11"></script>
+    <!-- Données bancaires locales temporaires -->
+    <script src="./banque.js?v=12"></script>
 
-    <!-- Affichage dynamique du tableau de bord -->
+    <!-- Affichage temporaire du tableau de bord -->
     <script>
         const donneesBancaires = initialiserBanqueDemo();
 
@@ -338,14 +348,6 @@
                         ? "positif"
                         : "negatif";
 
-                    const montantFormate = formaterEuros(
-                        transaction.montantCentimes
-                    );
-
-                    const dateFormatee = formaterDateTransaction(
-                        transaction.date
-                    );
-
                     return `
                         <article class="ligne-operation">
                             <div
@@ -369,13 +371,17 @@
                             </div>
 
                             <div class="date-operation">
-                                ${dateFormatee}
+                                ${formaterDateTransaction(
+                                    transaction.date
+                                )}
                             </div>
 
                             <strong
                                 class="montant ${classeMontant}"
                             >
-                                ${signe}${montantFormate}
+                                ${signe}${formaterEuros(
+                                    transaction.montantCentimes
+                                )}
                             </strong>
                         </article>
                     `;
@@ -420,24 +426,26 @@
     <!-- Bannière d’état du système -->
     <script src="./statut-systeme.js?v=1"></script>
 
-    <!-- Notifications et thème -->
+    <!-- Notifications -->
     <script src="./notifications.js?v=3"></script>
+
+    <!-- Thème clair et sombre -->
     <script src="./theme.js?v=3"></script>
 
-    <!-- Déconnexion -->
+    <!-- Déconnexion temporaire -->
     <script src="./deconnexion.js?v=2"></script>
 
     <!-- Pied de page dynamique -->
-<script src="./footer.js?v=3"></script>
+    <script src="./footer.js?v=3"></script>
 
-    <!-- Retour en haut de la page -->
-<script src="./retour-haut.js?v=1"></script>
+    <!-- Retour en haut -->
+    <script src="./retour-haut.js?v=1"></script>
 
     <!-- Progression de lecture -->
-<script src="./progression-page.js?v=1"></script>
+    <script src="./progression-page.js?v=1"></script>
 
     <!-- Menu mobile -->
-<script src="./menu-mobile.js?v=1"></script>
+    <script src="./menu-mobile.js?v=1"></script>
 
     <!-- Navigation active -->
     <script src="./navigation.js?v=3"></script>
