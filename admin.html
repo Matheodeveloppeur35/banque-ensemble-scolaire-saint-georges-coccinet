@@ -13,18 +13,24 @@
         content="Administration de la Banque Saint-Georges RP"
     >
 
-    <title>Administration — Banque Saint-Georges RP</title>
+    <title>
+        Administration — Banque Saint-Georges RP
+    </title>
 
-    <link rel="stylesheet" href="./style.css?v=28">
+    <link rel="stylesheet" href="./style.css?v=35">
 </head>
 
 <body>
     <header>
         <div class="identite">
-            <div class="logo">SG</div>
+            <div class="logo">
+                SG
+            </div>
 
             <div>
-                <strong>Banque Saint-Georges RP</strong>
+                <strong>
+                    Banque Saint-Georges RP
+                </strong>
 
                 <p>
                     Ensemble Scolaire Saint-Georges Coccinet
@@ -33,19 +39,63 @@
         </div>
 
         <nav>
-            <a href="./index.html">Accueil</a>
-            <a href="./dashboard.html">Mon compte</a>
-            <a href="./admin.html">Administration</a>
-            <a href="./profil.html">Profil</a>
-            <button
-    class="bouton-theme"
-    type="button"
-    data-changer-theme
->
-    <span aria-hidden="true">🌙</span>
-    <span>Thème sombre</span>
-</button>
+            <a href="./index.html">
+                Accueil
+            </a>
 
+            <a href="./dashboard.html">
+                Mon compte
+            </a>
+
+            <a href="./historique.html">
+                Historique
+            </a>
+
+            <a href="./boutique.html">
+                Boutique
+            </a>
+
+            <a href="./admin.html">
+                Administration
+            </a>
+
+            <a href="./profil.html">
+                Profil
+            </a>
+
+            <a href="./parametres.html">
+                Paramètres
+            </a>
+
+            <a href="./aide.html">
+                Aide
+            </a>
+
+            <a href="./reglement.html">
+                Règlement
+            </a>
+
+            <button
+                class="bouton-theme"
+                type="button"
+                data-changer-theme
+            >
+                <span aria-hidden="true">
+                    🌙
+                </span>
+
+                <span>
+                    Thème sombre
+                </span>
+            </button>
+
+            <button
+                class="deconnexion-menu"
+                type="button"
+                data-deconnexion-supabase
+            >
+                Déconnexion
+            </button>
         </nav>
     </header>
 
@@ -57,63 +107,85 @@
                         Espace réservé au personnel
                     </p>
 
-                    <h1>Administration bancaire</h1>
+                    <h1>
+                        Administration bancaire
+                    </h1>
 
                     <p>
-                        Tableau de gestion de la Banque Saint-Georges RP.
+                        Tableau de gestion de la
+                        Banque Saint-Georges RP.
                     </p>
                 </div>
 
-                <div class="zone-session-admin">
-                    <div class="badge-administrateur">
-                        Administrateur RP
-                    </div>
-
-                    <button
-                        class="bouton-deconnexion-admin"
-                        id="deconnexion-admin"
-                        type="button"
-                    >
-                        Se déconnecter
-                    </button>
+                <div class="badge-administrateur">
+                    Administrateur RP
                 </div>
             </div>
 
             <div class="avertissement-admin">
-                <strong>Mode de démonstration :</strong>
+                <strong>
+                    Administration sécurisée :
+                </strong>
 
-                l’accès à cette page est contrôlé par une session locale
-                administrateur. Cette protection sert uniquement aux tests
-                et ne remplace pas une authentification sécurisée côté serveur.
+                l’accès à cette page est contrôlé par la session
+                Discord et par le rôle enregistré dans Supabase.
             </div>
 
             <section class="statistiques-admin">
                 <article>
-                    <span>Comptes actifs</span>
-                    <strong>128</strong>
-                    <small>Utilisateurs RP</small>
+                    <span>
+                        Comptes actifs
+                    </span>
+
+                    <strong>
+                        128
+                    </strong>
+
+                    <small>
+                        Utilisateurs RP
+                    </small>
                 </article>
 
                 <article>
-                    <span>Solde total</span>
-                    <strong>82 450,50 €</strong>
-                    <small>Monnaie fictive en circulation</small>
+                    <span>
+                        Solde total
+                    </span>
+
+                    <strong>
+                        82 450,50 €
+                    </strong>
+
+                    <small>
+                        Monnaie fictive en circulation
+                    </small>
                 </article>
 
                 <article>
-                    <span>Transactions du jour</span>
-                    <strong>34</strong>
-                    <small>Opérations RP</small>
+                    <span>
+                        Transactions du jour
+                    </span>
+
+                    <strong>
+                        34
+                    </strong>
+
+                    <small>
+                        Opérations RP
+                    </small>
                 </article>
 
                 <article>
-                    <span>Comptes suspendus</span>
+                    <span>
+                        Comptes suspendus
+                    </span>
 
                     <strong class="texte-rouge">
                         3
                     </strong>
 
-                    <small>Contrôles en cours</small>
+                    <small>
+                        Contrôles en cours
+                    </small>
                 </article>
             </section>
 
@@ -123,7 +195,9 @@
                         Actions rapides
                     </p>
 
-                    <h2>Gestion bancaire</h2>
+                    <h2>
+                        Gestion bancaire
+                    </h2>
                 </div>
 
                 <div class="grille-actions-admin">
@@ -132,11 +206,18 @@
                         type="button"
                         data-action="creer-compte"
                     >
-                        <span>👤</span>
+                        <span aria-hidden="true">
+                            👤
+                        </span>
 
                         <div>
-                            <strong>Créer un compte</strong>
-                            <small>Ajouter un nouveau membre RP</small>
+                            <strong>
+                                Créer un compte
+                            </strong>
+
+                            <small>
+                                Ajouter un nouveau membre RP
+                            </small>
                         </div>
                     </button>
 
@@ -145,11 +226,18 @@
                         type="button"
                         data-action="modifier-solde"
                     >
-                        <span>💶</span>
+                        <span aria-hidden="true">
+                            💶
+                        </span>
 
                         <div>
-                            <strong>Modifier un solde</strong>
-                            <small>Créditer ou débiter un compte</small>
+                            <strong>
+                                Modifier un solde
+                            </strong>
+
+                            <small>
+                                Créditer ou débiter un compte
+                            </small>
                         </div>
                     </button>
 
@@ -158,11 +246,18 @@
                         type="button"
                         data-action="suspendre-compte"
                     >
-                        <span>🔒</span>
+                        <span aria-hidden="true">
+                            🔒
+                        </span>
 
                         <div>
-                            <strong>Suspendre un compte</strong>
-                            <small>Bloquer temporairement un compte</small>
+                            <strong>
+                                Suspendre un compte
+                            </strong>
+
+                            <small>
+                                Bloquer temporairement un compte
+                            </small>
                         </div>
                     </button>
 
@@ -171,11 +266,18 @@
                         type="button"
                         data-action="rechercher"
                     >
-                        <span>🔎</span>
+                        <span aria-hidden="true">
+                            🔎
+                        </span>
 
                         <div>
-                            <strong>Rechercher un membre</strong>
-                            <small>Consulter un profil bancaire RP</small>
+                            <strong>
+                                Rechercher un membre
+                            </strong>
+
+                            <small>
+                                Consulter un profil bancaire RP
+                            </small>
                         </div>
                     </button>
                 </div>
@@ -195,7 +297,9 @@
                             Contrôle bancaire
                         </p>
 
-                        <h2>Comptes récents</h2>
+                        <h2>
+                            Comptes récents
+                        </h2>
                     </div>
 
                     <input
@@ -210,62 +314,140 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>Titulaire</th>
-                                <th>Compte</th>
-                                <th>Rôle</th>
-                                <th>Solde</th>
-                                <th>Statut</th>
+                                <th>
+                                    Titulaire
+                                </th>
+
+                                <th>
+                                    Compte
+                                </th>
+
+                                <th>
+                                    Rôle
+                                </th>
+
+                                <th>
+                                    Solde
+                                </th>
+
+                                <th>
+                                    Statut
+                                </th>
                             </tr>
                         </thead>
 
                         <tbody id="liste-comptes-admin">
                             <tr>
-                                <td>Jean Dupont</td>
-                                <td>SGC-000042</td>
-                                <td>Élève</td>
-                                <td>1 245,50 €</td>
+                                <td>
+                                    Jean Dupont
+                                </td>
 
                                 <td>
-                                    <span class="statut-tableau actif">
+                                    SGC-000042
+                                </td>
+
+                                <td>
+                                    Élève
+                                </td>
+
+                                <td>
+                                    1 245,50 €
+                                </td>
+
+                                <td>
+                                    <span
+                                        class="
+                                            statut-tableau
+                                            actif
+                                        "
+                                    >
                                         Actif
                                     </span>
                                 </td>
                             </tr>
 
                             <tr>
-                                <td>Marie Martin</td>
-                                <td>SGC-000043</td>
-                                <td>Élève</td>
-                                <td>875,00 €</td>
+                                <td>
+                                    Marie Martin
+                                </td>
 
                                 <td>
-                                    <span class="statut-tableau actif">
+                                    SGC-000043
+                                </td>
+
+                                <td>
+                                    Élève
+                                </td>
+
+                                <td>
+                                    875,00 €
+                                </td>
+
+                                <td>
+                                    <span
+                                        class="
+                                            statut-tableau
+                                            actif
+                                        "
+                                    >
                                         Actif
                                     </span>
                                 </td>
                             </tr>
 
                             <tr>
-                                <td>Lucas Bernard</td>
-                                <td>SGC-000044</td>
-                                <td>Professeur</td>
-                                <td>2 350,00 €</td>
+                                <td>
+                                    Lucas Bernard
+                                </td>
 
                                 <td>
-                                    <span class="statut-tableau actif">
+                                    SGC-000044
+                                </td>
+
+                                <td>
+                                    Professeur
+                                </td>
+
+                                <td>
+                                    2 350,00 €
+                                </td>
+
+                                <td>
+                                    <span
+                                        class="
+                                            statut-tableau
+                                            actif
+                                        "
+                                    >
                                         Actif
                                     </span>
                                 </td>
                             </tr>
 
                             <tr>
-                                <td>Emma Robert</td>
-                                <td>SGC-000045</td>
-                                <td>Élève</td>
-                                <td>420,75 €</td>
+                                <td>
+                                    Emma Robert
+                                </td>
 
                                 <td>
-                                    <span class="statut-tableau suspendu">
+                                    SGC-000045
+                                </td>
+
+                                <td>
+                                    Élève
+                                </td>
+
+                                <td>
+                                    420,75 €
+                                </td>
+
+                                <td>
+                                    <span
+                                        class="
+                                            statut-tableau
+                                            suspendu
+                                        "
+                                    >
                                         Suspendu
                                     </span>
                                 </td>
@@ -276,84 +458,179 @@
             </section>
 
             <div class="encadre-important">
-                <strong>Important :</strong>
+                <strong>
+                    Migration en cours :
+                </strong>
 
-                les comptes, statistiques et soldes affichés sont fictifs.
-                Aucune modification réelle ne sera effectuée à cette étape.
+                l’accès administrateur utilise maintenant Supabase.
+                Les statistiques et les comptes affichés sont encore
+                des exemples et seront connectés à la base de données
+                dans la prochaine étape.
             </div>
         </section>
     </main>
 
-  <footer class="pied-page-site">
-    <div class="contenu-pied-page">
-        <div class="identite-pied-page">
-            <strong>Banque Saint-Georges RP</strong>
+    <footer class="pied-page-site">
+        <div class="contenu-pied-page">
+            <div class="identite-pied-page">
+                <strong>
+                    Banque Saint-Georges RP
+                </strong>
 
-            <span>
-                Ensemble Scolaire Saint-Georges Coccinet
-            </span>
+                <span>
+                    Ensemble Scolaire Saint-Georges Coccinet
+                </span>
+            </div>
+
+            <div class="informations-pied-page">
+                <span>
+                    © <span data-annee-actuelle></span>
+                </span>
+
+                <span aria-hidden="true">
+                    •
+                </span>
+
+                <span>
+                    Version
+                    <span data-version-site></span>
+                </span>
+
+                <span aria-hidden="true">
+                    •
+                </span>
+
+                <span>
+                    Mise à jour :
+                    <span data-mise-a-jour-site></span>
+                </span>
+            </div>
         </div>
 
-        <div class="informations-pied-page">
-            <span>
-                © <span data-annee-actuelle></span>
-            </span>
+        <p class="mention-fictive-pied-page">
+            Plateforme RP fictive — aucun argent réel,
+            paiement réel ou service bancaire réel.
+        </p>
+    </footer>
 
-            <span aria-hidden="true">•</span>
+    <!-- Bibliothèque officielle Supabase -->
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
 
-            <span>
-                Version <span data-version-site></span>
-            </span>
+    <!-- Configuration publique Supabase -->
+    <script src="./supabase-config.js?v=2"></script>
 
-            <span aria-hidden="true">•</span>
+    <!-- Authentification Supabase -->
+    <script src="./auth-supabase.js?v=2"></script>
 
-            <span>
-                Mise à jour :
-                <span data-mise-a-jour-site></span>
-            </span>
-        </div>
-    </div>
+    <!-- Protection des pages connectées -->
+    <script src="./protection-supabase.js?v=1"></script>
 
-    <p class="mention-fictive-pied-page">
-        Plateforme RP fictive — aucun argent réel,
-        paiement réel ou service bancaire réel.
-    </p>
-</footer>
+    <!-- Service bancaire Supabase -->
+    <script src="./banque-supabase.js?v=1"></script>
 
+    <!-- Protection du rôle administrateur -->
+    <script src="./protection-admin-supabase.js?v=1"></script>
 
-       <!-- Vérification de la session administrateur -->
-    <script src="./session.js?v=2"></script>
+    <!-- Notifications -->
+    <script src="./notifications.js?v=3"></script>
 
+    <!-- Vérification de l’autorisation administrateur -->
     <script>
-        if (!utilisateurConnecte()) {
-            window.location.replace("./connexion.html");
-        } else if (!utilisateurAdministrateur()) {
-            window.location.replace("./dashboard.html");
-        }
+        document.addEventListener(
+            "DOMContentLoaded",
+            async function () {
+                const autorisation =
+                    await protegerPageAdministration();
+
+                if (!autorisation) {
+                    return;
+                }
+
+                console.log(
+                    "Administration autorisée pour :",
+                    autorisation.profil.nom_affiche
+                );
+            }
+        );
     </script>
 
-    <!-- Fonctionnement de l’administration -->
-<script src="./admin.js?v=3"></script>
+    <!-- Fonctionnement temporaire de l’administration -->
+    <script src="./admin.js?v=2"></script>
 
-<!-- Thème clair et sombre -->
-<script src="./theme.js?v=3"></script>
+    <!-- Déconnexion Supabase -->
+    <script>
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+                const boutonDeconnexion =
+                    document.querySelector(
+                        "[data-deconnexion-supabase]"
+                    );
 
-<!-- Déconnexion commune -->
-<script src="./deconnexion.js?v=2"></script>
+                if (!boutonDeconnexion) {
+                    return;
+                }
 
-<!-- Pied de page dynamique -->
-<script src="./footer.js?v=3"></script>
+                boutonDeconnexion.addEventListener(
+                    "click",
+                    async function () {
+                        boutonDeconnexion.disabled = true;
 
-    <!-- Retour en haut de la page -->
-<script src="./retour-haut.js?v=1"></script>
+                        boutonDeconnexion.textContent =
+                            "Déconnexion…";
+
+                        try {
+                            await deconnexionSupabase();
+
+                            window.location.replace(
+                                "./connexion.html"
+                            );
+                        } catch (erreur) {
+                            console.error(
+                                "Déconnexion impossible :",
+                                erreur
+                            );
+
+                            boutonDeconnexion.disabled = false;
+
+                            boutonDeconnexion.textContent =
+                                "Déconnexion";
+
+                            if (
+                                typeof afficherNotification ===
+                                "function"
+                            ) {
+                                afficherNotification(
+                                    "La déconnexion a échoué.",
+                                    "erreur",
+                                    5000
+                                );
+                            }
+                        }
+                    }
+                );
+            }
+        );
+    </script>
+
+    <!-- Thème clair et sombre -->
+    <script src="./theme.js?v=3"></script>
+
+    <!-- Pied de page dynamique -->
+    <script src="./footer.js?v=3"></script>
+
+    <!-- Retour en haut -->
+    <script src="./retour-haut.js?v=1"></script>
 
     <!-- Progression de lecture -->
-<script src="./progression-page.js?v=1"></script>
+    <script src="./progression-page.js?v=1"></script>
 
     <!-- Menu mobile -->
-<script src="./menu-mobile.js?v=1"></script>
+    <script src="./menu-mobile.js?v=1"></script>
 
-<!-- Navigation active -->
-<script src="./navigation.js?v=3"></script>
+    <!-- Navigation active -->
+    <script src="./navigation.js?v=3"></script>
 </body>
 </html>
