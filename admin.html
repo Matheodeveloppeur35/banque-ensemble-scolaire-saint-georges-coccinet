@@ -17,7 +17,7 @@
         Administration — Banque Saint-Georges RP
     </title>
 
-    <link rel="stylesheet" href="./style.css?v=35">
+    <link rel="stylesheet" href="./style.css?v=36">
 </head>
 
 <body>
@@ -39,41 +39,15 @@
         </div>
 
         <nav>
-            <a href="./index.html">
-                Accueil
-            </a>
-
-            <a href="./dashboard.html">
-                Mon compte
-            </a>
-
-            <a href="./historique.html">
-                Historique
-            </a>
-
-            <a href="./boutique.html">
-                Boutique
-            </a>
-
-            <a href="./admin.html">
-                Administration
-            </a>
-
-            <a href="./profil.html">
-                Profil
-            </a>
-
-            <a href="./parametres.html">
-                Paramètres
-            </a>
-
-            <a href="./aide.html">
-                Aide
-            </a>
-
-            <a href="./reglement.html">
-                Règlement
-            </a>
+            <a href="./index.html">Accueil</a>
+            <a href="./dashboard.html">Mon compte</a>
+            <a href="./historique.html">Historique</a>
+            <a href="./boutique.html">Boutique</a>
+            <a href="./admin.html">Administration</a>
+            <a href="./profil.html">Profil</a>
+            <a href="./parametres.html">Paramètres</a>
+            <a href="./aide.html">Aide</a>
+            <a href="./reglement.html">Règlement</a>
 
             <button
                 class="bouton-theme"
@@ -127,8 +101,9 @@
                     Administration sécurisée :
                 </strong>
 
-                l’accès à cette page est contrôlé par la session
-                Discord et par le rôle enregistré dans Supabase.
+                les informations affichées proviennent de Supabase.
+                L’accès est contrôlé par votre session Discord et
+                votre rôle administrateur.
             </div>
 
             <section class="statistiques-admin">
@@ -137,12 +112,12 @@
                         Comptes actifs
                     </span>
 
-                    <strong>
-                        128
+                    <strong id="stat-comptes-actifs">
+                        Chargement…
                     </strong>
 
-                    <small>
-                        Utilisateurs RP
+                    <small id="stat-utilisateurs-total">
+                        Chargement…
                     </small>
                 </article>
 
@@ -151,8 +126,8 @@
                         Solde total
                     </span>
 
-                    <strong>
-                        82 450,50 €
+                    <strong id="stat-solde-total">
+                        Chargement…
                     </strong>
 
                     <small>
@@ -165,12 +140,12 @@
                         Transactions du jour
                     </span>
 
-                    <strong>
-                        34
+                    <strong id="stat-transactions-jour">
+                        Chargement…
                     </strong>
 
                     <small>
-                        Opérations RP
+                        Opérations RP enregistrées aujourd’hui
                     </small>
                 </article>
 
@@ -179,8 +154,11 @@
                         Comptes suspendus
                     </span>
 
-                    <strong class="texte-rouge">
-                        3
+                    <strong
+                        class="texte-rouge"
+                        id="stat-comptes-suspendus"
+                    >
+                        Chargement…
                     </strong>
 
                     <small>
@@ -216,7 +194,8 @@
                             </strong>
 
                             <small>
-                                Ajouter un nouveau membre RP
+                                Les comptes sont créés à la première
+                                connexion Discord
                             </small>
                         </div>
                     </button>
@@ -236,7 +215,7 @@
                             </strong>
 
                             <small>
-                                Créditer ou débiter un compte
+                                Créditer ou débiter un compte RP
                             </small>
                         </div>
                     </button>
@@ -276,7 +255,7 @@
                             </strong>
 
                             <small>
-                                Consulter un profil bancaire RP
+                                Utiliser le champ de recherche
                             </small>
                         </div>
                     </button>
@@ -298,14 +277,14 @@
                         </p>
 
                         <h2>
-                            Comptes récents
+                            Comptes enregistrés
                         </h2>
                     </div>
 
                     <input
                         id="recherche-admin"
                         type="search"
-                        placeholder="Rechercher un membre…"
+                        placeholder="Rechercher un membre ou un compte…"
                         autocomplete="off"
                     >
                 </div>
@@ -314,142 +293,18 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>
-                                    Titulaire
-                                </th>
-
-                                <th>
-                                    Compte
-                                </th>
-
-                                <th>
-                                    Rôle
-                                </th>
-
-                                <th>
-                                    Solde
-                                </th>
-
-                                <th>
-                                    Statut
-                                </th>
+                                <th>Titulaire</th>
+                                <th>Compte</th>
+                                <th>Rôle</th>
+                                <th>Solde</th>
+                                <th>Statut</th>
                             </tr>
                         </thead>
 
                         <tbody id="liste-comptes-admin">
                             <tr>
-                                <td>
-                                    Jean Dupont
-                                </td>
-
-                                <td>
-                                    SGC-000042
-                                </td>
-
-                                <td>
-                                    Élève
-                                </td>
-
-                                <td>
-                                    1 245,50 €
-                                </td>
-
-                                <td>
-                                    <span
-                                        class="
-                                            statut-tableau
-                                            actif
-                                        "
-                                    >
-                                        Actif
-                                    </span>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    Marie Martin
-                                </td>
-
-                                <td>
-                                    SGC-000043
-                                </td>
-
-                                <td>
-                                    Élève
-                                </td>
-
-                                <td>
-                                    875,00 €
-                                </td>
-
-                                <td>
-                                    <span
-                                        class="
-                                            statut-tableau
-                                            actif
-                                        "
-                                    >
-                                        Actif
-                                    </span>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    Lucas Bernard
-                                </td>
-
-                                <td>
-                                    SGC-000044
-                                </td>
-
-                                <td>
-                                    Professeur
-                                </td>
-
-                                <td>
-                                    2 350,00 €
-                                </td>
-
-                                <td>
-                                    <span
-                                        class="
-                                            statut-tableau
-                                            actif
-                                        "
-                                    >
-                                        Actif
-                                    </span>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    Emma Robert
-                                </td>
-
-                                <td>
-                                    SGC-000045
-                                </td>
-
-                                <td>
-                                    Élève
-                                </td>
-
-                                <td>
-                                    420,75 €
-                                </td>
-
-                                <td>
-                                    <span
-                                        class="
-                                            statut-tableau
-                                            suspendu
-                                        "
-                                    >
-                                        Suspendu
-                                    </span>
+                                <td colspan="5">
+                                    Chargement des comptes…
                                 </td>
                             </tr>
                         </tbody>
@@ -459,13 +314,12 @@
 
             <div class="encadre-important">
                 <strong>
-                    Migration en cours :
+                    Données réelles RP :
                 </strong>
 
-                l’accès administrateur utilise maintenant Supabase.
-                Les statistiques et les comptes affichés sont encore
-                des exemples et seront connectés à la base de données
-                dans la prochaine étape.
+                les profils, comptes, soldes et statistiques affichés
+                proviennent maintenant de la base de données Supabase.
+                Les montants restent entièrement fictifs.
             </div>
         </section>
     </main>
@@ -487,18 +341,14 @@
                     © <span data-annee-actuelle></span>
                 </span>
 
-                <span aria-hidden="true">
-                    •
-                </span>
+                <span aria-hidden="true">•</span>
 
                 <span>
                     Version
                     <span data-version-site></span>
                 </span>
 
-                <span aria-hidden="true">
-                    •
-                </span>
+                <span aria-hidden="true">•</span>
 
                 <span>
                     Mise à jour :
@@ -536,28 +386,8 @@
     <!-- Notifications -->
     <script src="./notifications.js?v=3"></script>
 
-    <!-- Vérification de l’autorisation administrateur -->
-    <script>
-        document.addEventListener(
-            "DOMContentLoaded",
-            async function () {
-                const autorisation =
-                    await protegerPageAdministration();
-
-                if (!autorisation) {
-                    return;
-                }
-
-                console.log(
-                    "Administration autorisée pour :",
-                    autorisation.profil.nom_affiche
-                );
-            }
-        );
-    </script>
-
-    <!-- Fonctionnement temporaire de l’administration -->
-    <script src="./admin.js?v=2"></script>
+    <!-- Données administratives Supabase -->
+    <script src="./admin-supabase.js?v=1"></script>
 
     <!-- Déconnexion Supabase -->
     <script>
