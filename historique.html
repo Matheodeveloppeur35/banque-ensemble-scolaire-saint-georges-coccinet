@@ -352,6 +352,9 @@
     <!-- Authentification Supabase -->
     <script src="./auth-supabase.js?v=2"></script>
 
+    <!-- Déconnexion Supabase commune -->
+<script src="./deconnexion-supabase.js?v=2"></script>
+
     <!-- Protection de la page -->
     <script src="./protection-supabase.js?v=1"></script>
 
@@ -367,60 +370,6 @@
 
     <!-- Exportation de l’historique -->
     <script src="./export-historique.js?v=2"></script>
-
-    <!-- Déconnexion Supabase -->
-    <script>
-        document.addEventListener(
-            "DOMContentLoaded",
-            function () {
-                const boutonDeconnexion =
-                    document.querySelector(
-                        "[data-deconnexion-supabase]"
-                    );
-
-                if (!boutonDeconnexion) {
-                    return;
-                }
-
-                boutonDeconnexion.addEventListener(
-                    "click",
-                    async function () {
-                        boutonDeconnexion.disabled = true;
-                        boutonDeconnexion.textContent =
-                            "Déconnexion…";
-
-                        try {
-                            await deconnexionSupabase();
-
-                            window.location.replace(
-                                "./connexion.html"
-                            );
-                        } catch (erreur) {
-                            console.error(
-                                "Déconnexion impossible :",
-                                erreur
-                            );
-
-                            boutonDeconnexion.disabled = false;
-                            boutonDeconnexion.textContent =
-                                "Déconnexion";
-
-                            if (
-                                typeof afficherNotification ===
-                                "function"
-                            ) {
-                                afficherNotification(
-                                    "La déconnexion a échoué.",
-                                    "erreur",
-                                    5000
-                                );
-                            }
-                        }
-                    }
-                );
-            }
-        );
-    </script>
 
     <!-- Thème clair et sombre -->
     <script src="./theme.js?v=3"></script>
