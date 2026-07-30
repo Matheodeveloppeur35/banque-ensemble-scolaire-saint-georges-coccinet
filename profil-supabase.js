@@ -232,6 +232,7 @@ function definirTexteProfilSupabase(
 function formaterRoleProfilSupabase(role) {
     const roles = {
         eleve: "Élève",
+        parent: "Parent",
         professeur: "Professeur",
         personnel: "Personnel",
         administrateur: "Administrateur"
@@ -239,6 +240,8 @@ function formaterRoleProfilSupabase(role) {
 
     return roles[role] || "Membre";
 }
+
+
 
 function formaterStatutProfilSupabase(statut) {
     const statuts = {
