@@ -431,6 +431,7 @@ function definirTexteAdministration(
 function formaterRoleAdministration(role) {
     const roles = {
         eleve: "Élève",
+        parent: "Parent",
         professeur: "Professeur",
         personnel: "Personnel",
         administrateur: "Administrateur"
