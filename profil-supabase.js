@@ -16,7 +16,6 @@ async function initialiserProfilSupabase() {
         }
 
         afficherProfilSupabase(donnees);
-        activerDeconnexionProfilSupabase();
     } catch (erreur) {
         console.error(
             "Chargement du profil impossible :",
@@ -136,6 +135,7 @@ function afficherAvatarProfilSupabase(
         image.style.borderRadius = "inherit";
 
         conteneur.appendChild(image);
+
         return;
     }
 
@@ -170,52 +170,6 @@ function adapterStatutProfilSupabase(statut) {
     );
 }
 
-function activerDeconnexionProfilSupabase() {
-    const bouton = document.querySelector(
-        "#bouton-deconnexion"
-    );
-
-    if (!bouton) {
-        return;
-    }
-
-    bouton.addEventListener(
-        "click",
-        async function () {
-            bouton.disabled = true;
-            bouton.textContent = "Déconnexion…";
-
-            try {
-                await deconnexionSupabase();
-
-                window.location.replace(
-                    "./connexion.html"
-                );
-            } catch (erreur) {
-                console.error(
-                    "Déconnexion impossible :",
-                    erreur
-                );
-
-                bouton.disabled = false;
-                bouton.textContent =
-                    "Se déconnecter";
-
-                if (
-                    typeof afficherNotification ===
-                    "function"
-                ) {
-                    afficherNotification(
-                        "La déconnexion a échoué.",
-                        "erreur",
-                        5000
-                    );
-                }
-            }
-        }
-    );
-}
-
 function definirTexteProfilSupabase(
     selecteur,
     valeur
@@ -241,8 +195,6 @@ function formaterRoleProfilSupabase(role) {
     return roles[role] || "Membre";
 }
 
-
-
 function formaterStatutProfilSupabase(statut) {
     const statuts = {
         actif: "Actif",
@@ -260,7 +212,9 @@ function creerInitialesProfilSupabase(nom) {
         .filter(Boolean)
         .slice(0, 2)
         .map(function (partie) {
-            return partie.charAt(0).toUpperCase();
+            return partie
+                .charAt(0)
+                .toUpperCase();
         })
         .join("") || "SG";
 }
