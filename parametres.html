@@ -15,16 +15,20 @@
 
     <title>Paramètres — Banque Saint-Georges RP</title>
 
-    <link rel="stylesheet" href="./style.css?v=28">
+    <link rel="stylesheet" href="./style.css?v=41">
 </head>
 
 <body>
     <header>
         <div class="identite">
-            <div class="logo">SG</div>
+            <div class="logo">
+                SG
+            </div>
 
             <div>
-                <strong>Banque Saint-Georges RP</strong>
+                <strong>
+                    Banque Saint-Georges RP
+                </strong>
 
                 <p>
                     Ensemble Scolaire Saint-Georges Coccinet
@@ -40,6 +44,24 @@
             <a href="./profil.html">Profil</a>
             <a href="./parametres.html">Paramètres</a>
             <a href="./aide.html">Aide</a>
+            <a href="./reglement.html">Règlement</a>
+
+            <button
+                class="bouton-theme"
+                type="button"
+                data-changer-theme
+            >
+                <span aria-hidden="true">🌙</span>
+                <span>Thème sombre</span>
+            </button>
+
+            <button
+                class="deconnexion-menu"
+                type="button"
+                data-deconnexion-supabase
+            >
+                Déconnexion
+            </button>
         </nav>
     </header>
 
@@ -48,14 +70,16 @@
             <div class="entete-parametres">
                 <div>
                     <p class="petit-titre">
-                        Préférences et données
+                        Préférences et session
                     </p>
 
-                    <h1>Paramètres</h1>
+                    <h1>
+                        Paramètres
+                    </h1>
 
                     <p>
-                        Personnalisez votre expérience et gérez vos
-                        données bancaires locales de démonstration.
+                        Personnalisez l’apparence du site et consultez
+                        les informations de votre session Discord.
                     </p>
                 </div>
 
@@ -78,12 +102,14 @@
                             Apparence
                         </p>
 
-                        <h2>Thème du site</h2>
+                        <h2>
+                            Thème du site
+                        </h2>
 
                         <p>
                             Basculez entre le thème clair et le thème
-                            sombre. Votre choix sera conservé dans
-                            ce navigateur.
+                            sombre. Ce choix reste enregistré uniquement
+                            dans ce navigateur.
                         </p>
 
                         <button
@@ -99,89 +125,122 @@
 
                 <article class="carte-parametre">
                     <div class="icone-parametre">
-                        💾
+                        💬
                     </div>
 
                     <div class="contenu-parametre">
                         <p class="petit-titre">
-                            Sauvegarde
+                            Compte connecté
                         </p>
 
-                        <h2>Exporter les données</h2>
+                        <h2>
+                            Identité Discord
+                        </h2>
 
-                        <p>
-                            Téléchargez une copie JSON du profil, du solde
-                            et de l’historique de démonstration.
-                        </p>
+                        <dl class="liste-parametres-compte">
+                            <div>
+                                <dt>
+                                    Nom Discord
+                                </dt>
 
-                        <button
-                            class="bouton-sauvegarde bouton-parametre"
-                            id="bouton-sauvegarde"
-                            type="button"
-                        >
-                            Télécharger une sauvegarde
-                        </button>
+                                <dd id="parametre-nom-discord">
+                                    Chargement…
+                                </dd>
+                            </div>
+
+                            <div>
+                                <dt>
+                                    Adresse associée
+                                </dt>
+
+                                <dd id="parametre-email">
+                                    Chargement…
+                                </dd>
+                            </div>
+
+                            <div>
+                                <dt>
+                                    Dernière connexion
+                                </dt>
+
+                                <dd id="parametre-derniere-connexion">
+                                    Chargement…
+                                </dd>
+                            </div>
+                        </dl>
                     </div>
                 </article>
 
                 <article class="carte-parametre">
                     <div class="icone-parametre">
-                        📥
+                        🏦
                     </div>
 
                     <div class="contenu-parametre">
                         <p class="petit-titre">
-                            Restauration
+                            Banque RP
                         </p>
 
-                        <h2>Importer une sauvegarde</h2>
+                        <h2>
+                            Compte bancaire
+                        </h2>
+
+                        <dl class="liste-parametres-compte">
+                            <div>
+                                <dt>
+                                    Numéro de compte
+                                </dt>
+
+                                <dd id="parametre-numero-compte">
+                                    Chargement…
+                                </dd>
+                            </div>
+
+                            <div>
+                                <dt>
+                                    Rôle
+                                </dt>
+
+                                <dd id="parametre-role">
+                                    Chargement…
+                                </dd>
+                            </div>
+                        </dl>
 
                         <p>
-                            Restaurez une sauvegarde JSON compatible.
-                            Les données locales actuelles seront remplacées.
+                            Les soldes, rôles et transactions sont gérés
+                            dans Supabase. Ils ne peuvent pas être
+                            réinitialisés depuis le navigateur.
                         </p>
-
-                        <input
-                            id="fichier-restauration"
-                            type="file"
-                            accept=".json,application/json"
-                            hidden
-                        >
-
-                        <button
-                            class="bouton-restauration bouton-parametre"
-                            id="bouton-restauration"
-                            type="button"
-                        >
-                            Restaurer une sauvegarde
-                        </button>
                     </div>
                 </article>
 
-                <article class="carte-parametre danger">
+                <article class="carte-parametre">
                     <div class="icone-parametre">
-                        ⚠️
+                        🔐
                     </div>
 
                     <div class="contenu-parametre">
                         <p class="petit-titre">
-                            Zone sensible
+                            Sécurité
                         </p>
 
-                        <h2>Réinitialiser les données</h2>
+                        <h2>
+                            Authentification
+                        </h2>
 
                         <p>
-                            Restaurez le compte, le solde et l’historique
-                            à leurs valeurs initiales de démonstration.
+                            La connexion est assurée par Discord et
+                            Supabase. Le site ne connaît pas et ne
+                            conserve pas votre mot de passe Discord.
                         </p>
 
-                        <button
-                            class="bouton-reinitialisation bouton-parametre"
-                            id="bouton-reinitialisation"
-                            type="button"
+                        <a
+                            class="bouton-parametre bouton-clair"
+                            href="./reglement.html"
                         >
-                            Réinitialiser les données
-                        </button>
+                            Consulter le règlement
+                        </a>
                     </div>
                 </article>
             </div>
@@ -189,14 +248,16 @@
             <section class="session-parametres">
                 <div>
                     <p class="petit-titre">
-                        Session
+                        Session Discord
                     </p>
 
-                    <h2>Déconnexion</h2>
+                    <h2>
+                        Déconnexion
+                    </h2>
 
                     <p>
-                        Fermez votre session locale de démonstration et
-                        revenez à la page de connexion.
+                        Fermez votre session Supabase sur ce navigateur
+                        et revenez à la page de connexion.
                     </p>
                 </div>
 
@@ -210,11 +271,13 @@
             </section>
 
             <div class="encadre-important">
-                <strong>Important :</strong>
+                <strong>
+                    Données sécurisées :
+                </strong>
 
-                ces paramètres concernent uniquement les données locales
-                enregistrées dans votre navigateur. Ils ne modifient
-                aucune donnée réelle.
+                les informations bancaires proviennent de Supabase et
+                sont associées à votre compte Discord. Seules les
+                préférences visuelles restent enregistrées localement.
             </div>
         </section>
     </main>
@@ -239,7 +302,8 @@
                 <span aria-hidden="true">•</span>
 
                 <span>
-                    Version <span data-version-site></span>
+                    Version
+                    <span data-version-site></span>
                 </span>
 
                 <span aria-hidden="true">•</span>
@@ -257,105 +321,48 @@
         </p>
     </footer>
 
-    <!-- Vérification de la session -->
-    <script src="./session.js?v=3"></script>
+    <!-- Bibliothèque officielle Supabase -->
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
 
-    <script>
-        if (!utilisateurConnecte()) {
-            window.location.replace("./connexion.html");
-        }
-    </script>
+    <!-- Configuration publique Supabase -->
+    <script src="./supabase-config.js?v=2"></script>
 
-    <!-- Données et services communs -->
-    <script src="./banque.js?v=11"></script>
+    <!-- Authentification Supabase -->
+    <script src="./auth-supabase.js?v=2"></script>
+
+    <!-- Protection de la page -->
+    <script src="./protection-supabase.js?v=1"></script>
+
+    <!-- Service bancaire Supabase -->
+    <script src="./banque-supabase.js?v=1"></script>
+
+    <!-- Navigation selon le rôle administrateur -->
+    <script src="./navigation-admin.js?v=2"></script>
+
+    <!-- Notifications -->
     <script src="./notifications.js?v=3"></script>
 
-    <!-- Sauvegarde et restauration -->
-    <script src="./sauvegarde.js?v=2"></script>
-    <script src="./restauration.js?v=2"></script>
+    <!-- Paramètres réels Supabase -->
+    <script src="./parametres-supabase.js?v=1"></script>
 
-    <!-- Thème -->
+    <!-- Thème clair et sombre -->
     <script src="./theme.js?v=3"></script>
 
     <!-- Pied de page dynamique -->
     <script src="./footer.js?v=3"></script>
 
-    <!-- Retour en haut de la page -->
-<script src="./retour-haut.js?v=1"></script>
+    <!-- Retour en haut -->
+    <script src="./retour-haut.js?v=1"></script>
 
     <!-- Progression de lecture -->
-<script src="./progression-page.js?v=1"></script>
+    <script src="./progression-page.js?v=1"></script>
 
     <!-- Menu mobile -->
-<script src="./menu-mobile.js?v=1"></script>
+    <script src="./menu-mobile.js?v=1"></script>
 
     <!-- Navigation active -->
     <script src="./navigation.js?v=3"></script>
-
-    <!-- Réinitialisation et déconnexion -->
-    <script>
-        const boutonReinitialisation = document.querySelector(
-            "#bouton-reinitialisation"
-        );
-
-        const boutonDeconnexionParametres = document.querySelector(
-            "#bouton-deconnexion-parametres"
-        );
-
-        boutonReinitialisation.addEventListener(
-            "click",
-            function () {
-                const confirmation = window.confirm(
-                    "Voulez-vous vraiment réinitialiser les données " +
-                    "bancaires de démonstration ?\n\n" +
-                    "Le solde et l’historique retrouveront leurs " +
-                    "valeurs initiales."
-                );
-
-                if (!confirmation) {
-                    return;
-                }
-
-                boutonReinitialisation.disabled = true;
-                boutonReinitialisation.textContent =
-                    "Réinitialisation…";
-
-                reinitialiserBanqueDemo();
-
-                if (
-                    typeof memoriserNotification ===
-                    "function"
-                ) {
-                    memoriserNotification(
-                        "Les données bancaires de démonstration " +
-                        "ont été réinitialisées.",
-                        "succes"
-                    );
-                }
-
-                window.setTimeout(function () {
-                    window.location.reload();
-                }, 500);
-            }
-        );
-
-        boutonDeconnexionParametres.addEventListener(
-            "click",
-            function () {
-                boutonDeconnexionParametres.disabled = true;
-
-                boutonDeconnexionParametres.textContent =
-                    "Déconnexion…";
-
-                fermerSessionDemo();
-
-                window.setTimeout(function () {
-                    window.location.replace(
-                        "./connexion.html"
-                    );
-                }, 400);
-            }
-        );
-    </script>
 </body>
 </html>
