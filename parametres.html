@@ -262,12 +262,14 @@
                 </div>
 
                 <button
-                    class="bouton-deconnexion"
-                    id="bouton-deconnexion-parametres"
-                    type="button"
-                >
-                    Se déconnecter
-                </button>
+    class="bouton-deconnexion"
+    id="bouton-deconnexion-parametres"
+    type="button"
+    data-deconnexion-supabase
+>
+    Se déconnecter
+</button>
+
             </section>
 
             <div class="encadre-important">
@@ -331,6 +333,7 @@
 
     <!-- Authentification Supabase -->
     <script src="./auth-supabase.js?v=2"></script>
+<script src="./deconnexion-supabase.js?v=2"></script>
 
     <!-- Protection de la page -->
     <script src="./protection-supabase.js?v=1"></script>
