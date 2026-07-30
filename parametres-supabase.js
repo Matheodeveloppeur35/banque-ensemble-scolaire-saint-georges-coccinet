@@ -13,8 +13,6 @@ async function initialiserParametresSupabase() {
             session,
             donnees
         );
-
-        activerDeconnexionParametresSupabase();
     } catch (erreur) {
         console.error(
             "Chargement des paramètres impossible :",
@@ -71,52 +69,6 @@ function afficherInformationsSessionParametres(
     );
 }
 
-function activerDeconnexionParametresSupabase() {
-    const bouton = document.querySelector(
-        "#bouton-deconnexion-parametres"
-    );
-
-    if (!bouton) {
-        return;
-    }
-
-    bouton.addEventListener(
-        "click",
-        async function () {
-            bouton.disabled = true;
-            bouton.textContent = "Déconnexion…";
-
-            try {
-                await deconnexionSupabase();
-
-                window.location.replace(
-                    "./connexion.html"
-                );
-            } catch (erreur) {
-                console.error(
-                    "Déconnexion impossible :",
-                    erreur
-                );
-
-                bouton.disabled = false;
-                bouton.textContent =
-                    "Se déconnecter";
-
-                if (
-                    typeof afficherNotification ===
-                    "function"
-                ) {
-                    afficherNotification(
-                        "La déconnexion a échoué.",
-                        "erreur",
-                        5000
-                    );
-                }
-            }
-        }
-    );
-}
-
 function definirTexteParametres(
     selecteur,
     valeur
@@ -145,6 +97,10 @@ function formaterRoleParametres(role) {
 function formaterDateConnexionParametres(
     dateTexte
 ) {
+    if (!dateTexte) {
+        return "Date inconnue";
+    }
+
     const date = new Date(dateTexte);
 
     if (Number.isNaN(date.getTime())) {
