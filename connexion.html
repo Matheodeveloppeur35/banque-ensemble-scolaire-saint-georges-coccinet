@@ -15,7 +15,7 @@
 
     <title>Connexion — Banque Saint-Georges RP</title>
 
-    <link rel="stylesheet" href="./style.css?v=33">
+    <link rel="stylesheet" href="./style.css?v=42">
 </head>
 
 <body>
@@ -81,10 +81,8 @@
 
             <p class="description-connexion">
                 Connectez-vous avec Discord pour accéder à votre
-                véritable compte bancaire RP partagé.
+                compte bancaire RP partagé.
             </p>
-
-            <!-- Connexion réelle avec Discord -->
 
             <button
                 class="bouton-discord"
@@ -96,38 +94,6 @@
                 </span>
 
                 Se connecter avec Discord
-            </button>
-
-            <div class="separation">
-                <span>
-                    Modes de démonstration
-                </span>
-            </div>
-
-            <!-- Connexion locale de démonstration -->
-
-            <button
-                class="bouton-discord"
-                id="connexion-demo"
-                type="button"
-            >
-                <span class="logo-discord">
-                    ◉
-                </span>
-
-                Continuer en mode démonstration
-            </button>
-
-            <button
-                class="bouton-admin-demo"
-                id="connexion-admin-demo"
-                type="button"
-            >
-                <span aria-hidden="true">
-                    ⚙️
-                </span>
-
-                Connexion administrateur de démonstration
             </button>
 
             <p
@@ -145,26 +111,27 @@
 
             <ul class="securite-connexion">
                 <li>
-                    La connexion réelle passe par la page officielle
-                    de Discord.
+                    La connexion passe par la page officielle de Discord.
                 </li>
 
                 <li>
-                    Nous ne demanderons jamais votre mot de passe Discord.
+                    Le site ne vous demandera jamais votre mot de passe
+                    Discord.
                 </li>
 
                 <li>
-                    Aucun numéro de carte ou compte bancaire réel
+                    Aucun numéro de carte, IBAN ou compte bancaire réel
                     n’est nécessaire.
                 </li>
 
                 <li>
-                    Tous les montants sont des euros RP fictifs.
+                    Tous les comptes et montants sont fictifs et réservés
+                    au jeu de rôle.
                 </li>
 
                 <li>
-                    Les modes de démonstration restent enregistrés
-                    uniquement dans ce navigateur.
+                    Votre session est gérée de manière sécurisée par
+                    Discord et Supabase.
                 </li>
             </ul>
 
@@ -231,9 +198,6 @@
     <!-- Authentification Discord avec Supabase -->
     <script src="./auth-supabase.js?v=2"></script>
 
-    <!-- Sessions locales de démonstration -->
-    <script src="./session.js?v=5"></script>
-
     <!-- Notifications -->
     <script src="./notifications.js?v=3"></script>
 
@@ -255,7 +219,7 @@
     <!-- Navigation active -->
     <script src="./navigation.js?v=3"></script>
 
-    <!-- Fonctionnement de la page de connexion -->
+    <!-- Connexion Discord réelle -->
     <script>
         document.addEventListener(
             "DOMContentLoaded",
@@ -265,16 +229,6 @@
                         "#connexion-discord"
                     );
 
-                const boutonUtilisateur =
-                    document.querySelector(
-                        "#connexion-demo"
-                    );
-
-                const boutonAdministrateur =
-                    document.querySelector(
-                        "#connexion-admin-demo"
-                    );
-
                 const messageConnexion =
                     document.querySelector(
                         "#message-connexion"
@@ -282,8 +236,6 @@
 
                 if (
                     !boutonDiscord ||
-                    !boutonUtilisateur ||
-                    !boutonAdministrateur ||
                     !messageConnexion
                 ) {
                     console.error(
@@ -293,21 +245,18 @@
                     return;
                 }
 
-                /*
-                 * Connexion Discord réelle
-                 */
-
                 boutonDiscord.addEventListener(
                     "click",
                     async function () {
-                        desactiverBoutons();
+                        boutonDiscord.disabled = true;
 
                         boutonDiscord.textContent =
                             "Redirection vers Discord…";
 
-                        afficherMessage(
-                            "Ouverture de la page officielle Discord…"
-                        );
+                        messageConnexion.hidden = false;
+
+                        messageConnexion.textContent =
+                            "Ouverture de la page officielle Discord…";
 
                         try {
                             if (
@@ -315,7 +264,8 @@
                                 "function"
                             ) {
                                 throw new Error(
-                                    "Le service Discord est indisponible."
+                                    "Le service de connexion Discord " +
+                                    "est indisponible."
                                 );
                             }
 
@@ -326,16 +276,15 @@
                                 erreur
                             );
 
-                            reactiverBoutons();
+                            boutonDiscord.disabled = false;
 
                             boutonDiscord.innerHTML =
                                 '<span class="logo-discord">◉</span>' +
                                 " Se connecter avec Discord";
 
-                            afficherMessage(
+                            messageConnexion.textContent =
                                 "La connexion Discord a échoué. " +
-                                "Veuillez vérifier la configuration."
-                            );
+                                "Veuillez réessayer.";
 
                             if (
                                 typeof afficherNotification ===
@@ -350,162 +299,6 @@
                         }
                     }
                 );
-
-                /*
-                 * Connexion utilisateur de démonstration
-                 */
-
-                boutonUtilisateur.addEventListener(
-                    "click",
-                    function () {
-                        connecterModeDemonstration(false);
-                    }
-                );
-
-                /*
-                 * Connexion administrateur de démonstration
-                 */
-
-                boutonAdministrateur.addEventListener(
-                    "click",
-                    function () {
-                        connecterModeDemonstration(true);
-                    }
-                );
-
-                function connecterModeDemonstration(
-                    modeAdministrateur
-                ) {
-                    desactiverBoutons();
-
-                    if (modeAdministrateur) {
-                        boutonAdministrateur.textContent =
-                            "Connexion administrateur…";
-
-                        afficherMessage(
-                            "Création de la session administrateur " +
-                            "de démonstration…"
-                        );
-                    } else {
-                        boutonUtilisateur.textContent =
-                            "Connexion en cours…";
-
-                        afficherMessage(
-                            "Création de votre session " +
-                            "de démonstration…"
-                        );
-                    }
-
-                    try {
-                        if (
-                            typeof ouvrirSessionDemo ===
-                            "function"
-                        ) {
-                            ouvrirSessionDemo(
-                                modeAdministrateur
-                            );
-                        } else {
-                            enregistrerSessionDeSecours(
-                                modeAdministrateur
-                            );
-                        }
-
-                        window.setTimeout(
-                            function () {
-                                window.location.replace(
-                                    modeAdministrateur
-                                        ? "./admin.html"
-                                        : "./dashboard.html"
-                                );
-                            },
-                            700
-                        );
-                    } catch (erreur) {
-                        console.error(
-                            "Connexion de démonstration impossible :",
-                            erreur
-                        );
-
-                        try {
-                            enregistrerSessionDeSecours(
-                                modeAdministrateur
-                            );
-
-                            window.location.replace(
-                                modeAdministrateur
-                                    ? "./admin.html"
-                                    : "./dashboard.html"
-                            );
-                        } catch (erreurSecondaire) {
-                            reactiverBoutons();
-
-                            restaurerTexteBoutons();
-
-                            afficherMessage(
-                                "La connexion de démonstration " +
-                                "a échoué."
-                            );
-                        }
-                    }
-                }
-
-                function afficherMessage(texte) {
-                    messageConnexion.hidden = false;
-                    messageConnexion.textContent = texte;
-                }
-
-                function desactiverBoutons() {
-                    boutonDiscord.disabled = true;
-                    boutonUtilisateur.disabled = true;
-                    boutonAdministrateur.disabled = true;
-                }
-
-                function reactiverBoutons() {
-                    boutonDiscord.disabled = false;
-                    boutonUtilisateur.disabled = false;
-                    boutonAdministrateur.disabled = false;
-                }
-
-                function restaurerTexteBoutons() {
-                    boutonDiscord.innerHTML =
-                        '<span class="logo-discord">◉</span>' +
-                        " Se connecter avec Discord";
-
-                    boutonUtilisateur.innerHTML =
-                        '<span class="logo-discord">◉</span>' +
-                        " Continuer en mode démonstration";
-
-                    boutonAdministrateur.innerHTML =
-                        "<span>⚙️</span> " +
-                        "Connexion administrateur de démonstration";
-                }
-
-                function enregistrerSessionDeSecours(
-                    modeAdministrateur
-                ) {
-                    localStorage.setItem(
-                        "saintGeorgesSessionDemo",
-                        JSON.stringify({
-                            connecte: true,
-                            administrateur:
-                                modeAdministrateur,
-                            dateConnexion:
-                                new Date().toISOString()
-                        })
-                    );
-
-                    localStorage.setItem(
-                        "saintGeorgesUtilisateurConnecte",
-                        "true"
-                    );
-
-                    localStorage.setItem(
-                        "saintGeorgesAdministrateur",
-                        modeAdministrateur
-                            ? "true"
-                            : "false"
-                    );
-                }
             }
         );
     </script>
