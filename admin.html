@@ -17,7 +17,7 @@
         Administration — Banque Saint-Georges RP
     </title>
 
-    <link rel="stylesheet" href="./style.css?v=36">
+    <link rel="stylesheet" href="./style.css?v=39">
 </head>
 
 <body>
@@ -39,15 +39,41 @@
         </div>
 
         <nav>
-            <a href="./index.html">Accueil</a>
-            <a href="./dashboard.html">Mon compte</a>
-            <a href="./historique.html">Historique</a>
-            <a href="./boutique.html">Boutique</a>
-            <a href="./admin.html">Administration</a>
-            <a href="./profil.html">Profil</a>
-            <a href="./parametres.html">Paramètres</a>
-            <a href="./aide.html">Aide</a>
-            <a href="./reglement.html">Règlement</a>
+            <a href="./index.html">
+                Accueil
+            </a>
+
+            <a href="./dashboard.html">
+                Mon compte
+            </a>
+
+            <a href="./historique.html">
+                Historique
+            </a>
+
+            <a href="./boutique.html">
+                Boutique
+            </a>
+
+            <a href="./admin.html">
+                Administration
+            </a>
+
+            <a href="./profil.html">
+                Profil
+            </a>
+
+            <a href="./parametres.html">
+                Paramètres
+            </a>
+
+            <a href="./aide.html">
+                Aide
+            </a>
+
+            <a href="./reglement.html">
+                Règlement
+            </a>
 
             <button
                 class="bouton-theme"
@@ -86,8 +112,8 @@
                     </h1>
 
                     <p>
-                        Tableau de gestion de la
-                        Banque Saint-Georges RP.
+                        Gérez les comptes, les rôles, les soldes et
+                        les opérations de la Banque Saint-Georges RP.
                     </p>
                 </div>
 
@@ -105,6 +131,8 @@
                 L’accès est contrôlé par votre session Discord et
                 votre rôle administrateur.
             </div>
+
+            <!-- Statistiques -->
 
             <section class="statistiques-admin">
                 <article>
@@ -162,10 +190,12 @@
                     </strong>
 
                     <small>
-                        Contrôles en cours
+                        Comptes temporairement bloqués
                     </small>
                 </article>
             </section>
+
+            <!-- Actions administratives -->
 
             <section class="actions-admin">
                 <div class="titre-section">
@@ -215,7 +245,29 @@
                             </strong>
 
                             <small>
-                                Créditer ou débiter un compte RP
+                                Créditer ou débiter manuellement
+                                un compte RP
+                            </small>
+                        </div>
+                    </button>
+
+                    <button
+                        class="action-admin"
+                        type="button"
+                        data-action="verser-salaire"
+                    >
+                        <span aria-hidden="true">
+                            💰
+                        </span>
+
+                        <div>
+                            <strong>
+                                Verser un salaire
+                            </strong>
+
+                            <small>
+                                Créditer un compte sans débiter
+                                un autre compte
                             </small>
                         </div>
                     </button>
@@ -235,7 +287,48 @@
                             </strong>
 
                             <small>
-                                Bloquer temporairement un compte
+                                Suspendre ou réactiver un compte RP
+                            </small>
+                        </div>
+                    </button>
+
+                    <button
+                        class="action-admin"
+                        type="button"
+                        data-action="modifier-role"
+                    >
+                        <span aria-hidden="true">
+                            🪪
+                        </span>
+
+                        <div>
+                            <strong>
+                                Modifier un rôle
+                            </strong>
+
+                            <small>
+                                Attribuer un rôle à un membre
+                            </small>
+                        </div>
+                    </button>
+
+                    <button
+                        class="action-admin"
+                        type="button"
+                        data-action="voir-membre"
+                    >
+                        <span aria-hidden="true">
+                            📋
+                        </span>
+
+                        <div>
+                            <strong>
+                                Consulter un membre
+                            </strong>
+
+                            <small>
+                                Afficher les détails d’un profil
+                                et de son compte
                             </small>
                         </div>
                     </button>
@@ -255,7 +348,8 @@
                             </strong>
 
                             <small>
-                                Utiliser le champ de recherche
+                                Accéder directement au champ
+                                de recherche
                             </small>
                         </div>
                     </button>
@@ -268,6 +362,8 @@
                     hidden
                 ></div>
             </section>
+
+            <!-- Tableau des comptes -->
 
             <section class="tableau-admin">
                 <div class="entete-tableau-admin">
@@ -286,6 +382,7 @@
                         type="search"
                         placeholder="Rechercher un membre ou un compte…"
                         autocomplete="off"
+                        aria-label="Rechercher un membre ou un compte"
                     >
                 </div>
 
@@ -293,11 +390,25 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>Titulaire</th>
-                                <th>Compte</th>
-                                <th>Rôle</th>
-                                <th>Solde</th>
-                                <th>Statut</th>
+                                <th scope="col">
+                                    Titulaire
+                                </th>
+
+                                <th scope="col">
+                                    Compte
+                                </th>
+
+                                <th scope="col">
+                                    Rôle
+                                </th>
+
+                                <th scope="col">
+                                    Solde
+                                </th>
+
+                                <th scope="col">
+                                    Statut
+                                </th>
                             </tr>
                         </thead>
 
@@ -317,9 +428,9 @@
                     Données réelles RP :
                 </strong>
 
-                les profils, comptes, soldes et statistiques affichés
-                proviennent maintenant de la base de données Supabase.
-                Les montants restent entièrement fictifs.
+                les profils, comptes, soldes et opérations affichés
+                proviennent de la base Supabase. Les montants restent
+                entièrement fictifs et sans valeur réelle.
             </div>
         </section>
     </main>
@@ -341,14 +452,18 @@
                     © <span data-annee-actuelle></span>
                 </span>
 
-                <span aria-hidden="true">•</span>
+                <span aria-hidden="true">
+                    •
+                </span>
 
                 <span>
                     Version
                     <span data-version-site></span>
                 </span>
 
-                <span aria-hidden="true">•</span>
+                <span aria-hidden="true">
+                    •
+                </span>
 
                 <span>
                     Mise à jour :
@@ -373,34 +488,34 @@
 
     <!-- Authentification Supabase -->
     <script src="./auth-supabase.js?v=2"></script>
-<script src="./deconnexion-supabase.js?v=2"></script>
+
+    <!-- Déconnexion Supabase commune -->
+    <script src="./deconnexion-supabase.js?v=2"></script>
 
     <!-- Protection des pages connectées -->
     <script src="./protection-supabase.js?v=1"></script>
 
-    <!-- Service bancaire Supabase -->
-    <script src="./banque-supabase.js?v=1"></script>
-
     <!-- Protection du rôle administrateur -->
     <script src="./protection-admin-supabase.js?v=1"></script>
 
+    <!-- Service bancaire Supabase -->
+    <script src="./banque-supabase.js?v=1"></script>
+
     <!-- Notifications -->
     <script src="./notifications.js?v=3"></script>
- 
-<!-- Données administratives Supabase -->
-<script src="./admin-supabase.js?v=3"></script>
 
-<!-- Modification sécurisée des soldes -->
-<script src="./admin-solde.js?v=1"></script>
+    <!-- Actions administratives -->
+    <script src="./admin-solde.js?v=1"></script>
+    <script src="./admin-salaire.js?v=1"></script>
+    <script src="./admin-statut.js?v=1"></script>
+    <script src="./admin-role.js?v=1"></script>
+    <script src="./admin-membre.js?v=1"></script>
 
-<!-- Suspension et réactivation des comptes -->
-<script src="./admin-statut.js?v=1"></script>
+    <!-- Chargement des statistiques et des comptes -->
+    <script src="./admin-supabase.js?v=2"></script>
 
-    <!-- Attribution des rôles -->
-<script src="./admin-role.js?v=1"></script>
-
-    <!-- Fiche détaillée des membres -->
-<script src="./admin-membre.js?v=1"></script>
+    <!-- Affichage conditionnel de l’administration -->
+    <script src="./navigation-admin.js?v=2"></script>
 
     <!-- Thème clair et sombre -->
     <script src="./theme.js?v=3"></script>
