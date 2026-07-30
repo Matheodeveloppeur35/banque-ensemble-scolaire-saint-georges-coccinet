@@ -7,12 +7,15 @@ async function initialiserAdministrationSupabase() {
             return;
         }
 
-        const [profils, comptes, transactions] =
-            await Promise.all([
-                chargerProfilsAdministration(),
-                chargerComptesAdministration(),
-                chargerTransactionsAdministration()
-            ]);
+        const [
+            profils,
+            comptes,
+            transactions
+        ] = await Promise.all([
+            chargerProfilsAdministration(),
+            chargerComptesAdministration(),
+            chargerTransactionsAdministration()
+        ]);
 
         afficherStatistiquesAdministration(
             profils,
@@ -26,21 +29,14 @@ async function initialiserAdministrationSupabase() {
         );
 
         activerRechercheAdministration();
+        activerAccessibiliteLignesAdministration();
     } catch (erreur) {
         console.error(
             "Chargement de l’administration impossible :",
             erreur
         );
 
-        if (
-            typeof afficherNotification === "function"
-        ) {
-            afficherNotification(
-                "Impossible de charger les données administratives.",
-                "erreur",
-                6000
-            );
-        }
+        afficherErreurChargementAdministration();
     }
 }
 
@@ -50,6 +46,8 @@ async function chargerProfilsAdministration() {
         .select(`
             id,
             nom_affiche,
+            discord_id,
+            avatar_url,
             role,
             statut,
             cree_le
@@ -62,7 +60,9 @@ async function chargerProfilsAdministration() {
         throw error;
     }
 
-    return Array.isArray(data) ? data : [];
+    return Array.isArray(data)
+        ? data
+        : [];
 }
 
 async function chargerComptesAdministration() {
@@ -84,7 +84,9 @@ async function chargerComptesAdministration() {
         throw error;
     }
 
-    return Array.isArray(data) ? data : [];
+    return Array.isArray(data)
+        ? data
+        : [];
 }
 
 async function chargerTransactionsAdministration() {
@@ -94,7 +96,10 @@ async function chargerTransactionsAdministration() {
 
     const { data, error } = await supabaseClient
         .from("transactions")
-        .select("id, cree_le")
+        .select(`
+            id,
+            cree_le
+        `)
         .gte(
             "cree_le",
             debutJournee.toISOString()
@@ -104,7 +109,9 @@ async function chargerTransactionsAdministration() {
         throw error;
     }
 
-    return Array.isArray(data) ? data : [];
+    return Array.isArray(data)
+        ? data
+        : [];
 }
 
 function afficherStatistiquesAdministration(
@@ -126,9 +133,14 @@ function afficherStatistiquesAdministration(
 
     const soldeTotal = comptes.reduce(
         function (total, compte) {
-            return (
-                total +
-                Number(compte.solde_centimes || 0)
+            const solde = Number(
+                compte.solde_centimes
+            );
+
+            return total + (
+                Number.isFinite(solde)
+                    ? solde
+                    : 0
             );
         },
         0
@@ -174,7 +186,10 @@ function afficherComptesAdministration(
 
     const profilsParId = new Map(
         profils.map(function (profil) {
-            return [profil.id, profil];
+            return [
+                profil.id,
+                profil
+            ];
         })
     );
 
@@ -184,15 +199,30 @@ function afficherComptesAdministration(
         );
 
         return {
-            nom: profil?.nom_affiche || "Utilisateur inconnu",
-            numero: compte.numero_compte,
+            id: compte.id,
+
+            utilisateurId:
+                compte.utilisateur_id,
+
+            nom:
+                profil?.nom_affiche ||
+                "Utilisateur inconnu",
+
+            numero:
+                compte.numero_compte ||
+                "Non attribué",
+
             role: formaterRoleAdministration(
                 profil?.role
             ),
+
             soldeCentimes: Number(
                 compte.solde_centimes || 0
             ),
-            statut: compte.statut || "inconnu"
+
+            statut:
+                compte.statut ||
+                "inconnu"
         };
     });
 
@@ -210,24 +240,53 @@ function afficherComptesAdministration(
 
     conteneur.innerHTML = lignes
         .map(function (ligne) {
+            const identifiantCompte =
+                securiserTexteAdministration(
+                    ligne.id
+                );
+
+            const nomSecurise =
+                securiserTexteAdministration(
+                    ligne.nom
+                );
+
+            const numeroSecurise =
+                securiserTexteAdministration(
+                    ligne.numero
+                );
+
+            const roleSecurise =
+                securiserTexteAdministration(
+                    ligne.role
+                );
+
+            const statutSecurise =
+                securiserTexteAdministration(
+                    ligne.statut
+                );
+
             return `
-                <tr data-ligne-compte>
+                <tr
+                    data-ligne-compte
+                    data-compte-id="${identifiantCompte}"
+                    class="ligne-compte-cliquable"
+                    tabindex="0"
+                    role="button"
+                    aria-label="
+                        Afficher la fiche bancaire de
+                        ${nomSecurise}
+                    "
+                >
                     <td>
-                        ${securiserTexteAdministration(
-                            ligne.nom
-                        )}
+                        ${nomSecurise}
                     </td>
 
                     <td>
-                        ${securiserTexteAdministration(
-                            ligne.numero
-                        )}
+                        ${numeroSecurise}
                     </td>
 
                     <td>
-                        ${securiserTexteAdministration(
-                            ligne.role
-                        )}
+                        ${roleSecurise}
                     </td>
 
                     <td>
@@ -240,9 +299,7 @@ function afficherComptesAdministration(
                         <span
                             class="
                                 statut-tableau
-                                ${securiserTexteAdministration(
-                                    ligne.statut
-                                )}
+                                ${statutSecurise}
                             "
                         >
                             ${formaterStatutAdministration(
@@ -265,23 +322,97 @@ function activerRechercheAdministration() {
         return;
     }
 
-    recherche.addEventListener("input", function () {
-        const valeur = normaliserTexteAdministration(
-            recherche.value
+    recherche.addEventListener(
+        "input",
+        filtrerComptesAdministration
+    );
+}
+
+function filtrerComptesAdministration() {
+    const recherche = document.querySelector(
+        "#recherche-admin"
+    );
+
+    if (!recherche) {
+        return;
+    }
+
+    const valeur = normaliserTexteAdministration(
+        recherche.value
+    );
+
+    document
+        .querySelectorAll("[data-ligne-compte]")
+        .forEach(function (ligne) {
+            const contenu =
+                normaliserTexteAdministration(
+                    ligne.textContent
+                );
+
+            ligne.hidden =
+                valeur.length > 0 &&
+                !contenu.includes(valeur);
+        });
+}
+
+function activerAccessibiliteLignesAdministration() {
+    document
+        .querySelectorAll("[data-ligne-compte]")
+        .forEach(function (ligne) {
+            ligne.addEventListener(
+                "keydown",
+                function (evenement) {
+                    if (
+                        evenement.key !== "Enter" &&
+                        evenement.key !== " "
+                    ) {
+                        return;
+                    }
+
+                    evenement.preventDefault();
+
+                    const compteId =
+                        ligne.dataset.compteId;
+
+                    if (
+                        compteId &&
+                        typeof ouvrirFicheMembreAdmin ===
+                            "function"
+                    ) {
+                        ouvrirFicheMembreAdmin(
+                            compteId
+                        );
+                    }
+                }
+            );
+        });
+}
+
+function afficherErreurChargementAdministration() {
+    const conteneur = document.querySelector(
+        "#liste-comptes-admin"
+    );
+
+    if (conteneur) {
+        conteneur.innerHTML = `
+            <tr>
+                <td colspan="5">
+                    Impossible de charger les comptes bancaires.
+                </td>
+            </tr>
+        `;
+    }
+
+    if (
+        typeof afficherNotification ===
+        "function"
+    ) {
+        afficherNotification(
+            "Impossible de charger les données administratives.",
+            "erreur",
+            6000
         );
-
-        document
-            .querySelectorAll("[data-ligne-compte]")
-            .forEach(function (ligne) {
-                const contenu =
-                    normaliserTexteAdministration(
-                        ligne.textContent
-                    );
-
-                ligne.hidden =
-                    !contenu.includes(valeur);
-            });
-    });
+    }
 }
 
 function definirTexteAdministration(
@@ -330,7 +461,8 @@ function securiserTexteAdministration(valeur) {
     const element = document.createElement("div");
 
     element.textContent =
-        valeur === null || valeur === undefined
+        valeur === null ||
+        valeur === undefined
             ? ""
             : String(valeur);
 
