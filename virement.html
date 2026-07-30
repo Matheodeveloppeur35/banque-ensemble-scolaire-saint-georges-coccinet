@@ -15,7 +15,7 @@
 
     <title>Virement — Banque Saint-Georges RP</title>
 
-    <link rel="stylesheet" href="./style.css?v=32">
+    <link rel="stylesheet" href="./style.css?v=39">
 </head>
 
 <body>
@@ -37,37 +37,14 @@
         </div>
 
         <nav>
-            <a href="./index.html">
-                Accueil
-            </a>
-
-            <a href="./dashboard.html">
-                Mon compte
-            </a>
-
-            <a href="./historique.html">
-                Historique
-            </a>
-
-            <a href="./boutique.html">
-                Boutique
-            </a>
-
-            <a href="./profil.html">
-                Profil
-            </a>
-
-            <a href="./parametres.html">
-                Paramètres
-            </a>
-
-            <a href="./aide.html">
-                Aide
-            </a>
-
-            <a href="./reglement.html">
-                Règlement
-            </a>
+            <a href="./index.html">Accueil</a>
+            <a href="./dashboard.html">Mon compte</a>
+            <a href="./historique.html">Historique</a>
+            <a href="./boutique.html">Boutique</a>
+            <a href="./profil.html">Profil</a>
+            <a href="./parametres.html">Paramètres</a>
+            <a href="./aide.html">Aide</a>
+            <a href="./reglement.html">Règlement</a>
 
             <button
                 class="bouton-theme"
@@ -86,7 +63,7 @@
             <button
                 class="deconnexion-menu"
                 type="button"
-                data-deconnexion
+                data-deconnexion-supabase
             >
                 Déconnexion
             </button>
@@ -143,13 +120,13 @@
                             id="destinataire"
                             name="destinataire"
                             type="text"
-                            placeholder="Nom du membre ou numéro de compte"
+                            placeholder="Nom exact ou numéro de compte"
                             autocomplete="off"
                             required
                         >
 
                         <small>
-                            Exemple : Marie Martin ou SGC-000043
+                            Exemple : Marie Martin ou SGC-ABC12345
                         </small>
                     </div>
 
@@ -174,47 +151,47 @@
                                 € RP
                             </span>
                         </div>
+
+                        <div
+                            class="montants-rapides"
+                            aria-label="Choisir rapidement un montant"
+                        >
+                            <button
+                                type="button"
+                                data-montant-rapide="10"
+                            >
+                                10 €
+                            </button>
+
+                            <button
+                                type="button"
+                                data-montant-rapide="25"
+                            >
+                                25 €
+                            </button>
+
+                            <button
+                                type="button"
+                                data-montant-rapide="50"
+                            >
+                                50 €
+                            </button>
+
+                            <button
+                                type="button"
+                                data-montant-rapide="100"
+                            >
+                                100 €
+                            </button>
+
+                            <button
+                                type="button"
+                                data-montant-rapide="solde"
+                            >
+                                Tout le solde
+                            </button>
+                        </div>
                     </div>
-                    <div
-    class="montants-rapides"
-    aria-label="Choisir rapidement un montant"
->
-    <button
-        type="button"
-        data-montant-rapide="10"
-    >
-        10 €
-    </button>
-
-    <button
-        type="button"
-        data-montant-rapide="25"
-    >
-        25 €
-    </button>
-
-    <button
-        type="button"
-        data-montant-rapide="50"
-    >
-        50 €
-    </button>
-
-    <button
-        type="button"
-        data-montant-rapide="100"
-    >
-        100 €
-    </button>
-
-    <button
-        type="button"
-        data-montant-rapide="solde"
-    >
-        Tout le solde
-    </button>
-</div>
-
 
                     <div class="champ">
                         <label for="motif">
@@ -224,6 +201,7 @@
                         <textarea
                             id="motif"
                             name="motif"
+                            minlength="3"
                             maxlength="150"
                             rows="4"
                             placeholder="Indiquez la raison RP du virement"
@@ -255,24 +233,26 @@
                     >
                         Vérifier le virement
                     </button>
-<button
-    class="bouton-effacer-virement"
-    id="effacer-virement"
-    type="button"
->
-    Effacer le formulaire
-</button>
-<p
-    class="etat-brouillon-virement"
-    id="etat-brouillon-virement"
-    aria-live="polite"
->
-    Aucun brouillon enregistré
-</p>
+
+                    <button
+                        class="bouton-effacer-virement"
+                        id="effacer-virement"
+                        type="button"
+                    >
+                        Effacer le formulaire
+                    </button>
+
+                    <p
+                        class="etat-brouillon-virement"
+                        id="etat-brouillon-virement"
+                        aria-live="polite"
+                    >
+                        Aucun brouillon enregistré
+                    </p>
 
                     <p class="note-formulaire">
-                        Aucun argent réel ne sera envoyé. Ce formulaire
-                        appartient uniquement au système RP.
+                        Le virement est réalisé dans la base Supabase.
+                        Aucun argent réel n’est envoyé.
                     </p>
                 </form>
 
@@ -283,7 +263,11 @@
 
                     <ul>
                         <li>
-                            Vérifiez soigneusement le nom du destinataire.
+                            Vérifiez soigneusement le destinataire.
+                        </li>
+
+                        <li>
+                            Utilisez de préférence son numéro de compte RP.
                         </li>
 
                         <li>
@@ -301,7 +285,7 @@
 
                     <div class="limite-virement">
                         <span>
-                            Plafond de démonstration
+                            Plafond autorisé
                         </span>
 
                         <strong>
@@ -313,12 +297,12 @@
 
             <div class="encadre-important">
                 <strong>
-                    Version de démonstration :
+                    Virement sécurisé :
                 </strong>
 
-                le virement débite uniquement le solde local enregistré
-                dans votre navigateur. Le destinataire n’est pas encore
-                réellement crédité.
+                l’expéditeur est débité, le destinataire est crédité
+                et les deux historiques sont enregistrés ensemble
+                dans Supabase.
             </div>
         </section>
     </main>
@@ -366,52 +350,108 @@
         </p>
     </footer>
 
-    <!-- Vérification de la session -->
-    <script src="./session.js?v=3"></script>
+    <!-- Bibliothèque officielle Supabase -->
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
 
-    <script>
-        if (
-            typeof utilisateurConnecte !== "function" ||
-            !utilisateurConnecte()
-        ) {
-            window.location.replace("./connexion.html");
-        }
-    </script>
+    <!-- Configuration publique Supabase -->
+    <script src="./supabase-config.js?v=2"></script>
 
-    <!-- Données bancaires -->
-    <script src="./banque.js?v=12"></script>
+    <!-- Authentification Supabase -->
+    <script src="./auth-supabase.js?v=2"></script>
+
+    <!-- Protection de la page -->
+    <script src="./protection-supabase.js?v=1"></script>
+
+    <!-- Service bancaire Supabase -->
+    <script src="./banque-supabase.js?v=1"></script>
+
+    <!-- Navigation selon le rôle administrateur -->
+    <script src="./navigation-admin.js?v=2"></script>
 
     <!-- Notifications -->
     <script src="./notifications.js?v=3"></script>
 
-    <!-- Fonctionnement dynamique du formulaire -->
-    <script src="./virement.js?v=11"></script>
+    <!-- Virement réel Supabase -->
+    <script src="./virement-supabase.js?v=1"></script>
 
     <!-- Compteur du motif -->
-<script src="./compteur-motif.js?v=1"></script>
+    <script src="./compteur-motif.js?v=1"></script>
 
     <!-- Montants rapides -->
-<script src="./montants-rapides.js?v=3"></script>
+    <script src="./montants-rapides-supabase.js?v=1"></script>
 
     <!-- Effacement du formulaire -->
-<script src="./effacer-virement.js?v=2"></script>
+    <script src="./effacer-virement.js?v=2"></script>
 
     <!-- Protection du formulaire non terminé -->
     <script src="./protection-formulaire.js?v=1"></script>
 
-    <!-- Sauvegarde automatique du brouillon -->
-<script src="./brouillon-virement.js?v=2"></script>
+    <!-- Sauvegarde locale du brouillon uniquement -->
+    <script src="./brouillon-virement.js?v=2"></script>
+
+    <!-- Déconnexion Supabase -->
+    <script>
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+                const boutonDeconnexion =
+                    document.querySelector(
+                        "[data-deconnexion-supabase]"
+                    );
+
+                if (!boutonDeconnexion) {
+                    return;
+                }
+
+                boutonDeconnexion.addEventListener(
+                    "click",
+                    async function () {
+                        boutonDeconnexion.disabled = true;
+                        boutonDeconnexion.textContent =
+                            "Déconnexion…";
+
+                        try {
+                            await deconnexionSupabase();
+
+                            window.location.replace(
+                                "./connexion.html"
+                            );
+                        } catch (erreur) {
+                            console.error(
+                                "Déconnexion impossible :",
+                                erreur
+                            );
+
+                            boutonDeconnexion.disabled = false;
+                            boutonDeconnexion.textContent =
+                                "Déconnexion";
+
+                            if (
+                                typeof afficherNotification ===
+                                "function"
+                            ) {
+                                afficherNotification(
+                                    "La déconnexion a échoué.",
+                                    "erreur",
+                                    5000
+                                );
+                            }
+                        }
+                    }
+                );
+            }
+        );
+    </script>
 
     <!-- Thème clair et sombre -->
     <script src="./theme.js?v=3"></script>
 
-    <!-- Déconnexion commune -->
-    <script src="./deconnexion.js?v=2"></script>
-
     <!-- Pied de page dynamique -->
     <script src="./footer.js?v=3"></script>
 
-    <!-- Retour en haut de la page -->
+    <!-- Retour en haut -->
     <script src="./retour-haut.js?v=1"></script>
 
     <!-- Progression de lecture -->
