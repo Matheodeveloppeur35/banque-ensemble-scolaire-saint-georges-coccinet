@@ -5412,3 +5412,587 @@ header nav .bouton-theme span:last-child {
         font-size: 37px;
     }
 }
+/* =========================================================
+   MENU UTILISATEUR ET NOTIFICATIONS
+   ========================================================= */
+
+.zone-utilisateur {
+    position: relative;
+    display: inline-flex;
+    flex: 0 0 auto;
+    gap: 10px;
+    align-items: center;
+    margin-left: 4px;
+}
+
+/* Cloche */
+
+.notifications-menu-utilisateur {
+    position: relative;
+    flex: 0 0 auto;
+}
+
+.bouton-notifications-menu {
+    position: relative;
+    display: grid;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    place-items: center;
+    color: var(--sg-texte);
+    background: var(--sg-carte);
+    border: 1px solid var(--sg-bordure);
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.08);
+    transition:
+        transform 160ms ease,
+        border-color 160ms ease,
+        background-color 160ms ease;
+}
+
+.bouton-notifications-menu:hover,
+.bouton-notifications-menu:focus-visible,
+.bouton-notifications-menu[aria-expanded="true"] {
+    background: var(--sg-carte-survol);
+    border-color: var(--sg-accent);
+    transform: translateY(-1px);
+}
+
+.icone-cloche-menu {
+    color: inherit;
+    font-size: 19px;
+    line-height: 1;
+}
+
+.bouton-notifications-menu.avec-notifications
+    .icone-cloche-menu {
+    animation: mouvement-cloche 1.8s ease-in-out infinite;
+}
+
+@keyframes mouvement-cloche {
+    0%,
+    70%,
+    100% {
+        transform: rotate(0deg);
+    }
+
+    78% {
+        transform: rotate(12deg);
+    }
+
+    86% {
+        transform: rotate(-10deg);
+    }
+
+    94% {
+        transform: rotate(5deg);
+    }
+}
+
+/* Compteur */
+
+.compteur-notifications-menu {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    display: grid;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 5px;
+    place-items: center;
+    color: #ffffff;
+    background: #db3f50;
+    border: 2px solid var(--sg-entete);
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 800;
+    line-height: 1;
+    box-shadow: 0 3px 9px rgba(219, 63, 80, 0.35);
+}
+
+/* Panneau déroulant */
+
+.panneau-notifications-menu {
+    position: absolute;
+    z-index: 5000;
+    top: calc(100% + 14px);
+    right: 0;
+    width: min(390px, calc(100vw - 28px));
+    max-height: min(620px, calc(100vh - 110px));
+    overflow: hidden;
+    color: var(--sg-texte);
+    background: var(--sg-carte);
+    border: 1px solid var(--sg-bordure);
+    border-radius: 18px;
+    box-shadow:
+        0 24px 60px rgba(0, 0, 0, 0.28),
+        0 6px 20px rgba(0, 0, 0, 0.14);
+}
+
+/* Force le respect de hidden */
+
+.panneau-notifications-menu[hidden],
+.panneau-menu-utilisateur[hidden] {
+    display: none !important;
+}
+
+/* Petite flèche au-dessus du panneau */
+
+.panneau-notifications-menu::before {
+    position: absolute;
+    top: -7px;
+    right: 18px;
+    width: 13px;
+    height: 13px;
+    content: "";
+    background: var(--sg-carte);
+    border-top: 1px solid var(--sg-bordure);
+    border-left: 1px solid var(--sg-bordure);
+    transform: rotate(45deg);
+}
+
+/* En-tête du panneau */
+
+.entete-notifications-menu {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 20px 20px 17px;
+    background: var(--sg-carte);
+    border-bottom: 1px solid var(--sg-bordure);
+}
+
+.entete-notifications-menu .petit-titre {
+    margin: 0 0 5px;
+    color: var(--sg-accent);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+}
+
+.entete-notifications-menu strong {
+    display: block;
+    color: var(--sg-texte);
+    font-size: 18px;
+    line-height: 1.2;
+}
+
+.fermer-notifications-menu {
+    display: grid;
+    flex: 0 0 32px;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    place-items: center;
+    color: var(--sg-texte-secondaire);
+    background: var(--sg-fond-secondaire);
+    border: 1px solid var(--sg-bordure);
+    border-radius: 9px;
+    font-size: 21px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.fermer-notifications-menu:hover {
+    color: var(--sg-texte);
+    background: var(--sg-carte-survol);
+    border-color: var(--sg-accent);
+}
+
+/* Liste */
+
+.liste-notifications-menu {
+    max-height: 410px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 8px;
+    scrollbar-width: thin;
+    scrollbar-color:
+        var(--sg-bordure)
+        transparent;
+}
+
+.notification-menu {
+    position: relative;
+    border-radius: 12px;
+}
+
+.notification-menu + .notification-menu {
+    margin-top: 5px;
+}
+
+.notification-menu.non-lue {
+    background: color-mix(
+        in srgb,
+        var(--sg-accent) 11%,
+        var(--sg-carte)
+    );
+}
+
+.notification-menu.non-lue::before {
+    position: absolute;
+    z-index: 2;
+    top: 12px;
+    bottom: 12px;
+    left: 0;
+    width: 3px;
+    content: "";
+    background: var(--sg-accent);
+    border-radius: 999px;
+}
+
+.contenu-notification-menu {
+    display: grid;
+    grid-template-columns:
+        40px
+        minmax(0, 1fr)
+        auto;
+    gap: 12px;
+    width: 100%;
+    padding: 14px;
+    color: inherit;
+    text-align: left;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.contenu-notification-menu:hover,
+.contenu-notification-menu:focus-visible {
+    background: var(--sg-carte-survol);
+    border-color: var(--sg-bordure);
+}
+
+.icone-notification-menu {
+    display: grid;
+    width: 40px;
+    height: 40px;
+    place-items: center;
+    background: var(--sg-fond-secondaire);
+    border: 1px solid var(--sg-bordure);
+    border-radius: 11px;
+    font-size: 18px;
+}
+
+.texte-notification-menu {
+    display: grid;
+    min-width: 0;
+    gap: 4px;
+}
+
+.texte-notification-menu strong {
+    overflow: hidden;
+    color: var(--sg-texte);
+    font-size: 14px;
+    line-height: 1.25;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.texte-notification-menu > span {
+    display: -webkit-box;
+    overflow: hidden;
+    color: var(--sg-texte-secondaire);
+    font-size: 12px;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.texte-notification-menu time {
+    color: var(--sg-texte-secondaire);
+    font-size: 10px;
+}
+
+.point-notification-non-lue {
+    align-self: center;
+    width: 9px;
+    height: 9px;
+    background: var(--sg-accent);
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px
+        color-mix(
+            in srgb,
+            var(--sg-accent) 15%,
+            transparent
+        );
+}
+
+/* États vide et chargement */
+
+.chargement-notifications-menu,
+.aucune-notification-menu {
+    margin: 0;
+    padding: 38px 20px;
+    color: var(--sg-texte-secondaire);
+    text-align: center;
+}
+
+/* Actions inférieures */
+
+.actions-notifications-menu {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px;
+    background: var(--sg-fond-secondaire);
+    border-top: 1px solid var(--sg-bordure);
+}
+
+.marquer-notifications-lues-menu,
+.voir-notifications-menu {
+    min-height: 38px;
+    padding: 9px 11px;
+    border-radius: 9px;
+    font-size: 11px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.marquer-notifications-lues-menu {
+    color: var(--sg-texte);
+    background: var(--sg-carte);
+    border: 1px solid var(--sg-bordure);
+    cursor: pointer;
+}
+
+.marquer-notifications-lues-menu:hover {
+    border-color: var(--sg-accent);
+}
+
+.marquer-notifications-lues-menu:disabled {
+    cursor: wait;
+    opacity: 0.65;
+}
+
+.voir-notifications-menu {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    text-decoration: none;
+    background: var(--sg-accent);
+    border: 1px solid var(--sg-accent);
+}
+
+/* Menu profil */
+
+.menu-utilisateur {
+    position: relative;
+}
+
+.bouton-menu-utilisateur {
+    display: flex;
+    gap: 9px;
+    align-items: center;
+    min-height: 44px;
+    padding: 5px 10px 5px 6px;
+    color: var(--sg-texte);
+    background: var(--sg-carte);
+    border: 1px solid var(--sg-bordure);
+    border-radius: 13px;
+    cursor: pointer;
+}
+
+.avatar-menu-utilisateur {
+    display: grid;
+    flex: 0 0 33px;
+    width: 33px;
+    height: 33px;
+    overflow: hidden;
+    place-items: center;
+    color: #ffffff;
+    background: var(--sg-accent);
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.avatar-menu-utilisateur img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.identite-menu-utilisateur {
+    display: grid;
+    min-width: 0;
+    text-align: left;
+}
+
+.identite-menu-utilisateur strong {
+    max-width: 115px;
+    overflow: hidden;
+    color: var(--sg-texte);
+    font-size: 12px;
+    line-height: 1.25;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.identite-menu-utilisateur small {
+    color: var(--sg-texte-secondaire);
+    font-size: 10px;
+}
+
+.fleche-menu-utilisateur {
+    color: var(--sg-texte-secondaire);
+    font-size: 11px;
+}
+
+/* Menu déroulant du profil */
+
+.panneau-menu-utilisateur {
+    position: absolute;
+    z-index: 5000;
+    top: calc(100% + 14px);
+    right: 0;
+    width: min(300px, calc(100vw - 28px));
+    padding: 8px;
+    color: var(--sg-texte);
+    background: var(--sg-carte);
+    border: 1px solid var(--sg-bordure);
+    border-radius: 16px;
+    box-shadow:
+        0 24px 60px rgba(0, 0, 0, 0.28),
+        0 6px 20px rgba(0, 0, 0, 0.14);
+}
+
+.entete-menu-utilisateur {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding: 12px;
+}
+
+.avatar-menu-utilisateur.grand {
+    flex-basis: 45px;
+    width: 45px;
+    height: 45px;
+}
+
+.entete-menu-utilisateur > div {
+    display: grid;
+    min-width: 0;
+    gap: 3px;
+}
+
+.entete-menu-utilisateur strong,
+.entete-menu-utilisateur span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.entete-menu-utilisateur strong {
+    color: var(--sg-texte);
+    font-size: 14px;
+}
+
+.entete-menu-utilisateur div span {
+    color: var(--sg-texte-secondaire);
+    font-size: 11px;
+}
+
+.separateur-menu-utilisateur {
+    height: 1px;
+    margin: 6px;
+    background: var(--sg-bordure);
+}
+
+.panneau-menu-utilisateur > a,
+.deconnexion-menu-utilisateur {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+    min-height: 42px;
+    padding: 9px 11px;
+    color: var(--sg-texte);
+    text-align: left;
+    text-decoration: none;
+    background: transparent;
+    border: 0;
+    border-radius: 9px;
+    cursor: pointer;
+}
+
+.panneau-menu-utilisateur > a:hover,
+.panneau-menu-utilisateur > a:focus-visible,
+.deconnexion-menu-utilisateur:hover,
+.deconnexion-menu-utilisateur:focus-visible {
+    background: var(--sg-carte-survol);
+}
+
+.deconnexion-menu-utilisateur {
+    color: var(--sg-danger);
+}
+
+/* Mobile */
+
+@media (max-width: 700px) {
+    .zone-utilisateur {
+        margin-left: auto;
+    }
+
+    .identite-menu-utilisateur,
+    .fleche-menu-utilisateur {
+        display: none;
+    }
+
+    .bouton-menu-utilisateur {
+        width: 42px;
+        height: 42px;
+        min-height: 42px;
+        padding: 4px;
+        justify-content: center;
+    }
+
+    .avatar-menu-utilisateur {
+        flex-basis: 32px;
+        width: 32px;
+        height: 32px;
+    }
+
+    .panneau-notifications-menu {
+        position: fixed;
+        top: 76px;
+        right: 12px;
+        left: 12px;
+        width: auto;
+        max-height: calc(100vh - 90px);
+    }
+
+    .panneau-notifications-menu::before {
+        display: none;
+    }
+
+    .actions-notifications-menu {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .panneau-menu-utilisateur {
+        position: fixed;
+        top: 76px;
+        right: 12px;
+        left: 12px;
+        width: auto;
+    }
+}
+
+/* Préférence : animations réduites */
+
+body.reduire-animations
+    .bouton-notifications-menu.avec-notifications
+    .icone-cloche-menu {
+    animation: none;
+}
