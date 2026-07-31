@@ -5119,3 +5119,296 @@ body.theme-sombre .pied-page-site {
         display: none;
     }
 }
+/* =========================================================
+   CORRECTIF ÉCRAN LARGE — ZOOM 100 %
+   ========================================================= */
+
+html,
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+/* Header plus compact */
+
+header {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 82px;
+    padding: 14px clamp(20px, 3vw, 48px);
+}
+
+header .identite {
+    display: flex;
+    flex: 0 0 auto;
+    gap: 12px;
+    align-items: center;
+    min-width: 250px;
+}
+
+header .identite .logo {
+    flex: 0 0 48px;
+    width: 48px;
+    height: 48px;
+}
+
+header .identite > div:last-child {
+    min-width: 0;
+}
+
+header .identite strong {
+    display: block;
+    max-width: none;
+    font-size: 15px;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+header .identite p {
+    max-width: 230px;
+    margin: 3px 0 0;
+    font-size: 11px;
+    line-height: 1.3;
+    white-space: normal;
+}
+
+/* Navigation adaptative */
+
+header nav {
+    display: flex;
+    flex: 1 1 auto;
+    gap: clamp(4px, 0.55vw, 10px);
+    align-items: center;
+    justify-content: flex-end;
+    min-width: 0;
+}
+
+header nav a {
+    flex: 0 0 auto;
+    padding: 9px clamp(7px, 0.65vw, 12px);
+    font-size: clamp(12px, 0.78vw, 14px);
+    line-height: 1.2;
+    white-space: nowrap;
+    border-radius: 9px;
+}
+
+header nav .bouton-theme,
+header nav .deconnexion-menu {
+    flex: 0 0 auto;
+    min-height: 38px;
+    padding: 8px 12px;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+/* Le libellé du bouton reste sur une ligne */
+
+header nav .bouton-theme {
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
+}
+
+header nav .bouton-theme span:last-child {
+    color: inherit;
+    white-space: nowrap;
+}
+
+/* Largeur raisonnable pour le contenu */
+
+.page-interieure .conteneur {
+    width: min(calc(100% - 48px), 1320px);
+    margin-inline: auto;
+    padding-block: 34px 55px;
+}
+
+/* En-tête du tableau de bord */
+
+.entete-dashboard {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+}
+
+.entete-dashboard > div:first-child {
+    min-width: 0;
+}
+
+.entete-dashboard h1 {
+    overflow-wrap: anywhere;
+    font-size: clamp(32px, 3.2vw, 48px);
+}
+
+.entete-dashboard > div:first-child > p:last-child {
+    max-width: 720px;
+    font-size: 16px;
+}
+
+/* Grille moins étirée */
+
+.grille-dashboard {
+    display: grid;
+    grid-template-columns:
+        minmax(0, 1.55fr)
+        minmax(300px, 0.9fr);
+    gap: 22px;
+}
+
+/* Carte principale moins haute */
+
+.carte-solde {
+    min-height: 280px;
+    padding: 30px;
+}
+
+.carte-solde > h2,
+.carte-solde > h3 {
+    margin-bottom: 28px;
+    font-size: clamp(38px, 4vw, 54px);
+}
+
+/* Informations du compte */
+
+.carte-information {
+    min-width: 0;
+    padding: 28px;
+}
+
+/* Évite les débordements internes */
+
+.carte-solde,
+.carte-information,
+.operations,
+.ligne-operation {
+    min-width: 0;
+}
+
+.carte-solde strong,
+.carte-information dd,
+.description-operation strong,
+.description-operation span {
+    overflow-wrap: anywhere;
+}
+
+/* =========================================================
+   NAVIGATION INTERMÉDIAIRE
+   ========================================================= */
+
+@media (max-width: 1450px) {
+    header {
+        gap: 18px;
+        padding-inline: 24px;
+    }
+
+    header .identite {
+        min-width: 220px;
+    }
+
+    header .identite strong {
+        white-space: normal;
+    }
+
+    header .identite p {
+        display: none;
+    }
+
+    header nav {
+        gap: 3px;
+    }
+
+    header nav a {
+        padding-inline: 7px;
+        font-size: 12px;
+    }
+
+    header nav .bouton-theme,
+    header nav .deconnexion-menu {
+        padding-inline: 9px;
+        font-size: 11px;
+    }
+}
+
+/* Menu mobile avant que la navigation déborde */
+
+@media (max-width: 1180px) {
+    header {
+        flex-wrap: wrap;
+        min-height: auto;
+    }
+
+    header .identite {
+        min-width: auto;
+    }
+
+    header nav {
+        flex: 1 0 100%;
+        justify-content: flex-start;
+        width: 100%;
+        overflow-x: auto;
+        padding: 6px 0 4px;
+        scrollbar-width: thin;
+    }
+
+    header nav a {
+        padding: 9px 11px;
+        font-size: 13px;
+    }
+}
+
+/* Tablette */
+
+@media (max-width: 950px) {
+    .grille-dashboard {
+        grid-template-columns: 1fr;
+    }
+
+    .entete-dashboard {
+        align-items: flex-start;
+    }
+}
+
+/* Mobile */
+
+@media (max-width: 700px) {
+    header {
+        padding: 12px 16px;
+    }
+
+    header .identite strong {
+        font-size: 14px;
+    }
+
+    .page-interieure .conteneur {
+        width: min(calc(100% - 24px), 1320px);
+        padding-block: 24px 40px;
+    }
+
+    .entete-dashboard {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .entete-dashboard h1 {
+        font-size: 32px;
+    }
+
+    .statut-compte {
+        align-self: flex-start;
+    }
+
+    .carte-solde {
+        min-height: auto;
+        padding: 24px;
+    }
+
+    .carte-solde > h2,
+    .carte-solde > h3 {
+        font-size: 37px;
+    }
+}
