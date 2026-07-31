@@ -24,6 +24,31 @@ async function initialiserDashboardSupabase() {
 
         afficherCompteSupabase(donnees);
         afficherOperationsSupabase(transactions);
+
+        /*
+         * Les données Supabase sont maintenant affichées.
+         * On peut donc mémoriser leur véritable valeur avant
+         * d'appliquer le masquage du solde et du compte.
+         */
+        preparerValeursPersonnalisablesDashboard();
+
+        /*
+         * Application des préférences déjà chargées.
+         */
+        if (
+            window.preferencesUtilisateur &&
+            typeof appliquerPreferencesUtilisateur ===
+                "function"
+        ) {
+            appliquerPreferencesUtilisateur(
+                window.preferencesUtilisateur
+            );
+        } else if (
+            typeof chargerEtAppliquerPreferencesSupabase ===
+                "function"
+        ) {
+            await chargerEtAppliquerPreferencesSupabase();
+        }
     } catch (erreur) {
         console.error(
             "Chargement du tableau de bord impossible :",
@@ -39,7 +64,8 @@ async function initialiserDashboardSupabase() {
         }
 
         if (
-            typeof afficherNotification === "function"
+            typeof afficherNotification ===
+            "function"
         ) {
             afficherNotification(
                 "Impossible de charger votre compte bancaire.",
@@ -102,6 +128,10 @@ function afficherCompteSupabase(donnees) {
         "#statut-information-dashboard",
         statut
     );
+
+    adapterStatutDashboard(
+        compte.statut
+    );
 }
 
 function afficherOperationsSupabase(transactions) {
@@ -132,6 +162,7 @@ function afficherOperationsSupabase(transactions) {
                 transaction.type === "revenu";
 
             const signe = revenu ? "+" : "−";
+
             const classeType =
                 revenu ? "revenu" : "depense";
 
@@ -142,6 +173,7 @@ function afficherOperationsSupabase(transactions) {
                 <article class="ligne-operation">
                     <div
                         class="icone-operation ${classeType}"
+                        aria-hidden="true"
                     >
                         ${signe}
                     </div>
@@ -179,7 +211,66 @@ function afficherOperationsSupabase(transactions) {
         .join("");
 }
 
-function definirTexteDashboard(selecteur, texte) {
+function preparerValeursPersonnalisablesDashboard() {
+    const solde = document.querySelector(
+        "#solde-dashboard"
+    );
+
+    const numeroCompte = document.querySelector(
+        "#numero-compte-dashboard"
+    );
+
+    if (solde) {
+        solde.dataset.valeurOriginale =
+            solde.textContent.trim();
+
+        solde.dataset.valeurMasquee =
+            "false";
+    }
+
+    if (numeroCompte) {
+        numeroCompte.dataset.valeurOriginale =
+            numeroCompte.textContent.trim();
+
+        numeroCompte.dataset.valeurMasquee =
+            "false";
+    }
+}
+
+function adapterStatutDashboard(statut) {
+    const statutInformation =
+        document.querySelector(
+            "#statut-information-dashboard"
+        );
+
+    const pointStatut = document.querySelector(
+        ".statut-compte .point-statut"
+    );
+
+    const actif =
+        String(statut || "").toLowerCase() ===
+        "actif";
+
+    statutInformation?.classList.toggle(
+        "texte-vert",
+        actif
+    );
+
+    statutInformation?.classList.toggle(
+        "texte-rouge",
+        !actif
+    );
+
+    pointStatut?.classList.toggle(
+        "point-statut-inactif",
+        !actif
+    );
+}
+
+function definirTexteDashboard(
+    selecteur,
+    texte
+) {
     const element = document.querySelector(
         selecteur
     );
@@ -192,6 +283,7 @@ function definirTexteDashboard(selecteur, texte) {
 function formaterRoleSupabase(role) {
     const roles = {
         eleve: "Élève",
+        parent: "Parent",
         professeur: "Professeur",
         personnel: "Personnel",
         administrateur: "Administrateur"
@@ -211,10 +303,13 @@ function formaterStatutSupabase(statut) {
 }
 
 function securiserTexteDashboard(valeur) {
-    const element = document.createElement("div");
+    const element = document.createElement(
+        "div"
+    );
 
     element.textContent =
-        valeur === null || valeur === undefined
+        valeur === null ||
+        valeur === undefined
             ? ""
             : String(valeur);
 
