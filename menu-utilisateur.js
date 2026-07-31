@@ -5,6 +5,8 @@ document.addEventListener(
     }
 );
 
+let actualiserCompteurNotificationsMenu = null;
+
 async function initialiserMenuUtilisateur() {
     const navigation = document.querySelector(
         "header nav"
@@ -31,9 +33,10 @@ async function initialiserMenuUtilisateur() {
             return;
         }
 
-        const profil = await chargerProfilMenuUtilisateur(
-            session.user
-        );
+        const profil =
+            await chargerProfilMenuUtilisateur(
+                session.user
+            );
 
         creerMenuUtilisateur(
             navigation,
@@ -42,6 +45,18 @@ async function initialiserMenuUtilisateur() {
         );
 
         activerMenuUtilisateur();
+        activerClocheNotificationsMenu();
+
+        if (
+            typeof demarrerActualisationNotificationsSupabase ===
+            "function"
+        ) {
+            actualiserCompteurNotificationsMenu =
+                demarrerActualisationNotificationsSupabase(
+                    afficherCompteurNotificationsMenu,
+                    60000
+                );
+        }
     } catch (erreur) {
         console.error(
             "Chargement du menu utilisateur impossible :",
@@ -93,10 +108,6 @@ function creerMenuUtilisateur(
 ) {
     supprimerAncienMenuUtilisateur();
 
-    /*
-     * Le bouton de déconnexion classique est retiré,
-     * car il sera désormais placé dans le menu utilisateur.
-     */
     navigation
         .querySelectorAll(
             "[data-deconnexion-supabase]"
@@ -120,165 +131,267 @@ function creerMenuUtilisateur(
     );
 
     conteneur.className =
-        "menu-utilisateur";
+        "zone-utilisateur";
 
     conteneur.id =
-        "menu-utilisateur";
+        "zone-utilisateur";
 
     conteneur.innerHTML = `
-        <button
-            class="bouton-menu-utilisateur"
-            id="bouton-menu-utilisateur"
-            type="button"
-            aria-haspopup="true"
-            aria-expanded="false"
-            aria-controls="panneau-menu-utilisateur"
-        >
-            <span class="avatar-menu-utilisateur">
-                ${creerContenuAvatarMenuUtilisateur(
-                    avatarUrl,
-                    nom
-                )}
-            </span>
-
-            <span class="identite-menu-utilisateur">
-                <strong>
-                    ${securiserTexteMenuUtilisateur(
-                        nom
-                    )}
-                </strong>
-
-                <small>
-                    ${securiserTexteMenuUtilisateur(
-                        formaterRoleMenuUtilisateur(
-                            role
-                        )
-                    )}
-                </small>
-            </span>
-
-            <span
-                class="fleche-menu-utilisateur"
-                aria-hidden="true"
+        <div class="notifications-menu-utilisateur">
+            <button
+                class="bouton-notifications-menu"
+                id="bouton-notifications-menu"
+                type="button"
+                aria-label="Ouvrir les notifications"
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-controls="panneau-notifications-menu"
             >
-                ▾
-            </span>
-        </button>
+                <span
+                    class="icone-cloche-menu"
+                    aria-hidden="true"
+                >
+                    🔔
+                </span>
+
+                <span
+                    class="compteur-notifications-menu"
+                    id="compteur-notifications-menu"
+                    aria-label="0 notification non lue"
+                    hidden
+                >
+                    0
+                </span>
+            </button>
+
+            <div
+                class="panneau-notifications-menu"
+                id="panneau-notifications-menu"
+                role="dialog"
+                aria-label="Notifications récentes"
+                hidden
+            >
+                <div class="entete-notifications-menu">
+                    <div>
+                        <p class="petit-titre">
+                            Centre de notifications
+                        </p>
+
+                        <strong>
+                            Notifications récentes
+                        </strong>
+                    </div>
+
+                    <button
+                        class="fermer-notifications-menu"
+                        type="button"
+                        data-fermer-notifications
+                        aria-label="Fermer les notifications"
+                    >
+                        ×
+                    </button>
+                </div>
+
+                <div
+                    class="liste-notifications-menu"
+                    id="liste-notifications-menu"
+                    aria-live="polite"
+                >
+                    <p class="chargement-notifications-menu">
+                        Chargement…
+                    </p>
+                </div>
+
+                <div class="actions-notifications-menu">
+                    <button
+                        class="marquer-notifications-lues-menu"
+                        id="marquer-notifications-lues-menu"
+                        type="button"
+                    >
+                        Tout marquer comme lu
+                    </button>
+
+                    <a
+                        href="./notifications.html"
+                        class="voir-notifications-menu"
+                    >
+                        Voir toutes les notifications
+                    </a>
+                </div>
+            </div>
+        </div>
 
         <div
-            class="panneau-menu-utilisateur"
-            id="panneau-menu-utilisateur"
-            role="menu"
-            hidden
+            class="menu-utilisateur"
+            id="menu-utilisateur"
         >
-            <div class="entete-menu-utilisateur">
-                <span class="avatar-menu-utilisateur grand">
+            <button
+                class="bouton-menu-utilisateur"
+                id="bouton-menu-utilisateur"
+                type="button"
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-controls="panneau-menu-utilisateur"
+            >
+                <span class="avatar-menu-utilisateur">
                     ${creerContenuAvatarMenuUtilisateur(
                         avatarUrl,
                         nom
                     )}
                 </span>
 
-                <div>
+                <span class="identite-menu-utilisateur">
                     <strong>
                         ${securiserTexteMenuUtilisateur(
                             nom
                         )}
                     </strong>
 
-                    <span>
+                    <small>
                         ${securiserTexteMenuUtilisateur(
-                            utilisateur.email ||
-                            "Compte Discord"
+                            formaterRoleMenuUtilisateur(
+                                role
+                            )
+                        )}
+                    </small>
+                </span>
+
+                <span
+                    class="fleche-menu-utilisateur"
+                    aria-hidden="true"
+                >
+                    ▾
+                </span>
+            </button>
+
+            <div
+                class="panneau-menu-utilisateur"
+                id="panneau-menu-utilisateur"
+                role="menu"
+                hidden
+            >
+                <div class="entete-menu-utilisateur">
+                    <span
+                        class="avatar-menu-utilisateur grand"
+                    >
+                        ${creerContenuAvatarMenuUtilisateur(
+                            avatarUrl,
+                            nom
                         )}
                     </span>
+
+                    <div>
+                        <strong>
+                            ${securiserTexteMenuUtilisateur(
+                                nom
+                            )}
+                        </strong>
+
+                        <span>
+                            ${securiserTexteMenuUtilisateur(
+                                utilisateur.email ||
+                                "Compte Discord"
+                            )}
+                        </span>
+                    </div>
                 </div>
+
+                <div
+                    class="separateur-menu-utilisateur"
+                    aria-hidden="true"
+                ></div>
+
+                <a
+                    href="./profil.html"
+                    role="menuitem"
+                >
+                    <span aria-hidden="true">
+                        👤
+                    </span>
+
+                    Mon profil
+                </a>
+
+                <a
+                    href="./personnalisation.html"
+                    role="menuitem"
+                >
+                    <span aria-hidden="true">
+                        🎨
+                    </span>
+
+                    Personnalisation
+                </a>
+
+                <a
+                    href="./parametres.html"
+                    role="menuitem"
+                >
+                    <span aria-hidden="true">
+                        ⚙️
+                    </span>
+
+                    Paramètres
+                </a>
+
+                <a
+                    href="./notifications.html"
+                    role="menuitem"
+                >
+                    <span aria-hidden="true">
+                        🔔
+                    </span>
+
+                    Notifications
+                </a>
+
+                <a
+                    href="./aide.html"
+                    role="menuitem"
+                >
+                    <span aria-hidden="true">
+                        ❔
+                    </span>
+
+                    Aide
+                </a>
+
+                ${
+                    role === "administrateur"
+                        ? `
+                            <a
+                                class="lien-administration-menu"
+                                href="./admin.html"
+                                role="menuitem"
+                            >
+                                <span aria-hidden="true">
+                                    🛡️
+                                </span>
+
+                                Administration
+                            </a>
+                        `
+                        : ""
+                }
+
+                <div
+                    class="separateur-menu-utilisateur"
+                    aria-hidden="true"
+                ></div>
+
+                <button
+                    class="deconnexion-menu-utilisateur"
+                    type="button"
+                    role="menuitem"
+                    data-deconnexion-supabase
+                >
+                    <span aria-hidden="true">
+                        ↪
+                    </span>
+
+                    Déconnexion
+                </button>
             </div>
-
-            <div
-                class="separateur-menu-utilisateur"
-                aria-hidden="true"
-            ></div>
-
-            <a
-                href="./profil.html"
-                role="menuitem"
-            >
-                <span aria-hidden="true">
-                    👤
-                </span>
-
-                Mon profil
-            </a>
-
-            <a
-                href="./personnalisation.html"
-                role="menuitem"
-            >
-                <span aria-hidden="true">
-                    🎨
-                </span>
-
-                Personnalisation
-            </a>
-
-            <a
-                href="./parametres.html"
-                role="menuitem"
-            >
-                <span aria-hidden="true">
-                    ⚙️
-                </span>
-
-                Paramètres
-            </a>
-
-            <a
-                href="./aide.html"
-                role="menuitem"
-            >
-                <span aria-hidden="true">
-                    ❔
-                </span>
-
-                Aide
-            </a>
-
-            ${
-                role === "administrateur"
-                    ? `
-                        <a
-                            class="lien-administration-menu"
-                            href="./admin.html"
-                            role="menuitem"
-                        >
-                            <span aria-hidden="true">
-                                🛡️
-                            </span>
-
-                            Administration
-                        </a>
-                    `
-                    : ""
-            }
-
-            <div
-                class="separateur-menu-utilisateur"
-                aria-hidden="true"
-            ></div>
-
-            <button
-                class="deconnexion-menu-utilisateur"
-                type="button"
-                role="menuitem"
-                data-deconnexion-supabase
-            >
-                <span aria-hidden="true">
-                    ↪
-                </span>
-
-                Déconnexion
-            </button>
         </div>
     `;
 
@@ -288,10 +401,6 @@ function creerMenuUtilisateur(
 }
 
 function activerMenuUtilisateur() {
-    const conteneur = document.querySelector(
-        "#menu-utilisateur"
-    );
-
     const bouton = document.querySelector(
         "#bouton-menu-utilisateur"
     );
@@ -300,11 +409,7 @@ function activerMenuUtilisateur() {
         "#panneau-menu-utilisateur"
     );
 
-    if (
-        !conteneur ||
-        !bouton ||
-        !panneau
-    ) {
+    if (!bouton || !panneau) {
         return;
     }
 
@@ -312,6 +417,8 @@ function activerMenuUtilisateur() {
         "click",
         function (evenement) {
             evenement.stopPropagation();
+
+            fermerNotificationsMenu();
 
             const ouvert =
                 bouton.getAttribute(
@@ -333,10 +440,82 @@ function activerMenuUtilisateur() {
         }
     );
 
+    const boutonDeconnexion = panneau.querySelector(
+        "[data-deconnexion-supabase]"
+    );
+
+    boutonDeconnexion?.addEventListener(
+        "click",
+        deconnecterDepuisMenuUtilisateur
+    );
+}
+
+function activerClocheNotificationsMenu() {
+    const bouton = document.querySelector(
+        "#bouton-notifications-menu"
+    );
+
+    const panneau = document.querySelector(
+        "#panneau-notifications-menu"
+    );
+
+    const boutonFermer = panneau?.querySelector(
+        "[data-fermer-notifications]"
+    );
+
+    const boutonToutLire = document.querySelector(
+        "#marquer-notifications-lues-menu"
+    );
+
+    if (!bouton || !panneau) {
+        return;
+    }
+
+    bouton.addEventListener(
+        "click",
+        async function (evenement) {
+            evenement.stopPropagation();
+
+            fermerMenuUtilisateur();
+
+            const ouvert =
+                bouton.getAttribute(
+                    "aria-expanded"
+                ) === "true";
+
+            if (ouvert) {
+                fermerNotificationsMenu();
+                return;
+            }
+
+            ouvrirNotificationsMenu();
+
+            await chargerApercuNotificationsMenu();
+        }
+    );
+
+    panneau.addEventListener(
+        "click",
+        function (evenement) {
+            evenement.stopPropagation();
+        }
+    );
+
+    boutonFermer?.addEventListener(
+        "click",
+        fermerNotificationsMenu
+    );
+
+    boutonToutLire?.addEventListener(
+        "click",
+        marquerToutesNotificationsLuesMenu
+    );
+
     document.addEventListener(
         "click",
         function () {
             fermerMenuUtilisateur();
+            fermerNotificationsMenu();
         }
     );
 
@@ -345,24 +524,352 @@ function activerMenuUtilisateur() {
         function (evenement) {
             if (evenement.key === "Escape") {
                 fermerMenuUtilisateur();
-
-                bouton.focus();
+                fermerNotificationsMenu();
             }
         }
     );
 
-    /*
-     * Le bouton de déconnexion est créé après le
-     * chargement de deconnexion-supabase.js.
-     * On lui ajoute donc son fonctionnement ici.
-     */
-    const boutonDeconnexion = panneau.querySelector(
-        "[data-deconnexion-supabase]"
+    document.addEventListener(
+        "compteurNotificationsSupabaseActualise",
+        function (evenement) {
+            afficherCompteurNotificationsMenu(
+                evenement.detail?.nombre || 0
+            );
+        }
     );
 
-    boutonDeconnexion?.addEventListener(
-        "click",
-        deconnecterDepuisMenuUtilisateur
+    document.addEventListener(
+        "notificationsSupabaseActualisees",
+        function () {
+            if (!panneau.hidden) {
+                chargerApercuNotificationsMenu();
+            }
+        }
+    );
+}
+
+async function chargerApercuNotificationsMenu() {
+    const conteneur = document.querySelector(
+        "#liste-notifications-menu"
+    );
+
+    if (!conteneur) {
+        return;
+    }
+
+    conteneur.innerHTML = `
+        <p class="chargement-notifications-menu">
+            Chargement…
+        </p>
+    `;
+
+    try {
+        if (
+            typeof obtenirNotificationsSupabase !==
+            "function"
+        ) {
+            throw new Error(
+                "Le service de notifications est indisponible."
+            );
+        }
+
+        const notifications =
+            await obtenirNotificationsSupabase({
+                limite: 5
+            });
+
+        afficherApercuNotificationsMenu(
+            notifications
+        );
+
+        const nombre =
+            await compterNotificationsNonLuesSupabase();
+
+        afficherCompteurNotificationsMenu(
+            nombre
+        );
+    } catch (erreur) {
+        console.error(
+            "Chargement des notifications impossible :",
+            erreur
+        );
+
+        conteneur.innerHTML = `
+            <p class="aucune-notification-menu">
+                Impossible de charger les notifications.
+            </p>
+        `;
+    }
+}
+
+function afficherApercuNotificationsMenu(
+    notifications
+) {
+    const conteneur = document.querySelector(
+        "#liste-notifications-menu"
+    );
+
+    if (!conteneur) {
+        return;
+    }
+
+    if (
+        !Array.isArray(notifications) ||
+        notifications.length === 0
+    ) {
+        conteneur.innerHTML = `
+            <p class="aucune-notification-menu">
+                Vous n’avez aucune notification.
+            </p>
+        `;
+
+        return;
+    }
+
+    conteneur.innerHTML = notifications
+        .map(function (notification) {
+            const classeLecture =
+                notification.lue
+                    ? "lue"
+                    : "non-lue";
+
+            return `
+                <article
+                    class="
+                        notification-menu
+                        ${classeLecture}
+                    "
+                    data-notification-id="${securiserTexteMenuUtilisateur(
+                        notification.id
+                    )}"
+                >
+                    <button
+                        class="contenu-notification-menu"
+                        type="button"
+                        data-ouvrir-notification
+                    >
+                        <span
+                            class="icone-notification-menu"
+                            aria-hidden="true"
+                        >
+                            ${obtenirIconeNotificationMenu(
+                                notification.type
+                            )}
+                        </span>
+
+                        <span class="texte-notification-menu">
+                            <strong>
+                                ${securiserTexteMenuUtilisateur(
+                                    notification.titre
+                                )}
+                            </strong>
+
+                            <span>
+                                ${securiserTexteMenuUtilisateur(
+                                    notification.message
+                                )}
+                            </span>
+
+                            <time>
+                                ${formaterDateNotificationMenu(
+                                    notification.cree_le
+                                )}
+                            </time>
+                        </span>
+
+                        ${
+                            !notification.lue
+                                ? `
+                                    <span
+                                        class="point-notification-non-lue"
+                                        aria-label="Non lue"
+                                    ></span>
+                                `
+                                : ""
+                        }
+                    </button>
+                </article>
+            `;
+        })
+        .join("");
+
+    conteneur
+        .querySelectorAll(
+            "[data-ouvrir-notification]"
+        )
+        .forEach(function (bouton) {
+            bouton.addEventListener(
+                "click",
+                ouvrirNotificationDepuisMenu
+            );
+        });
+}
+
+async function ouvrirNotificationDepuisMenu(
+    evenement
+) {
+    const article =
+        evenement.currentTarget.closest(
+            "[data-notification-id]"
+        );
+
+    const notificationId =
+        article?.dataset.notificationId;
+
+    if (!notificationId) {
+        return;
+    }
+
+    try {
+        const notification =
+            await obtenirNotificationSupabase(
+                notificationId
+            );
+
+        if (!notification) {
+            return;
+        }
+
+        if (!notification.lue) {
+            await marquerNotificationLueSupabase(
+                notificationId
+            );
+        }
+
+        if (
+            lienNotificationAutorise(
+                notification.lien
+            )
+        ) {
+            window.location.href =
+                notification.lien;
+
+            return;
+        }
+
+        await chargerApercuNotificationsMenu();
+    } catch (erreur) {
+        console.error(
+            "Ouverture de la notification impossible :",
+            erreur
+        );
+    }
+}
+
+async function marquerToutesNotificationsLuesMenu() {
+    const bouton = document.querySelector(
+        "#marquer-notifications-lues-menu"
+    );
+
+    if (!bouton || bouton.disabled) {
+        return;
+    }
+
+    bouton.disabled = true;
+    bouton.textContent = "Mise à jour…";
+
+    try {
+        await marquerToutesNotificationsLuesSupabase();
+
+        afficherCompteurNotificationsMenu(0);
+        await chargerApercuNotificationsMenu();
+    } catch (erreur) {
+        console.error(
+            "Mise à jour des notifications impossible :",
+            erreur
+        );
+    } finally {
+        bouton.disabled = false;
+        bouton.textContent =
+            "Tout marquer comme lu";
+    }
+}
+
+function afficherCompteurNotificationsMenu(
+    nombre
+) {
+    const compteur = document.querySelector(
+        "#compteur-notifications-menu"
+    );
+
+    const bouton = document.querySelector(
+        "#bouton-notifications-menu"
+    );
+
+    if (!compteur || !bouton) {
+        return;
+    }
+
+    const total = Math.max(
+        Number(nombre) || 0,
+        0
+    );
+
+    compteur.textContent =
+        total > 99
+            ? "99+"
+            : String(total);
+
+    compteur.hidden =
+        total === 0;
+
+    compteur.setAttribute(
+        "aria-label",
+        `${total} notification(s) non lue(s)`
+    );
+
+    bouton.setAttribute(
+        "aria-label",
+        total === 0
+            ? "Ouvrir les notifications"
+            : `Ouvrir les notifications, ${total} non lue(s)`
+    );
+
+    bouton.classList.toggle(
+        "avec-notifications",
+        total > 0
+    );
+}
+
+function ouvrirNotificationsMenu() {
+    const bouton = document.querySelector(
+        "#bouton-notifications-menu"
+    );
+
+    const panneau = document.querySelector(
+        "#panneau-notifications-menu"
+    );
+
+    if (!bouton || !panneau) {
+        return;
+    }
+
+    panneau.hidden = false;
+
+    bouton.setAttribute(
+        "aria-expanded",
+        "true"
+    );
+}
+
+function fermerNotificationsMenu() {
+    const bouton = document.querySelector(
+        "#bouton-notifications-menu"
+    );
+
+    const panneau = document.querySelector(
+        "#panneau-notifications-menu"
+    );
+
+    if (!bouton || !panneau) {
+        return;
+    }
+
+    panneau.hidden = true;
+
+    bouton.setAttribute(
+        "aria-expanded",
+        "false"
     );
 }
 
@@ -375,10 +882,7 @@ function ouvrirMenuUtilisateur() {
         "#panneau-menu-utilisateur"
     );
 
-    if (
-        !bouton ||
-        !panneau
-    ) {
+    if (!bouton || !panneau) {
         return;
     }
 
@@ -387,21 +891,6 @@ function ouvrirMenuUtilisateur() {
     bouton.setAttribute(
         "aria-expanded",
         "true"
-    );
-
-    document.body.classList.add(
-        "menu-utilisateur-ouvert"
-    );
-
-    const premierLien = panneau.querySelector(
-        'a, button:not([hidden])'
-    );
-
-    window.setTimeout(
-        function () {
-            premierLien?.focus();
-        },
-        0
     );
 }
 
@@ -414,10 +903,7 @@ function fermerMenuUtilisateur() {
         "#panneau-menu-utilisateur"
     );
 
-    if (
-        !bouton ||
-        !panneau
-    ) {
+    if (!bouton || !panneau) {
         return;
     }
 
@@ -427,34 +913,19 @@ function fermerMenuUtilisateur() {
         "aria-expanded",
         "false"
     );
-
-    document.body.classList.remove(
-        "menu-utilisateur-ouvert"
-    );
 }
 
 async function deconnecterDepuisMenuUtilisateur(
     evenement
 ) {
-    const bouton =
-        evenement.currentTarget;
+    const bouton = evenement.currentTarget;
 
-    if (
-        !bouton ||
-        bouton.disabled
-    ) {
+    if (!bouton || bouton.disabled) {
         return;
     }
 
     bouton.disabled = true;
-
-    bouton.innerHTML = `
-        <span aria-hidden="true">
-            …
-        </span>
-
-        Déconnexion…
-    `;
+    bouton.textContent = "Déconnexion…";
 
     try {
         if (
@@ -476,31 +947,54 @@ async function deconnecterDepuisMenuUtilisateur(
         );
     } catch (erreur) {
         console.error(
-            "Déconnexion depuis le menu impossible :",
+            "Déconnexion impossible :",
             erreur
         );
 
         bouton.disabled = false;
-
-        bouton.innerHTML = `
-            <span aria-hidden="true">
-                ↪
-            </span>
-
-            Déconnexion
-        `;
-
-        if (
-            typeof afficherNotification ===
-            "function"
-        ) {
-            afficherNotification(
-                "La déconnexion a échoué.",
-                "erreur",
-                5000
-            );
-        }
+        bouton.textContent = "Déconnexion";
     }
+}
+
+function lienNotificationAutorise(lien) {
+    return (
+        typeof lien === "string" &&
+        /^\.\/[a-zA-Z0-9_-]+\.html([?#].*)?$/.test(
+            lien
+        )
+    );
+}
+
+function obtenirIconeNotificationMenu(type) {
+    const icones = {
+        information: "ℹ️",
+        virement: "🔄",
+        salaire: "💰",
+        achat: "🛍️",
+        administration: "🛡️",
+        role: "🪪",
+        suspension: "🔒",
+        reactivation: "🔓",
+        annonce: "📢"
+    };
+
+    return icones[type] || "🔔";
+}
+
+function formaterDateNotificationMenu(dateTexte) {
+    const date = new Date(dateTexte);
+
+    if (Number.isNaN(date.getTime())) {
+        return "Date inconnue";
+    }
+
+    return date.toLocaleString(
+        "fr-FR",
+        {
+            dateStyle: "short",
+            timeStyle: "short"
+        }
+    );
 }
 
 function creerContenuAvatarMenuUtilisateur(
@@ -536,7 +1030,8 @@ function obtenirNomDiscordUtilisateur(
     return (
         utilisateur?.user_metadata?.full_name ||
         utilisateur?.user_metadata?.name ||
-        utilisateur?.user_metadata?.preferred_username ||
+        utilisateur?.user_metadata
+            ?.preferred_username ||
         utilisateur?.user_metadata?.user_name ||
         "Membre"
     );
@@ -579,6 +1074,12 @@ function creerInitialesMenuUtilisateur(nom) {
 }
 
 function supprimerAncienMenuUtilisateur() {
+    document
+        .querySelector(
+            "#zone-utilisateur"
+        )
+        ?.remove();
+
     document
         .querySelector(
             "#menu-utilisateur"
