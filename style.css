@@ -4741,3 +4741,381 @@ body.reduire-animations *::after {
         width: 100%;
     }
 }
+/* =========================================================
+   CORRECTIF DU TABLEAU DE BORD — THÈME SOMBRE
+   ========================================================= */
+
+/* Largeur et respiration générale */
+
+.page-interieure .conteneur {
+    width: min(100% - 40px, 1450px);
+    margin-inline: auto;
+    padding-block: 38px 55px;
+}
+
+.entete-dashboard {
+    gap: 25px;
+    margin-bottom: 28px;
+}
+
+.entete-dashboard h1 {
+    margin: 7px 0 10px;
+    font-size: clamp(30px, 4vw, 48px);
+    line-height: 1.08;
+}
+
+.grille-dashboard {
+    display: grid;
+    grid-template-columns:
+        minmax(0, 1.45fr)
+        minmax(320px, 0.85fr);
+    gap: 24px;
+    align-items: stretch;
+}
+
+/* Carte bancaire principale */
+
+.carte-solde {
+    position: relative;
+    isolation: isolate;
+    min-height: 295px;
+    padding: clamp(26px, 4vw, 40px);
+    overflow: hidden;
+    color: #ffffff;
+    background:
+        radial-gradient(
+            circle at 88% 15%,
+            rgba(255, 255, 255, 0.25),
+            transparent 20rem
+        ),
+        linear-gradient(
+            135deg,
+            #175fa9 0%,
+            var(--sg-accent) 55%,
+            #0c477f 100%
+        );
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 22px;
+    box-shadow:
+        0 20px 45px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+/* Forme décorative */
+
+.carte-solde::before {
+    position: absolute;
+    z-index: -1;
+    top: -105px;
+    right: -75px;
+    width: 310px;
+    height: 310px;
+    content: "";
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+}
+
+.carte-solde::after {
+    position: absolute;
+    z-index: -1;
+    right: 130px;
+    bottom: -160px;
+    width: 280px;
+    height: 280px;
+    content: "";
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 50%;
+}
+
+/* Contraste forcé de la carte */
+
+.carte-solde :is(
+    p,
+    h2,
+    h3,
+    span,
+    strong
+) {
+    color: #ffffff;
+}
+
+.carte-solde > p {
+    margin: 0 0 10px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.025em;
+}
+
+.carte-solde > h2,
+.carte-solde > h3 {
+    margin: 0 0 34px;
+    color: #ffffff;
+    font-size: clamp(36px, 5vw, 58px);
+    font-weight: 750;
+    line-height: 1;
+    letter-spacing: -0.035em;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.18);
+}
+
+.carte-solde .details-compte {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding: 18px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.carte-solde .details-compte span {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.carte-solde .details-compte strong {
+    color: #ffffff;
+    font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+    letter-spacing: 0.04em;
+}
+
+/* Boutons de la carte */
+
+.carte-solde .actions-compte {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.carte-solde .bouton {
+    color: #10243e;
+    background: #ffffff;
+    border: 1px solid #ffffff;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.14);
+}
+
+.carte-solde .bouton:hover {
+    color: #10243e;
+    background: #edf5ff;
+    transform: translateY(-1px);
+}
+
+.carte-solde .bouton-clair {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+}
+
+.carte-solde .bouton-clair:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Informations du compte */
+
+.carte-information {
+    padding: clamp(24px, 3vw, 34px);
+    border-radius: 22px;
+}
+
+.carte-information h2 {
+    margin: 0 0 25px;
+    font-size: 22px;
+}
+
+.carte-information dl {
+    display: grid;
+    gap: 0;
+    margin: 0;
+}
+
+.carte-information dl > div {
+    display: grid;
+    gap: 6px;
+    padding: 17px 0;
+    border-bottom: 1px solid var(--sg-bordure);
+}
+
+.carte-information dl > div:last-child {
+    border-bottom: 0;
+}
+
+.carte-information dt {
+    color: var(--sg-texte-secondaire);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.carte-information dd {
+    margin: 0;
+    color: var(--sg-texte);
+    font-size: 16px;
+    font-weight: 650;
+}
+
+/* Historique récent */
+
+.operations {
+    margin-top: 26px;
+    padding: clamp(24px, 3vw, 34px);
+    background: var(--sg-carte);
+    border: 1px solid var(--sg-bordure);
+    border-radius: 22px;
+    box-shadow: var(--sg-ombre);
+}
+
+.operations .titre-section {
+    margin-bottom: 18px;
+}
+
+.operations .titre-section h2 {
+    margin: 5px 0 0;
+    font-size: 24px;
+}
+
+.liste-operations {
+    display: grid;
+}
+
+.ligne-operation {
+    display: grid;
+    grid-template-columns:
+        auto
+        minmax(0, 1fr)
+        auto
+        minmax(120px, auto);
+    gap: 18px;
+    align-items: center;
+    min-height: 74px;
+    padding: 15px 0;
+    border-top: 1px solid var(--sg-bordure);
+}
+
+.icone-operation {
+    display: grid;
+    width: 42px;
+    height: 42px;
+    place-items: center;
+    border-radius: 12px;
+    font-size: 20px;
+    font-weight: 750;
+}
+
+.icone-operation.revenu {
+    color: #08764e;
+    background: #d9f8e9;
+}
+
+.icone-operation.depense {
+    color: #b72f42;
+    background: #ffe2e6;
+}
+
+.description-operation {
+    display: grid;
+    gap: 4px;
+}
+
+.description-operation strong {
+    color: var(--sg-texte);
+    font-size: 15px;
+}
+
+.description-operation span,
+.date-operation {
+    color: var(--sg-texte-secondaire);
+    font-size: 13px;
+}
+
+.montant {
+    font-size: 15px;
+    text-align: right;
+}
+
+.montant.positif {
+    color: var(--sg-succes);
+}
+
+.montant.negatif {
+    color: var(--sg-danger);
+}
+
+/* Encadré d’information */
+
+.encadre-important {
+    margin-top: 24px;
+    padding: 16px 20px;
+    color: var(--sg-texte-secondaire);
+    background: var(--sg-fond-secondaire);
+    border: 1px solid var(--sg-bordure);
+    border-left: 4px solid var(--sg-accent);
+    border-radius: 12px;
+    line-height: 1.55;
+}
+
+.encadre-important strong {
+    color: var(--sg-texte);
+}
+
+/* Pied de page mieux séparé */
+
+html[data-theme="sombre"] .pied-page-site,
+body.theme-sombre .pied-page-site {
+    background: #070e17;
+    border-top: 1px solid var(--sg-bordure);
+}
+
+/* Responsive */
+
+@media (max-width: 1000px) {
+    .grille-dashboard {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 700px) {
+    .page-interieure .conteneur {
+        width: min(100% - 24px, 1450px);
+        padding-block: 25px 40px;
+    }
+
+    .entete-dashboard h1 {
+        font-size: 32px;
+    }
+
+    .carte-solde {
+        min-height: 265px;
+        padding: 24px;
+    }
+
+    .carte-solde > h2,
+    .carte-solde > h3 {
+        font-size: 38px;
+    }
+
+    .carte-solde .details-compte {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 7px;
+    }
+
+    .carte-solde .actions-compte {
+        flex-direction: column;
+    }
+
+    .carte-solde .actions-compte a {
+        width: 100%;
+        text-align: center;
+    }
+
+    .ligne-operation {
+        grid-template-columns:
+            auto
+            minmax(0, 1fr)
+            auto;
+    }
+
+    .date-operation {
+        display: none;
+    }
+}
