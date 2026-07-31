@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Personnalisation de la Banque Saint-Georges RP"
+    >
+
+    <title>
+        Personnalisation — Banque Saint-Georges RP
+    </title>
+
+    <link rel="stylesheet" href="./style.css?v=40">
+</head>
+
+<body>
+    <header>
+        <div class="identite">
+            <div class="logo">
+                SG
+            </div>
+
+            <div>
+                <strong>
+                    Banque Saint-Georges RP
+                </strong>
+
+                <p>
+                    Ensemble Scolaire Saint-Georges Coccinet
+                </p>
+            </div>
+        </div>
+
+        <nav>
+            <a href="./index.html">
+                Accueil
+            </a>
+
+            <a href="./dashboard.html">
+                Mon compte
+            </a>
+
+            <a href="./historique.html">
+                Historique
+            </a>
+
+            <a href="./boutique.html">
+                Boutique
+            </a>
+
+            <a href="./profil.html">
+                Profil
+            </a>
+
+            <a href="./personnalisation.html">
+                Personnalisation
+            </a>
+
+            <a href="./parametres.html">
+                Paramètres
+            </a>
+
+            <a href="./aide.html">
+                Aide
+            </a>
+
+            <a href="./reglement.html">
+                Règlement
+            </a>
+
+            <button
+                class="bouton-theme"
+                type="button"
+                data-changer-theme
+            >
+                <span aria-hidden="true">
+                    🌙
+                </span>
+
+                <span>
+                    Thème sombre
+                </span>
+            </button>
+
+            <button
+                class="deconnexion-menu"
+                type="button"
+                data-deconnexion-supabase
+            >
+                Déconnexion
+            </button>
+        </nav>
+    </header>
+
+    <main class="page-interieure page-personnalisation">
+        <section class="conteneur">
+            <div class="entete-parametres">
+                <div>
+                    <p class="petit-titre">
+                        Apparence et accessibilité
+                    </p>
+
+                    <h1>
+                        Personnalisation
+                    </h1>
+
+                    <p>
+                        Adaptez l’interface de la Banque Saint-Georges RP
+                        selon vos préférences.
+                    </p>
+                </div>
+
+                <a
+                    class="retour-dashboard"
+                    href="./dashboard.html"
+                >
+                    ← Retour au compte
+                </a>
+            </div>
+
+            <div class="avertissement-admin">
+                <strong>
+                    Préférences synchronisées :
+                </strong>
+
+                vos choix sont enregistrés dans votre compte et sont
+                retrouvés lorsque vous vous connectez avec Discord
+                sur un autre appareil.
+            </div>
+
+            <form
+                class="formulaire-personnalisation"
+                id="formulaire-personnalisation"
+            >
+                <!-- Apparence générale -->
+
+                <section class="groupe-personnalisation">
+                    <div class="titre-section">
+                        <p class="petit-titre">
+                            Apparence générale
+                        </p>
+
+                        <h2>
+                            Thème et couleur
+                        </h2>
+                    </div>
+
+                    <div class="grille-parametres">
+                        <article class="carte-parametre">
+                            <div class="icone-parametre">
+                                🌓
+                            </div>
+
+                            <div class="contenu-parametre">
+                                <label for="preference-theme">
+                                    <strong>
+                                        Thème du site
+                                    </strong>
+                                </label>
+
+                                <p>
+                                    Choisissez un thème fixe ou utilisez
+                                    automatiquement celui de votre appareil.
+                                </p>
+
+                                <select
+                                    id="preference-theme"
+                                    name="theme"
+                                >
+                                    <option value="systeme">
+                                        Automatique — système
+                                    </option>
+
+                                    <option value="clair">
+                                        Thème clair
+                                    </option>
+
+                                    <option value="sombre">
+                                        Thème sombre
+                                    </option>
+                                </select>
+                            </div>
+                        </article>
+
+                        <article class="carte-parametre">
+                            <div class="icone-parametre">
+                                🎨
+                            </div>
+
+                            <div class="contenu-parametre">
+                                <span>
+                                    <strong>
+                                        Couleur principale
+                                    </strong>
+                                </span>
+
+                                <p>
+                                    Choisissez la couleur utilisée pour
+                                    les boutons et les éléments importants.
+                                </p>
+
+                                <div
+                                    class="choix-couleurs-personnalisation"
+                                    role="radiogroup"
+                                    aria-label="Couleur principale"
+                                >
+                                    <label>
+                                        <input
+                                            type="radio"
+                                            name="couleur_principale"
+                                            value="bleu"
+                                            checked
+                                        >
+
+                                        <span
+                                            class="pastille-couleur couleur-bleu"
+                                            aria-hidden="true"
+                                        ></span>
+
+                                        Bleu
+                                    </label>
+
+                                    <label>
+                                        <input
+                                            type="radio"
+                                            name="couleur_principale"
+                                            value="dore"
+                                        >
+
+                                        <span
+                                            class="pastille-couleur couleur-dore"
+                                            aria-hidden="true"
+                                        ></span>
+
+                                        Doré
+                                    </label>
+
+                                    <label>
+                                        <input
+                                            type="radio"
+                                            name="couleur_principale"
+                                            value="vert"
+                                        >
+
+                                        <span
+                                            class="pastille-couleur couleur-vert"
+                                            aria-hidden="true"
+                                        ></span>
+
+                                        Vert
+                                    </label>
+
+                                    <label>
+                                        <input
+                                            type="radio"
+                                            name="couleur_principale"
+                                            value="violet"
+                                        >
+
+                                        <span
+                                            class="pastille-couleur couleur-violet"
+                                            aria-hidden="true"
+                                        ></span>
+
+                                        Violet
+                                    </label>
+
+                                    <label>
+                                        <input
+                                            type="radio"
+                                            name="couleur_principale"
+                                            value="rouge"
+                                        >
+
+                                        <span
+                                            class="pastille-couleur couleur-rouge"
+                                            aria-hidden="true"
+                                        ></span>
+
+                                        Rouge
+                                    </label>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <!-- Affichage -->
+
+                <section class="groupe-personnalisation">
+                    <div class="titre-section">
+                        <p class="petit-titre">
+                            Mise en page
+                        </p>
+
+                        <h2>
+                            Affichage du site
+                        </h2>
+                    </div>
+
+                    <div class="grille-parametres">
+                        <article class="carte-parametre">
+                            <div class="icone-parametre">
+                                🔠
+                            </div>
+
+                            <div class="contenu-parametre">
+                                <label for="preference-taille-texte">
+                                    <strong>
+                                        Taille du texte
+                                    </strong>
+                                </label>
+
+                                <p>
+                                    Agrandissez les textes principaux
+                                    pour améliorer leur lisibilité.
+                                </p>
+
+                                <select
+                                    id="preference-taille-texte"
+                                    name="taille_texte"
+                                >
+                                    <option value="normale">
+                                        Taille normale
+                                    </option>
+
+                                    <option value="grande">
+                                        Texte agrandi
+                                    </option>
+                                </select>
+                            </div>
+                        </article>
+
+                        <article class="carte-parametre">
+                            <div class="icone-parametre">
+                                ↕️
+                            </div>
+
+                            <div class="contenu-parametre">
+                                <label for="preference-densite">
+                                    <strong>
+                                        Densité d’affichage
+                                    </strong>
+                                </label>
+
+                                <p>
+                                    Réduisez les espacements afin
+                                    d’afficher davantage d’informations.
+                                </p>
+
+                                <select
+                                    id="preference-densite"
+                                    name="densite_affichage"
+                                >
+                                    <option value="confortable">
+                                        Affichage confortable
+                                    </option>
+
+                                    <option value="compacte">
+                                        Affichage compact
+                                    </option>
+                                </select>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <!-- Confidentialité visuelle -->
+
+                <section class="groupe-personnalisation">
+                    <div class="titre-section">
+                        <p class="petit-titre">
+                            Confidentialité visuelle
+                        </p>
+
+                        <h2>
+                            Informations sensibles
+                        </h2>
+                    </div>
+
+                    <div class="liste-options-personnalisation">
+                        <label class="option-personnalisation">
+                            <div>
+                                <strong>
+                                    Masquer le solde par défaut
+                                </strong>
+
+                                <span>
+                                    Remplace le montant par des points
+                                    lorsque le compte est affiché.
+                                </span>
+                            </div>
+
+                            <input
+                                type="checkbox"
+                                name="masquer_solde"
+                            >
+                        </label>
+
+                        <label class="option-personnalisation">
+                            <div>
+                                <strong>
+                                    Masquer le numéro de compte
+                                </strong>
+
+                                <span>
+                                    Cache automatiquement le numéro de
+                                    compte RP sur les pages compatibles.
+                                </span>
+                            </div>
+
+                            <input
+                                type="checkbox"
+                                name="masquer_numero_compte"
+                            >
+                        </label>
+
+                        <label class="option-personnalisation">
+                            <div>
+                                <strong>
+                                    Afficher les opérations récentes
+                                </strong>
+
+                                <span>
+                                    Affiche les dernières transactions
+                                    sur le tableau de bord.
+                                </span>
+                            </div>
+
+                            <input
+                                type="checkbox"
+                                name="afficher_operations_recentes"
+                                checked
+                            >
+                        </label>
+                    </div>
+                </section>
+
+                <!-- Accessibilité -->
+
+                <section class="groupe-personnalisation">
+                    <div class="titre-section">
+                        <p class="petit-titre">
+                            Confort d’utilisation
+                        </p>
+
+                        <h2>
+                            Accessibilité
+                        </h2>
+                    </div>
+
+                    <div class="liste-options-personnalisation">
+                        <label class="option-personnalisation">
+                            <div>
+                                <strong>
+                                    Contraste renforcé
+                                </strong>
+
+                                <span>
+                                    Renforce les bordures, les couleurs
+                                    et la lisibilité des éléments.
+                                </span>
+                            </div>
+
+                            <input
+                                type="checkbox"
+                                name="contraste_renforce"
+                            >
+                        </label>
+
+                        <label class="option-personnalisation">
+                            <div>
+                                <strong>
+                                    Réduire les animations
+                                </strong>
+
+                                <span>
+                                    Désactive la majorité des transitions
+                                    et des défilements animés.
+                                </span>
+                            </div>
+
+                            <input
+                                type="checkbox"
+                                name="reduire_animations"
+                            >
+                        </label>
+
+                        <label class="option-personnalisation">
+                            <div>
+                                <strong>
+                                    Souligner les liens
+                                </strong>
+
+                                <span>
+                                    Rend les liens plus faciles à
+                                    identifier dans les différentes pages.
+                                </span>
+                            </div>
+
+                            <input
+                                type="checkbox"
+                                name="souligner_liens"
+                            >
+                        </label>
+
+                        <label class="option-personnalisation">
+                            <div>
+                                <strong>
+                                    Confirmation renforcée
+                                </strong>
+
+                                <span>
+                                    Ajoute une confirmation supplémentaire
+                                    avant les achats et les virements.
+                                </span>
+                            </div>
+
+                            <input
+                                type="checkbox"
+                                name="confirmation_renforcee"
+                                checked
+                            >
+                        </label>
+                    </div>
+                </section>
+
+                <!-- Aperçu -->
+
+                <section class="apercu-personnalisation">
+                    <div>
+                        <p class="petit-titre">
+                            Aperçu
+                        </p>
+
+                        <h2>
+                            Exemple de compte
+                        </h2>
+                    </div>
+
+                    <article class="carte-solde">
+                        <p>
+                            Solde disponible
+                        </p>
+
+                        <h3 data-valeur-solde>
+                            1 250,00 € RP
+                        </h3>
+
+                        <div class="details-compte">
+                            <span>
+                                Compte scolaire
+                            </span>
+
+                            <strong data-numero-compte>
+                                SGC-000042
+                            </strong>
+                        </div>
+
+                        <button
+                            class="bouton"
+                            type="button"
+                            disabled
+                        >
+                            Exemple de bouton
+                        </button>
+                    </article>
+                </section>
+
+                <p
+                    class="message-action-admin"
+                    id="message-personnalisation"
+                    aria-live="polite"
+                    hidden
+                ></p>
+
+                <div class="actions-personnalisation">
+                    <button
+                        class="bouton-clair"
+                        id="reinitialiser-personnalisation"
+                        type="button"
+                    >
+                        Réinitialiser les préférences
+                    </button>
+
+                    <button
+                        class="bouton"
+                        id="enregistrer-personnalisation"
+                        type="submit"
+                    >
+                        Enregistrer les préférences
+                    </button>
+                </div>
+            </form>
+
+            <div class="encadre-important">
+                <strong>
+                    Synchronisation :
+                </strong>
+
+                ces préférences sont liées à votre compte Discord et
+                enregistrées dans Supabase. Elles ne concernent que
+                l’apparence de la plateforme RP.
+            </div>
+        </section>
+    </main>
+
+    <footer class="pied-page-site">
+        <div class="contenu-pied-page">
+            <div class="identite-pied-page">
+                <strong>
+                    Banque Saint-Georges RP
+                </strong>
+
+                <span>
+                    Ensemble Scolaire Saint-Georges Coccinet
+                </span>
+            </div>
+
+            <div class="informations-pied-page">
+                <span>
+                    © <span data-annee-actuelle></span>
+                </span>
+
+                <span aria-hidden="true">
+                    •
+                </span>
+
+                <span>
+                    Version
+                    <span data-version-site></span>
+                </span>
+
+                <span aria-hidden="true">
+                    •
+                </span>
+
+                <span>
+                    Mise à jour :
+                    <span data-mise-a-jour-site></span>
+                </span>
+            </div>
+        </div>
+
+        <p class="mention-fictive-pied-page">
+            Plateforme RP fictive — aucun argent réel,
+            paiement réel ou service bancaire réel.
+        </p>
+    </footer>
+
+    <!-- Bibliothèque officielle Supabase -->
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
+
+    <!-- Configuration et authentification -->
+    <script src="./supabase-config.js?v=2"></script>
+    <script src="./auth-supabase.js?v=2"></script>
+
+    <!-- Déconnexion commune -->
+    <script src="./deconnexion-supabase.js?v=2"></script>
+
+    <!-- Protection de la page -->
+    <script src="./protection-supabase.js?v=1"></script>
+
+    <!-- Service des préférences -->
+    <script src="./preferences-supabase.js?v=1"></script>
+
+    <!-- Gestion de la page -->
+    <script src="./personnalisation.js?v=1"></script>
+
+    <!-- Affichage conditionnel de l’administration -->
+    <script src="./navigation-admin.js?v=2"></script>
+
+    <!-- Services communs -->
+    <script src="./notifications.js?v=3"></script>
+    <script src="./theme.js?v=3"></script>
+    <script src="./footer.js?v=3"></script>
+    <script src="./retour-haut.js?v=1"></script>
+    <script src="./progression-page.js?v=1"></script>
+    <script src="./menu-mobile.js?v=1"></script>
+    <script src="./navigation.js?v=3"></script>
+</body>
+</html>
