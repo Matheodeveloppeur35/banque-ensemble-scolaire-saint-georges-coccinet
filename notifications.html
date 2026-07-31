@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Centre de notifications de la Banque Saint-Georges RP"
+    >
+
+    <title>
+        Notifications — Banque Saint-Georges RP
+    </title>
+
+    <link rel="stylesheet" href="./style.css?v=45">
+</head>
+
+<body>
+    <header>
+        <div class="identite">
+            <div class="logo">
+                SG
+            </div>
+
+            <div>
+                <strong>
+                    Banque Saint-Georges RP
+                </strong>
+
+                <p>
+                    Ensemble Scolaire Saint-Georges Coccinet
+                </p>
+            </div>
+        </div>
+
+        <nav>
+            <a href="./index.html">
+                Accueil
+            </a>
+
+            <a href="./dashboard.html">
+                Mon compte
+            </a>
+
+            <a href="./historique.html">
+                Historique
+            </a>
+
+            <a href="./boutique.html">
+                Boutique
+            </a>
+
+            <a href="./profil.html">
+                Profil
+            </a>
+
+            <a href="./personnalisation.html">
+                Personnalisation
+            </a>
+
+            <a href="./parametres.html">
+                Paramètres
+            </a>
+
+            <a href="./aide.html">
+                Aide
+            </a>
+
+            <a href="./reglement.html">
+                Règlement
+            </a>
+
+            <button
+                class="bouton-theme"
+                type="button"
+                data-changer-theme
+            >
+                <span aria-hidden="true">
+                    🌙
+                </span>
+
+                <span>
+                    Thème sombre
+                </span>
+            </button>
+
+            <!-- Remplacé automatiquement par le menu Discord -->
+            <button
+                class="deconnexion-menu"
+                type="button"
+                data-deconnexion-supabase
+            >
+                Déconnexion
+            </button>
+        </nav>
+    </header>
+
+    <main class="page-interieure page-notifications">
+        <section class="conteneur">
+            <div class="entete-notifications-page">
+                <div>
+                    <p class="petit-titre">
+                        Centre personnel
+                    </p>
+
+                    <h1>
+                        Mes notifications
+                    </h1>
+
+                    <p>
+                        Consultez les événements associés à votre
+                        compte bancaire RP.
+                    </p>
+                </div>
+
+                <a
+                    class="retour-dashboard"
+                    href="./dashboard.html"
+                >
+                    ← Retour au compte
+                </a>
+            </div>
+
+            <section class="resume-notifications-page">
+                <article>
+                    <span>
+                        Total
+                    </span>
+
+                    <strong id="total-notifications-page">
+                        Chargement…
+                    </strong>
+
+                    <small>
+                        Toutes les notifications
+                    </small>
+                </article>
+
+                <article>
+                    <span>
+                        Non lues
+                    </span>
+
+                    <strong
+                        class="texte-rouge"
+                        id="notifications-non-lues-page"
+                    >
+                        Chargement…
+                    </strong>
+
+                    <small>
+                        Notifications à consulter
+                    </small>
+                </article>
+
+                <article>
+                    <span>
+                        Lues
+                    </span>
+
+                    <strong
+                        class="texte-vert"
+                        id="notifications-lues-page"
+                    >
+                        Chargement…
+                    </strong>
+
+                    <small>
+                        Notifications consultées
+                    </small>
+                </article>
+            </section>
+
+            <section class="centre-notifications-page">
+                <div class="barre-notifications-page">
+                    <div>
+                        <p class="petit-titre">
+                            Activité récente
+                        </p>
+
+                        <h2 id="titre-liste-notifications-page">
+                            Toutes les notifications
+                        </h2>
+                    </div>
+
+                    <div class="recherche-notifications-page">
+                        <label for="recherche-notifications-page">
+                            Rechercher
+                        </label>
+
+                        <input
+                            id="recherche-notifications-page"
+                            type="search"
+                            placeholder="Titre, message, référence…"
+                            autocomplete="off"
+                        >
+                    </div>
+                </div>
+
+                <div
+                    class="filtres-notifications-page"
+                    aria-label="Filtrer les notifications"
+                >
+                    <button
+                        class="filtre-notification-page actif"
+                        type="button"
+                        data-filtre-notification="toutes"
+                    >
+                        Toutes
+                    </button>
+
+                    <button
+                        class="filtre-notification-page"
+                        type="button"
+                        data-filtre-notification="non-lues"
+                    >
+                        Non lues
+                    </button>
+
+                    <button
+                        class="filtre-notification-page"
+                        type="button"
+                        data-filtre-notification="lues"
+                    >
+                        Lues
+                    </button>
+
+                    <button
+                        class="filtre-notification-page"
+                        type="button"
+                        data-filtre-notification="virement"
+                    >
+                        Virements
+                    </button>
+
+                    <button
+                        class="filtre-notification-page"
+                        type="button"
+                        data-filtre-notification="salaire"
+                    >
+                        Salaires
+                    </button>
+
+                    <button
+                        class="filtre-notification-page"
+                        type="button"
+                        data-filtre-notification="administration"
+                    >
+                        Administration
+                    </button>
+                </div>
+
+                <div class="actions-notifications-page">
+                    <button
+                        class="bouton-clair"
+                        id="marquer-toutes-lues-page"
+                        type="button"
+                    >
+                        Tout marquer comme lu
+                    </button>
+
+                    <button
+                        class="bouton-suppression-notifications"
+                        id="supprimer-notifications-lues-page"
+                        type="button"
+                    >
+                        Supprimer les notifications lues
+                    </button>
+                </div>
+
+                <p
+                    class="message-action-admin"
+                    id="message-notifications-page"
+                    aria-live="polite"
+                    hidden
+                ></p>
+
+                <div
+                    class="liste-notifications-page"
+                    id="liste-notifications-page"
+                    aria-live="polite"
+                    aria-busy="true"
+                >
+                    <p class="chargement-notifications-page">
+                        Chargement des notifications…
+                    </p>
+                </div>
+            </section>
+
+            <div class="encadre-important">
+                <strong>
+                    Notifications synchronisées :
+                </strong>
+
+                les notifications sont associées à votre compte Discord
+                et enregistrées dans Supabase. Elles sont disponibles
+                sur tous vos appareils.
+            </div>
+        </section>
+    </main>
+
+    <footer class="pied-page-site">
+        <div class="contenu-pied-page">
+            <div class="identite-pied-page">
+                <strong>
+                    Banque Saint-Georges RP
+                </strong>
+
+                <span>
+                    Ensemble Scolaire Saint-Georges Coccinet
+                </span>
+            </div>
+
+            <div class="informations-pied-page">
+                <span>
+                    © <span data-annee-actuelle></span>
+                </span>
+
+                <span aria-hidden="true">
+                    •
+                </span>
+
+                <span>
+                    Version
+                    <span data-version-site></span>
+                </span>
+
+                <span aria-hidden="true">
+                    •
+                </span>
+
+                <span>
+                    Mise à jour :
+                    <span data-mise-a-jour-site></span>
+                </span>
+            </div>
+        </div>
+
+        <p class="mention-fictive-pied-page">
+            Plateforme RP fictive — aucun argent réel,
+            paiement réel ou service bancaire réel.
+        </p>
+    </footer>
+
+    <!-- Bibliothèque officielle Supabase -->
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
+
+    <!-- Configuration et authentification -->
+    <script src="./supabase-config.js?v=2"></script>
+    <script src="./auth-supabase.js?v=2"></script>
+
+    <!-- Déconnexion commune -->
+    <script src="./deconnexion-supabase.js?v=2"></script>
+
+    <!-- Protection de la page -->
+    <script src="./protection-supabase.js?v=1"></script>
+
+    <!-- Préférences de l’utilisateur -->
+    <script src="./preferences-supabase.js?v=1"></script>
+
+    <!-- Notifications visuelles existantes -->
+    <script src="./notifications.js?v=3"></script>
+
+    <!-- Service des notifications Supabase -->
+    <script src="./notifications-supabase.js?v=1"></script>
+
+    <!-- Gestion de la page complète -->
+    <script src="./page-notifications.js?v=1"></script>
+
+    <!-- Menu Discord avec la cloche -->
+    <script src="./menu-utilisateur.js?v=2"></script>
+
+    <!-- Affichage conditionnel de l’administration -->
+    <script src="./navigation-admin.js?v=2"></script>
+
+    <!-- Services communs -->
+    <script src="./theme.js?v=3"></script>
+    <script src="./footer.js?v=3"></script>
+    <script src="./retour-haut.js?v=1"></script>
+    <script src="./progression-page.js?v=1"></script>
+    <script src="./menu-mobile.js?v=1"></script>
+    <script src="./navigation.js?v=3"></script>
+
+    <!-- Chargement des préférences -->
+    <script>
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+                if (
+                    typeof chargerEtAppliquerPreferencesSupabase ===
+                    "function"
+                ) {
+                    chargerEtAppliquerPreferencesSupabase();
+                }
+            }
+        );
+    </script>
+</body>
+</html>
