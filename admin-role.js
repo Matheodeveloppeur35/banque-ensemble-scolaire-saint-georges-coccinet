@@ -4,42 +4,72 @@ function initialiserGestionRoles() {
     );
 
     if (!conteneurActions) {
+        console.warn(
+            "Le conteneur des actions administratives est introuvable."
+        );
+
         return;
     }
 
+    /*
+     * On récupère d’abord le bouton déjà présent dans admin.html.
+     */
+    let boutonRole = document.querySelector(
+        '[data-action="modifier-role"]'
+    );
+
+    /*
+     * Si le bouton n’existe pas dans le HTML,
+     * le script peut le créer automatiquement.
+     */
+    if (!boutonRole) {
+        boutonRole = document.createElement(
+            "button"
+        );
+
+        boutonRole.className =
+            "action-admin";
+
+        boutonRole.type =
+            "button";
+
+        boutonRole.dataset.action =
+            "modifier-role";
+
+        boutonRole.innerHTML = `
+            <span aria-hidden="true">
+                🪪
+            </span>
+
+            <div>
+                <strong>
+                    Modifier un rôle
+                </strong>
+
+                <small>
+                    Attribuer un rôle à un membre
+                </small>
+            </div>
+        `;
+
+        conteneurActions.appendChild(
+            boutonRole
+        );
+    }
+
+    /*
+     * Protection contre l’ajout de plusieurs écouteurs
+     * si le fichier est initialisé plusieurs fois.
+     */
     if (
-        document.querySelector(
-            '[data-action="modifier-role"]'
-        )
+        boutonRole.dataset.roleInitialise ===
+        "true"
     ) {
         return;
     }
 
-    const boutonRole = document.createElement(
-        "button"
-    );
-
-    boutonRole.className = "action-admin";
-    boutonRole.type = "button";
-    boutonRole.dataset.action = "modifier-role";
-
-    boutonRole.innerHTML = `
-        <span aria-hidden="true">
-            🎓
-        </span>
-
-        <div>
-            <strong>
-                Modifier un rôle
-            </strong>
-
-            <small>
-                Attribuer un rôle à un membre
-            </small>
-        </div>
-    `;
-
-    conteneurActions.appendChild(boutonRole);
+    boutonRole.dataset.roleInitialise =
+        "true";
 
     boutonRole.addEventListener(
         "click",
@@ -62,7 +92,9 @@ async function ouvrirFenetreModificationRole() {
             return;
         }
 
-        creerFenetreModificationRole(profils);
+        creerFenetreModificationRole(
+            profils
+        );
     } catch (erreur) {
         console.error(
             "Chargement des profils impossible :",
@@ -70,23 +102,38 @@ async function ouvrirFenetreModificationRole() {
         );
 
         afficherErreurRole(
-            "Impossible de charger les membres."
+            obtenirMessageErreurRole(
+                erreur
+            )
         );
     }
 }
 
 async function chargerProfilsPourRole() {
-    const { data, error } = await supabaseClient
-        .from("profils")
-        .select(`
-            id,
-            nom_affiche,
-            role,
-            statut
-        `)
-        .order("nom_affiche", {
-            ascending: true
-        });
+    if (
+        typeof supabaseClient ===
+        "undefined"
+    ) {
+        throw new Error(
+            "Le service Supabase est indisponible."
+        );
+    }
+
+    const { data, error } =
+        await supabaseClient
+            .from("profils")
+            .select(`
+                id,
+                nom_affiche,
+                role,
+                statut
+            `)
+            .order(
+                "nom_affiche",
+                {
+                    ascending: true
+                }
+            );
 
     if (error) {
         throw error;
@@ -97,7 +144,9 @@ async function chargerProfilsPourRole() {
         : [];
 }
 
-function creerFenetreModificationRole(profils) {
+function creerFenetreModificationRole(
+    profils
+) {
     const arrierePlan =
         document.createElement("div");
 
@@ -115,7 +164,7 @@ function creerFenetreModificationRole(profils) {
                 );
 
             const texte =
-                `${profil.nom_affiche} — ` +
+                `${profil.nom_affiche || "Membre"} — ` +
                 `${roleLisible}`;
 
             return `
@@ -261,42 +310,56 @@ function creerFenetreModificationRole(profils) {
         </section>
     `;
 
-    document.body.appendChild(arrierePlan);
+    document.body.appendChild(
+        arrierePlan
+    );
+
     document.body.classList.add(
         "modal-ouverte"
     );
 
-    activerEvenementsRole(arrierePlan);
+    activerEvenementsRole(
+        arrierePlan
+    );
 
-    document
-        .querySelector("#utilisateur-role-admin")
+    arrierePlan
+        .querySelector(
+            "#utilisateur-role-admin"
+        )
         ?.focus();
 }
 
-function activerEvenementsRole(arrierePlan) {
-    const formulaire = document.querySelector(
-        "#formulaire-modification-role"
-    );
+function activerEvenementsRole(
+    arrierePlan
+) {
+    const formulaire =
+        arrierePlan.querySelector(
+            "#formulaire-modification-role"
+        );
 
     const selectionUtilisateur =
-        document.querySelector(
+        arrierePlan.querySelector(
             "#utilisateur-role-admin"
         );
 
     const selectionRole =
-        document.querySelector(
+        arrierePlan.querySelector(
             "#nouveau-role-admin"
         );
 
-    document
-        .querySelector("#fermer-modification-role")
+    arrierePlan
+        .querySelector(
+            "#fermer-modification-role"
+        )
         ?.addEventListener(
             "click",
             fermerFenetreModificationRole
         );
 
-    document
-        .querySelector("#annuler-modification-role")
+    arrierePlan
+        .querySelector(
+            "#annuler-modification-role"
+        )
         ?.addEventListener(
             "click",
             fermerFenetreModificationRole
@@ -305,7 +368,10 @@ function activerEvenementsRole(arrierePlan) {
     arrierePlan.addEventListener(
         "click",
         function (evenement) {
-            if (evenement.target === arrierePlan) {
+            if (
+                evenement.target ===
+                arrierePlan
+            ) {
                 fermerFenetreModificationRole();
             }
         }
@@ -321,8 +387,12 @@ function activerEvenementsRole(arrierePlan) {
             const roleActuel =
                 option?.dataset.role;
 
-            if (roleActuel) {
-                selectionRole.value = roleActuel;
+            if (
+                roleActuel &&
+                selectionRole
+            ) {
+                selectionRole.value =
+                    roleActuel;
             }
         }
     );
@@ -338,18 +408,21 @@ async function enregistrerModificationRole(
 ) {
     evenement.preventDefault();
 
+    const formulaire =
+        evenement.currentTarget;
+
     const utilisateurId =
-        document.querySelector(
+        formulaire.querySelector(
             "#utilisateur-role-admin"
         )?.value;
 
     const nouveauRole =
-        document.querySelector(
+        formulaire.querySelector(
             "#nouveau-role-admin"
         )?.value;
 
     const motif = String(
-        document.querySelector(
+        formulaire.querySelector(
             "#motif-role-admin"
         )?.value || ""
     ).trim();
@@ -361,25 +434,33 @@ async function enregistrerModificationRole(
     );
 
     if (erreur) {
-        afficherMessageRole(erreur, "erreur");
+        afficherMessageRole(
+            erreur,
+            "erreur"
+        );
+
         return;
     }
 
     const confirmation = window.confirm(
         "Confirmer l’attribution du rôle " +
-        `"${formaterRoleAdmin(nouveauRole)}" ?`
+        `"${formaterRoleAdmin(
+            nouveauRole
+        )}" ?`
     );
 
     if (!confirmation) {
         return;
     }
 
-    const bouton = document.querySelector(
-        "#confirmer-modification-role"
-    );
+    const bouton =
+        formulaire.querySelector(
+            "#confirmer-modification-role"
+        );
 
     if (bouton) {
         bouton.disabled = true;
+
         bouton.textContent =
             "Enregistrement…";
     }
@@ -404,7 +485,10 @@ async function enregistrerModificationRole(
             throw error;
         }
 
-        if (!data || data.succes !== true) {
+        if (
+            !data ||
+            data.succes !== true
+        ) {
             throw new Error(
                 "Le changement de rôle n’a pas été confirmé."
             );
@@ -427,12 +511,14 @@ async function enregistrerModificationRole(
 
         fermerFenetreModificationRole();
 
-        window.setTimeout(
-            function () {
-                window.location.reload();
-            },
-            500
-        );
+        if (
+            typeof initialiserAdministrationSupabase ===
+            "function"
+        ) {
+            await initialiserAdministrationSupabase();
+        } else {
+            window.location.reload();
+        }
     } catch (erreurRpc) {
         console.error(
             "Modification du rôle impossible :",
@@ -448,6 +534,7 @@ async function enregistrerModificationRole(
 
         if (bouton) {
             bouton.disabled = false;
+
             bouton.textContent =
                 "Confirmer le rôle";
         }
@@ -468,11 +555,19 @@ function verifierModificationRole(
     ];
 
     if (!utilisateurId) {
-        return "Veuillez sélectionner un membre.";
+        return (
+            "Veuillez sélectionner un membre."
+        );
     }
 
-    if (!rolesAutorises.includes(nouveauRole)) {
-        return "Le rôle sélectionné est invalide.";
+    if (
+        !rolesAutorises.includes(
+            nouveauRole
+        )
+    ) {
+        return (
+            "Le rôle sélectionné est invalide."
+        );
     }
 
     if (motif.length < 3) {
@@ -490,7 +585,10 @@ function verifierModificationRole(
     return null;
 }
 
-function afficherMessageRole(message, type) {
+function afficherMessageRole(
+    message,
+    type
+) {
     const conteneur = document.querySelector(
         "#message-role-admin"
     );
@@ -500,10 +598,12 @@ function afficherMessageRole(message, type) {
     }
 
     conteneur.hidden = false;
+
     conteneur.className =
         `message-action-admin ${type}`;
 
-    conteneur.textContent = message;
+    conteneur.textContent =
+        message;
 }
 
 function afficherErreurRole(message) {
@@ -521,7 +621,9 @@ function afficherErreurRole(message) {
     }
 }
 
-function obtenirMessageErreurRole(erreur) {
+function obtenirMessageErreurRole(
+    erreur
+) {
     const message = String(
         erreur?.message ||
         "La modification du rôle a échoué."
@@ -538,9 +640,14 @@ function obtenirMessageErreurRole(erreur) {
     ];
 
     return (
-        messagesConnus.find(function (texte) {
-            return message.includes(texte);
-        }) ||
+        messagesConnus.find(
+            function (texte) {
+                return message.includes(
+                    texte
+                );
+            }
+        ) ||
+        message ||
         "La modification du rôle a échoué."
     );
 }
@@ -551,7 +658,8 @@ function formaterRoleAdmin(role) {
         parent: "Parent",
         professeur: "Professeur",
         personnel: "Personnel",
-        administrateur: "Administrateur"
+        administrateur:
+            "Administrateur"
     };
 
     return roles[role] || "Membre";
@@ -570,9 +678,8 @@ function fermerFenetreModificationRole() {
 }
 
 function securiserValeurAdminRole(valeur) {
-    const element = document.createElement(
-        "div"
-    );
+    const element =
+        document.createElement("div");
 
     element.textContent =
         valeur === null ||
@@ -586,7 +693,12 @@ function securiserValeurAdminRole(valeur) {
 document.addEventListener(
     "keydown",
     function (evenement) {
-        if (evenement.key === "Escape") {
+        if (
+            evenement.key === "Escape" &&
+            document.querySelector(
+                "#modal-modification-role"
+            )
+        ) {
             fermerFenetreModificationRole();
         }
     }
