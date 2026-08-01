@@ -17,7 +17,7 @@
         Administration — Banque Saint-Georges RP
     </title>
 
-    <link rel="stylesheet" href="./style.css?v=39">
+    <link rel="stylesheet" href="./style.css?v=45">
 </head>
 
 <body>
@@ -61,6 +61,10 @@
 
             <a href="./profil.html">
                 Profil
+            </a>
+
+            <a href="./personnalisation.html">
+                Personnalisation
             </a>
 
             <a href="./parametres.html">
@@ -132,7 +136,7 @@
                 votre rôle administrateur.
             </div>
 
-            <!-- Statistiques -->
+            <!-- Statistiques administratives -->
 
             <section class="statistiques-admin">
                 <article>
@@ -501,21 +505,27 @@
     <!-- Service bancaire Supabase -->
     <script src="./banque-supabase.js?v=1"></script>
 
-    <!-- Notifications -->
+    <!-- Préférences synchronisées -->
+    <script src="./preferences-supabase.js?v=1"></script>
+
+    <!-- Notifications visuelles -->
     <script src="./notifications.js?v=3"></script>
 
-    <!-- Menu utilisateur Discord -->
-<script src="./menu-utilisateur.js?v=1"></script>
-    
+    <!-- Service des notifications Supabase -->
+    <script src="./notifications-supabase.js?v=1"></script>
+
     <!-- Actions administratives -->
-    <script src="./admin-solde.js?v=1"></script>
-    <script src="./admin-salaire.js?v=1"></script>
-    <script src="./admin-statut.js?v=1"></script>
-    <script src="./admin-role.js?v=1"></script>
-    <script src="./admin-membre.js?v=1"></script>
+    <script src="./admin-solde.js?v=2"></script>
+    <script src="./admin-salaire.js?v=2"></script>
+    <script src="./admin-statut.js?v=2"></script>
+    <script src="./admin-role.js?v=2"></script>
+    <script src="./admin-membre.js?v=2"></script>
 
     <!-- Chargement des statistiques et des comptes -->
-    <script src="./admin-supabase.js?v=2"></script>
+    <script src="./admin-supabase.js?v=3"></script>
+
+    <!-- Menu utilisateur Discord avec la cloche -->
+    <script src="./menu-utilisateur.js?v=2"></script>
 
     <!-- Affichage conditionnel de l’administration -->
     <script src="./navigation-admin.js?v=2"></script>
@@ -537,5 +547,20 @@
 
     <!-- Navigation active -->
     <script src="./navigation.js?v=3"></script>
+
+    <!-- Chargement des préférences -->
+    <script>
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+                if (
+                    typeof chargerEtAppliquerPreferencesSupabase ===
+                    "function"
+                ) {
+                    chargerEtAppliquerPreferencesSupabase();
+                }
+            }
+        );
+    </script>
 </body>
 </html>
